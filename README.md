@@ -6,6 +6,10 @@
   - add some useful keybindings
 - [Xmodmap](Xmodmap)
   - swap Escape key with Caps Lock (who needs Caps Lock anyways)
+- [xinitrc](xinitrc)
+  - script run on starting X
+- [muttrc](muttrc)
+  - configuration for [mutt](http://www.mutt.org/)
 - [tmux.conf](tmux.conf)
   - [tmux](https://tmux.github.io/) config
   - add some useful keybindings

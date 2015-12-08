@@ -95,10 +95,10 @@ let g:airline#extensions#tmuxline#enabled  = 1
 let g:tmuxline_preset = {
       \'a'    : '#S',
       \'b'    : '#W',
-      \'c'    : '#(mpstat | tail -n 1 | awk "{print 100 - $13}")',
+      \'c'    : "#(mpstat | tail -n 1 | awk '{print 100 - $13}')",
       \'win'  : '#I #W',
       \'cwin' : '#I #W',
-      \'x'    : '#(acpi -b | cut -d " " -f 4)',
+      \'x'    : "#(acpi -b | grep -Po '[[:digit:]]\+%')",
       \'y'    : '%a %R',
       \'z'    : '#H'}
 " }}}

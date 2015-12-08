@@ -1,0 +1,125 @@
+source "gpg -dq ~/.mutt/passwords.gpg |"
+
+# Use TLS
+set ssl_starttls = yes
+set ssl_force_tls = yes
+
+# User Details
+set imap_user = "danlrobertson89@gmail.com"
+set from = "danlrobertson89@gmail.com"
+set realname = "Daniel Robertson"
+
+# URL Directories etc...
+set folder = "imaps://imap.gmail.com/"
+set spoolfile = "imaps://imap.gmail.com/INBOX"
+set postponed = "imaps://imap.gmail.com/[GMAIL]/Drafts"
+set smtp_url = "smtp://danlrobertson89@smtp.gmail.com:587/"
+
+# Cache Directories
+set header_cache = "~/.mutt/cache/headers"
+set message_cachedir = "~/.mutt/cache/bodies"
+set certificate_file = "~/.mutt/certificates"
+
+# Sorting
+set sort_aux=reverse-date-received       
+set sort=threads
+set sort_re
+set sort_alias=alias     # sort aliases in alpha order by alias name
+set auto_tag = yes
+hdr_order Date: From: To: Cc: Reply-To: Subject:
+
+# Other
+set move = no
+set imap_keepalive = 900
+set markers
+set smart_wrap
+set pager_context=3
+set status_on_top
+push <show-version>
+
+# Editor
+set editor = "vim"
+set edit_headers
+
+# GPG Settings
+source ~/.gpg.rc
+set pgp_use_gpg_agent = yes
+set pgp_sign_as = 1ECE3333
+set pgp_timeout = 3600
+set crypt_autosign = yes
+set crypt_replyencrypt = yes
+
+# Colors
+
+color index brightcyan black ~N
+color index brightred black ~O
+color index brightyellow black ~F
+color index black green ~T
+color index brightred black ~D
+mono index bold ~N
+mono index bold ~F
+mono index bold ~T
+mono index bold ~D
+
+color body brightgreen black "(http|ftp|news|telnet|finger)://[^ \"\t\r\n]*"
+color body brightgreen black "mailto:[-a-z_0-9.]+@[-a-z_0-9.]+"
+mono body bold "(http|ftp|news|telnet|finger)://[^ \"\t\r\n]*"
+mono body bold "mailto:[-a-z_0-9.]+@[-a-z_0-9.]+"
+
+color body brightgreen black "[-a-z_0-9.%$]+@[-a-z_0-9.]+\\.[-a-z][-a-z]+"
+
+color header green black "^from:"
+color header green black "^to:"
+color header green black "^cc:"
+color header green black "^date:"
+color header yellow black "^newsgroups:"
+color header yellow black "^reply-to:"
+color header brightcyan black "^subject:"
+color header red black "^x-spam-rule:"
+color header green black "^x-mailer:"
+color header yellow black "^message-id:"
+color header yellow black "^Organization:"
+color header yellow black "^Organisation:"
+color header yellow black "^User-Agent:"
+color header yellow black "^message-id: .*pine"
+color header yellow black "^X-Fnord:"
+color header yellow black "^X-WebTV-Stationery:"
+
+color header red black "^x-spam-rule:"
+color header green black "^x-mailer:"
+color header yellow black "^message-id:"
+color header yellow black "^Organization:"
+color header yellow black "^Organisation:"
+color header yellow black "^User-Agent:"
+color header yellow black "^message-id: .*pine"
+color header yellow black "^X-Fnord:"
+color header yellow black "^X-WebTV-Stationery:"
+color header yellow black "^X-Message-Flag:"
+color header yellow black "^X-Spam-Status:"
+color header yellow black "^X-SpamProbe:"
+color header red black "^X-SpamProbe: SPAM"
+
+color quoted cyan black
+color quoted1 yellow black
+color quoted2 red black
+color quoted3 green black
+color quoted4 cyan black
+color quoted5 yellow black
+color quoted6 red black
+color quoted7 green black
+
+color signature brightmagenta black
+color indicator brightblue black
+color attachment black green
+color error cyan black
+color message white black
+color search brightwhite magenta
+color status red black
+color tree brightblue black
+color normal white black
+color tilde green black
+color bold brightyellow black
+color underline magenta black
+color markers brightcyan black
+mono underline underline
+mono indicator reverse

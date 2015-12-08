@@ -1,4 +1,3 @@
 rename-window Mutt
-send-keys -t Mutt mutt Enter
 neww -n Vim vim
 neww -n Shell

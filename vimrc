@@ -91,6 +91,18 @@ let g:airline#extensions#tabline#enabled   = 1
 let g:airline#extensions#tmuxline#enabled  = 1
 " }}}
 
+" Tmuxline Settings ---- {{{
+let g:tmuxline_preset = {
+      \'a'    : '#S',
+      \'b'    : '#W',
+      \'c'    : '#(mpstat | tail -n 1 | awk "{print 100 - $13}")',
+      \'win'  : '#I #W',
+      \'cwin' : '#I #W',
+      \'x'    : '#(acpi -b | cut -d " " -f 4)',
+      \'y'    : '%a %R',
+      \'z'    : '#H'}
+" }}}
+
 " Vimscript file settings ---- {{{
 augroup filetype_vim
     autocmd!

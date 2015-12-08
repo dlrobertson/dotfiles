@@ -25,8 +25,6 @@ export PATH=${PATH}:${HOME}/dev/go/bin:${SPARK_HOME}/bin
 #export PATH=$PATH:/usr/local/bin/:$HADOOP_HOME/bin
 
 export CPATH=${HOME}/.local/include
-#export C_INCLUDE_PATH=/home/drobertson/.local/include:${C_INCLUDE_PATH}
-#export CPLUS_INCLUDE_PATH=/home/drobertson/.local/include:${CPLUS_INCLUDE_PATH}
 export LD_LIBRARY_PATH=/usr/lib:/usr/lib64:${LD_LIBRARY_PATH}:/usr/local/lib
 export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig:${PKG_CONFIG_PATH}
 
@@ -39,12 +37,10 @@ export TERMINAL=st
 export CC=clang
 export CXX=clang++
 
-export WLD=$HOME/.local   # change this to another location if you prefer
+export WLD=$HOME/.local
 export LD_LIBRARY_PATH=$WLD/lib
 export PKG_CONFIG_PATH=$WLD/lib/pkgconfig/:$WLD/share/pkgconfig/
 export PATH=$WLD/bin:$PATH
-#export ACLOCAL_PATH=$WLD/share/aclocal
-#export ACLOCAL="aclocal -I $ACLOCAL_PATH"
 
 setopt promptsubst
 autoload -U colors && colors # Enable colors in prompt

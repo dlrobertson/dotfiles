@@ -14,6 +14,7 @@ set folder = "imaps://imap.gmail.com/"
 set spoolfile = "imaps://imap.gmail.com/INBOX"
 set postponed = "imaps://imap.gmail.com/[GMAIL]/Drafts"
 set smtp_url = "smtp://danlrobertson89@smtp.gmail.com:587/"
+set trash="imaps://imap.gmail.com/[Gmail]/Trash"
 
 # Cache Directories
 set header_cache = "~/.mutt/cache/headers"
@@ -62,8 +63,7 @@ mailboxes "+--Gmail----"\
           +Personal\
           +Receipts\
           +Travel\
-          +Work\
-          +[GMAIL]/Sent Mail
+          +Work
 
 bind index,pager <up> sidebar-prev
 bind index,pager <down> sidebar-next
@@ -92,36 +92,17 @@ mono body bold "mailto:[-a-z_0-9.]+@[-a-z_0-9.]+"
 
 color body brightgreen black "[-a-z_0-9.%$]+@[-a-z_0-9.]+\\.[-a-z][-a-z]+"
 
+ignore *
+unignore from to cc date subject Message-Id
+unhdr_order *
+hdr_order from: to: cc: Message-Id: date: subject:
+
 color header green black "^from:"
 color header green black "^to:"
 color header green black "^cc:"
-color header green black "^date:"
-color header yellow black "^newsgroups:"
-color header yellow black "^reply-to:"
-color header brightcyan black "^subject:"
-color header red black "^x-spam-rule:"
-color header green black "^x-mailer:"
-color header yellow black "^message-id:"
-color header yellow black "^Organization:"
-color header yellow black "^Organisation:"
-color header yellow black "^User-Agent:"
-color header yellow black "^message-id: .*pine"
-color header yellow black "^X-Fnord:"
-color header yellow black "^X-WebTV-Stationery:"
-
-color header red black "^x-spam-rule:"
-color header green black "^x-mailer:"
-color header yellow black "^message-id:"
-color header yellow black "^Organization:"
-color header yellow black "^Organisation:"
-color header yellow black "^User-Agent:"
-color header yellow black "^message-id: .*pine"
-color header yellow black "^X-Fnord:"
-color header yellow black "^X-WebTV-Stationery:"
-color header yellow black "^X-Message-Flag:"
-color header yellow black "^X-Spam-Status:"
-color header yellow black "^X-SpamProbe:"
-color header red black "^X-SpamProbe: SPAM"
+color header yellow black "^Message-Id:"
+color header yellow black "^date:"
+color header brightmagenta black "^subject:"
 
 color quoted cyan black
 color quoted1 yellow black
@@ -147,3 +128,13 @@ color underline magenta black
 color markers brightcyan black
 mono underline underline
 mono indicator reverse
+
+# Keybindings
+bind editor <space> noop
+macro index,pager y "<save-message>=[Gmail]/All Mail<enter><enter>" "Archive"
+macro index,pager d "<save-message>=[Gmail]/Trash<enter><enter>" "Trash"
+macro index gi "<change-folder>=INBOX<enter>" "Go to inbox"
+macro index ga "<change-folder>=[Gmail]/All Mail<enter>" "Go to all mail"
+macro index gs "<change-folder>=[Gmail]/Starred<enter>" "Go to starred messages"
+macro index gd "<change-folder>=[Gmail]/Drafts<enter>" "Go to drafts"
+macro index gt "<change-folder>=[Gmail]/Trash<enter>" "Go to drafts"

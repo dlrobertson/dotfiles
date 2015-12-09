@@ -153,15 +153,17 @@ nnoremap ; :
 " Leader remaps
 nnoremap <leader>c V`]
 nnoremap <leader>ev :split<cr>:e $MYVIMRC<cr>
+nnoremap <leader>Ev :e $MYVIMRC<cr>
 nnoremap <leader>sv :source $MYVIMRC<cr>
 nnoremap <leader>t :NERDTree<cr>
+nnoremap <leader>cd :cd %:h<cr>
 
 " Window movement
 nnoremap <leader>v <C-w>v<C-w>l
 nnoremap <leader>h <C-w>s<C-w>j
 nnoremap <leader>n :tabn<cr>
 nnoremap <leader>p :tabp<cr>
-nnoremap <leader>e :tabe
+nnoremap <leader>e :tabe<space>
 
 nnoremap <C-h> <C-w>h
 nnoremap <C-j> <C-w>j

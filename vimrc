@@ -42,7 +42,6 @@ set relativenumber
 
 set showcmd
 set hlsearch
-set ignorecase
 set smartcase
 set backspace=indent,eol,start
 set autoindent
@@ -110,13 +109,11 @@ augroup filetype_vim
 augroup END
 " }}}
 
-" Overleght settings ----- {{{
-hi OverLength ctermbg=233
-match OverLength /\%81v.\+/
+" Yankring settings ----- {{{
 let g:yankring_history_dir = "~/.yankring"
 " }}}
 
-" Leader mapping definitions ---- {{{{
+" Leader mapping definitions ---- {{{
 let mapleader = "\\"
 let maplocalleader = "-"
 " }}}

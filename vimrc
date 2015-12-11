@@ -38,7 +38,6 @@ set hidden
 set wildmenu
 set wildmode=list:longest
 set ttyfast
-set relativenumber
 
 set showcmd
 set hlsearch

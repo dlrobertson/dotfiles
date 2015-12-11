@@ -71,15 +71,13 @@ bind index,pager <right> sidebar-open
 bind pager k previous-line
 bind pager j next-line
 bind index <Return> display-message
-#bind index,pager \Cn sidebar-scroll-up
-#bind index,pager \Cv sidebar-scroll-down
 
 # Colors
-color index brightcyan black ~N
-color index brightred black ~O
-color index brightyellow black ~F
-color index black green ~T
-color index brightred black ~D
+color index brightcolor6 color0 ~N
+color index brightcolor1 color0 ~O
+color index brightcolor3 color0 ~F
+color index color0 color2 ~T
+color index brightcolor1 color0 ~D
 mono index bold ~N
 mono index bold ~F
 mono index bold ~T
@@ -97,35 +95,35 @@ unignore from to cc date subject Message-Id
 unhdr_order *
 hdr_order from: to: cc: Message-Id: date: subject:
 
-color header green black "^from:"
-color header green black "^to:"
-color header green black "^cc:"
-color header yellow black "^Message-Id:"
-color header yellow black "^date:"
-color header brightmagenta black "^subject:"
+color header color1 color0 "^from:"
+color header color2 color0 "^to:"
+color header color2 color0 "^cc:"
+color header color3 color0 "^Message-Id:"
+color header color3 color0 "^date:"
+color header brightcolor9 color0 "^subject:"
 
-color quoted cyan black
-color quoted1 yellow black
-color quoted2 red black
-color quoted3 green black
-color quoted4 cyan black
-color quoted5 yellow black
-color quoted6 red black
-color quoted7 green black
+color quoted color1 color0
+color quoted1 color2 color0
+color quoted2 color3 color0 
+color quoted3 color4 color0 
+color quoted4 color5 color0 
+color quoted5 color6 color0 
+color quoted6 color7 color0 
+color quoted7 color8 color0 
 
-color signature brightmagenta black
-color indicator brightblue black
-color attachment black green
-color error cyan black
-color message white black
-color search brightwhite magenta
-color status red black
-color tree brightblue black
-color normal white black
-color tilde green black
-color bold brightyellow black
-color underline magenta black
-color markers brightcyan black
+color signature brightcolor13 color0
+color indicator brightcolor9 color8
+color attachment color1 color0
+color error color5 color0
+color message color15 color0
+color search brightcolor15 color0
+color status brightcolor1 color0
+color tree brightcolor4 color0
+color normal color7 color8
+color tilde color2 color0
+color bold brightcolor3 color0 
+color underline color5 color0 
+color markers brightcolor4 color0
 mono underline underline
 mono indicator reverse
 

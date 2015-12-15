@@ -13,7 +13,7 @@ promptinit
 # This will set the default prompt to the walters theme
 alias ls="ls --color=auto"
 alias -s html=google-chrome-stable
-alias ed="ed -p:"
+alias ed="ed -p ': p:'"
 
 export SPARK_HOME=/home/drobertson/git/spark
 

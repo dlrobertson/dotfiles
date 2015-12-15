@@ -1,0 +1,83 @@
+#!/usr/bin/env bash
+
+SUBDIR=$(date +"%Y-%m-%d")
+
+main() {
+    if [ $# -lt 1 ]; then
+        echo "Usage: snap-tool <options>"
+        exit 1
+    fi
+    case $1 in
+        clean)
+            btrfs_clean_run $2
+            shift
+            ;;
+        backup)
+            btrfs_backup_setup
+            btrfs_backup_run
+            shift
+            ;;
+        *)
+            echo "Unrecognized option $i"
+            exit 1
+            ;;
+    esac
+}
+
+BASE_SNAP_DIR=/.snapshots
+SNAP_DIR=/.snapshots/$SUBDIR
+
+parse_snap_dir() {
+    if [ -z "$1" ]; then
+        echo "parse_snap_dir expected input"
+        exit 1
+    fi
+    echo $(echo $1 | sed -e "s/^\/$/root/" -e "s/^\//root_/" -e "s/\//_/")
+}
+
+btrfs_clean_run () {
+    if [ "$1" ]; then
+        SUBDIR="$1"
+        SNAP_DIR=/.snapshots/$SUBDIR
+    fi
+    for dir in $SNAP_DIR/*; do
+        btrfs subvolume delete $dir
+    done
+    rm -rf SNAP_DIR
+
+    return 0
+}
+
+btrfs_backup_run () {
+    cat /proc/mounts | while read line; do
+        IFS=' ' read -r -a columns <<< "$line"
+        if [ "${columns[2]}" == "btrfs" ]; then
+            directory=${columns[1]}
+            if [[ $directory != $BASE_SNAP_DIR ]] && [[ ! $directory =~ tmp|mnt ]]; then
+                btrfs_backup_snapshot $directory
+            fi
+        fi
+    done
+}
+
+btrfs_backup_setup () {
+    if [ ! -d $SNAP_DIR ]; then
+        mkdir -p $SNAP_DIR
+    else
+        echo "Error: Backup already created for today - delete the backup and try again"
+        exit 1
+    fi
+    return 0
+}
+
+btrfs_backup_snapshot () {
+    if [ -z "$1" ]; then
+        #echo "Usage: btrfs_backup <directory>"
+        exit 1
+    fi
+    snap_dir=$(parse_snap_dir $1)
+    btrfs subvolume snapshot -r $1 $SNAP_DIR/$snap_dir
+    return 0
+}
+
+main "$@"

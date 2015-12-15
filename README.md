@@ -22,7 +22,9 @@
   - config files for [dwm](http://dwm.suckless.org/)
 - [st](st/)
   - config files for [st](http://st.suckless.org/)
-- [scripts](scripts/)
-  - random scripts I use to manage my box
-    - [snap-tool](scripts/snap-tool) - A tool I use to manage my backup btrfs snapshots
-    - [repls.sh](scripts/repls.sh) - A tool I use to quickly launch MongoDB single machine repleca sets
+- [scripts](scripts/) - random scripts I use to manage my box
+    - [btrfs](https://btrfs.wiki.kernel.org/index.php/Main_Page)
+      - [snap-tool](scripts/snap-tool) - A tool I use to manage my backup btrfs snapshots
+      - [backup.sh](scripts/backup.sh) - A script that I placed in `/etc/cron.hourly` that uses the above tool to backup your machine.
+    - [MongoDB](https://www.mongodb.org/)
+      - [repls.sh](scripts/repls.sh) - A tool I use to quickly launch MongoDB single machine repleca sets

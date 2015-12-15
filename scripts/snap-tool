@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-SUBDIR=$(date +"%Y-%m-%d")
+SUBDIR=$(date +"%Y%m%d%H%M%S")
 
 main() {
     if [ $# -lt 1 ]; then
@@ -36,8 +36,8 @@ get_help () {
     echo "Usage: snap-tool <clean|backup <args>>"
     echo '    backup        will back up all btrfs partitionsmounted on root directory'
     echo '                  Example: snap-tool backup'
-    echo '    clean <date>  will remove the snapshot taken at date <%Y-%m-%d>'
-    echo '                  Example: snap-tool clean 2015-12-10'
+    echo '    clean <date>  will remove the snapshot taken at date <%Y%m%d%H%M%S>'
+    echo '                  Example: snap-tool clean 20151210050505'
     return 0
 }
 parse_snap_dir () {
@@ -56,7 +56,7 @@ btrfs_clean_run () {
     for dir in $SNAP_DIR/*; do
         btrfs subvolume delete $dir
     done
-    rm -rf SNAP_DIR
+    rm -rf $SNAP_DIR
 
     return 0
 }

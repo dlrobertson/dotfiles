@@ -17,8 +17,13 @@ main() {
             btrfs_backup_run
             shift
             ;;
+        help)
+            get_help
+            exit 0
+            ;;
         *)
-            echo "Unrecognized option $i"
+            echo "Unrecognized option: \"$1\""
+            get_help
             exit 1
             ;;
     esac
@@ -27,7 +32,15 @@ main() {
 BASE_SNAP_DIR=/.snapshots
 SNAP_DIR=/.snapshots/$SUBDIR
 
-parse_snap_dir() {
+get_help () {
+    echo "Usage: snap-tool <clean|backup <args>>"
+    echo '    backup        will back up all btrfs partitionsmounted on root directory'
+    echo '                  Example: snap-tool backup'
+    echo '    clean <date>  will remove the snapshot taken at date <%Y-%m-%d>'
+    echo '                  Example: snap-tool clean 2015-12-10'
+    return 0
+}
+parse_snap_dir () {
     if [ -z "$1" ]; then
         echo "parse_snap_dir expected input"
         exit 1

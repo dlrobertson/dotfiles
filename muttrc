@@ -1,4 +1,4 @@
-source "gpg -dq ~/.mutt/passwords.gpg |"
+source "gpg2 -dq ~/.mutt/passwords.gpg |"
 
 # Use TLS
 set ssl_starttls = yes
@@ -14,7 +14,7 @@ set folder = "imaps://imap.gmail.com/"
 set spoolfile = "imaps://imap.gmail.com/INBOX"
 set postponed = "imaps://imap.gmail.com/[GMAIL]/Drafts"
 set smtp_url = "smtp://danlrobertson89@smtp.gmail.com:587/"
-set trash="imaps://imap.gmail.com/[Gmail]/Trash"
+#set trash="imaps://imap.gmail.com/[Gmail]/Trash"
 
 # Cache Directories
 set header_cache = "~/.mutt/cache/headers"
@@ -44,7 +44,8 @@ set editor = "vim"
 set edit_headers
 
 # GPG Settings
-source ~/.gpg.rc
+#source ~/.gpg.rc
+source /usr/share/doc/mutt/samples/pgp2.rc
 set pgp_use_gpg_agent = yes
 set pgp_sign_as = 1ECE3333
 set pgp_timeout = 3600
@@ -52,22 +53,22 @@ set crypt_autosign = yes
 set crypt_replyencrypt = yes
 
 # Sidebar
-set sidebar_delim   = '  │'
-set sidebar_visible = yes
-set sidebar_width   = 24
-color sidebar_new color221 color233
-set status_chars  = " *%A"
-set status_format = "───[ Folder: %f ]───[%r%m messages%?n? (%n new)?%?d? (%d to delete)?%?t? (%t tagged)? ]───%>─%?p?( %p postponed )?───"
-mailboxes "+--Gmail----"\
-          +INBOX\
-          +Personal\
-          +Receipts\
-          +Travel\
-          +Work
-
-bind index,pager <up> sidebar-prev
-bind index,pager <down> sidebar-next
-bind index,pager <right> sidebar-open
+#set sidebar_delim   = '  │'
+#set sidebar_visible = yes
+#set sidebar_width   = 24
+#color sidebar_new color221 color233
+#set status_chars  = " *%A"
+#set status_format = "───[ Folder: %f ]───[%r%m messages%?n? (%n new)?%?d? (%d to delete)?%?t? (%t tagged)? ]───%>─%?p?( %p postponed )?───"
+#mailboxes "+--Gmail----"\
+#          +INBOX\
+#          +Personal\
+#          +Receipts\
+#          +Travel\
+#          +Work
+#
+#bind index,pager <up> sidebar-prev
+#bind index,pager <down> sidebar-next
+#bind index,pager <right> sidebar-open
 bind pager k previous-line
 bind pager j next-line
 bind index <Return> display-message

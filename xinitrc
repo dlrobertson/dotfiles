@@ -15,7 +15,7 @@ xset r rate 300 44
 xmodmap ~/.Xmodmap
 
 while true; do
-  xsetroot -solid "#20e0e5" -name "$(date +'%l:%M %Y-%M-%d') | Battery:$(acpi -b | cut -d "," -f 2) | Size: $(~/.bin/test.sh)GiB | Cpu: $(mpstat | tail -n 1 | awk '{print 100 - $13}') | wlp3s0 $(cat /sys/class/net/wlp3s0/operstate) | enp2s0 $(cat /sys/class/net/enp2s0/operstate)"
+  xsetroot -solid "#20e0e5" -name "$(date +'%l:%M %Y-%M-%d') | Battery:$(acpi -b | cut -d "," -f 2) | Cpu: $(mpstat | tail -n 1 | awk '{print 100 - $13}') | wlp3s0 $(cat /sys/class/net/wlp3s0/operstate) | enp2s0 $(cat /sys/class/net/enp2s0/operstate)"
   xsetroot -cursor_name left_ptr
   sleep 1m
 done &

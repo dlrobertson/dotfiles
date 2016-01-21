@@ -19,6 +19,7 @@ export SPARK_HOME=/home/drobertson/git/spark
 
 # set up path for spark and go
 export PATH=${PATH}:${HOME}/dev/go/bin:${SPARK_HOME}/bin
+export PATH="$(ruby -e 'print Gem.user_dir')/bin:$PATH"
 
 #export HADOOP_HOME=/usr/local/hadoop
 #export JAVA_HOME=/usr/lib/jvm/java-8-openjdk
@@ -34,8 +35,8 @@ export EDITOR=/usr/bin/vim
 export CCACHE_COMPRESS=1
 export CCACHE_CPP2=1
 export TERMINAL=st
-export CC=clang
-export CXX=clang++
+export CC=gcc
+export CXX=g++
 
 export WLD=$HOME/.local
 export LD_LIBRARY_PATH=$WLD/lib

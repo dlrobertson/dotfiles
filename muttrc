@@ -22,7 +22,7 @@ set message_cachedir = "~/.mutt/cache/bodies"
 set certificate_file = "~/.mutt/certificates"
 
 # Sorting
-set sort_aux=reverse-date-received       
+set sort_aux=reverse-date-received
 set sort=threads
 set sort_re
 set sort_alias=alias     # sort aliases in alpha order by alias name
@@ -40,14 +40,14 @@ push <show-version>
 set quit
 
 # Editor
-set editor = "vim"
+set editor = "vim -c 'set spell spelllang=de,en'" 
 set edit_headers
 
 # GPG Settings
 #source ~/.gpg.rc
-source /usr/share/doc/mutt/samples/pgp2.rc
+source /usr/share/doc/mutt/samples/gpg.rc
 set pgp_use_gpg_agent = yes
-set pgp_sign_as = 1ECE3333
+set pgp_sign_as = 71F66667
 set pgp_timeout = 3600
 set crypt_autosign = yes
 set crypt_replyencrypt = yes
@@ -105,12 +105,12 @@ color header brightcolor9 color0 "^subject:"
 
 color quoted color1 color0
 color quoted1 color2 color0
-color quoted2 color3 color0 
-color quoted3 color4 color0 
-color quoted4 color5 color0 
-color quoted5 color6 color0 
-color quoted6 color7 color0 
-color quoted7 color8 color0 
+color quoted2 color3 color0
+color quoted3 color4 color0
+color quoted4 color5 color0
+color quoted5 color6 color0
+color quoted6 color7 color0
+color quoted7 color8 color0
 
 color signature brightcolor13 color0
 color indicator brightcolor9 color8
@@ -122,8 +122,8 @@ color status brightcolor1 color0
 color tree brightcolor4 color0
 color normal color7 color8
 color tilde color2 color0
-color bold brightcolor3 color0 
-color underline color5 color0 
+color bold brightcolor3 color0
+color underline color5 color0
 color markers brightcolor4 color0
 mono underline underline
 mono indicator reverse

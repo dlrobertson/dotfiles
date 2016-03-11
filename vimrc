@@ -18,11 +18,17 @@ Plugin 'Yankring.vim'
 
 Plugin 'edkolev/tmuxline.vim.git'
 
-Plugin 'bling/vim-airline.git'
+Plugin 'vim-airline/vim-airline.git'
+
+Plugin 'vim-airline/vim-airline-themes.git'
 
 Plugin 'tpope/vim-fugitive.git'
 
+Plugin 'tpope/vim-git.git'
+
 Plugin 'airblade/vim-gitgutter.git'
+
+Plugin 'vimux'
 
 call vundle#end()
 
@@ -80,7 +86,7 @@ augroup END
 " }}}
 
 " Airline Settings ---- {{{
-let g:airline_theme                        = 'simple'
+let g:airline_theme                        = 'badwolf'
 let g:airline_extensions                   = ['branch', 'tabline', 'tmuxline']
 let g:airline_powerline_fonts              = 1
 let g:airline#extensions#hunks#enabled     = 1
@@ -93,7 +99,7 @@ let g:airline#extensions#tmuxline#enabled  = 1
 let g:tmuxline_preset = {
       \'a'    : '#S',
       \'b'    : '#W',
-      \'c'    : "#(mpstat | tail -n 1 | awk '{print 100 - $13}')",
+      \'c'    : "#(cat /proc/loadavg | cut -d ' ' -f 1,4)",
       \'win'  : '#I #W',
       \'cwin' : '#I #W',
       \'x'    : "#(acpi -b | grep -Po '[[:digit:]]\+%')",

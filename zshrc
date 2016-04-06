@@ -18,8 +18,8 @@ alias ed="ed -p ': p:'"
 export SPARK_HOME=/home/drobertson/git/spark
 
 # set up path for spark and go
-export PATH=${PATH}:${HOME}/dev/go/bin:${SPARK_HOME}/bin
-export PATH="$(ruby -e 'print Gem.user_dir')/bin:$PATH"
+#export PATH=${PATH}:${HOME}/dev/go/bin:${SPARK_HOME}/bin
+#export PATH="$(ruby -e 'print Gem.user_dir')/bin:$HOME/.cargo/bin:$PATH"
 
 #export HADOOP_HOME=/usr/local/hadoop
 #export JAVA_HOME=/usr/lib/jvm/java-8-openjdk
@@ -37,11 +37,6 @@ export CCACHE_CPP2=1
 export TERMINAL=st
 export CC=gcc
 export CXX=g++
-
-export WLD=$HOME/.local
-export LD_LIBRARY_PATH=$WLD/lib
-export PKG_CONFIG_PATH=$WLD/lib/pkgconfig/:$WLD/share/pkgconfig/
-export PATH=$WLD/bin:$PATH
 
 setopt prompt_subst
 autoload -U colors && colors # Enable colors in prompt
@@ -109,3 +104,5 @@ git_prompt_string() {
 PS1="%(?..[%i])%F{6}%U%n%u%f%F{1}@%M%f"
 PS1="$PS1 "$'$(git_prompt_string)\n%(?.%F{green}.%F{red})\u279c  %f'
 RPROMPT="%F{green}%~%f"
+
+export PATH="$HOME/.cargo/bin:$PATH"

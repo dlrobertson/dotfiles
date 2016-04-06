@@ -1,0 +1,44 @@
+[user]
+    name = Daniel Robertson
+    email = dan.robertson@anidata.org
+    signingkey = 71F66667
+[color]
+    ui = true
+    branch = auto
+    diff = auto
+    interactive = auto
+    status = auto
+[gpg]
+    program=gpg2
+[core]
+    autocrlf = input
+    compression = 9
+    editor = vim
+[merge]
+    tool = vimdiff
+[sendmail]
+    smtpencryption = tls
+    smtpserver = smtp.gmail.com
+    smtpuser = dan.robertson@anidata.org
+    smtpserverport = 587
+[alias]
+    # basic {{{
+	co = checkout
+    br = branch
+    ci = commit
+    st = status -s
+    cp = cherry-pick
+    # }}}
+    # alter {{{
+    grep = grep -in
+    find = "!git ls-files | grep -i"
+    caa = commit -a --amend -C HEAD
+    # }}}
+    dump = cat-file -p
+    hist = log --pretty=format:\"%h %ad| %s%d[%an]\" --graph --date=short
+    unstage = reset HEAD --
+    last = log -1 HEAD
+    wa = "!f() { \
+        wd=$(git rev-parse --show-toplevel | sed \"s/[A-Za-z_.-]*$//\"); \
+        git worktree add $wd$@; \
+    }; f"

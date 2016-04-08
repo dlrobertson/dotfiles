@@ -37,7 +37,7 @@ GIT_PS1_SHOWCOLORHINTS=1
 
 source ~/.git-prompt.sh
 
-PROMPT_COMMAND='__git_ps1 "\e[36m\u\e[0m\e[31m@\h\e[0m: \e[93m\w\e[0m" " "\\n\\e[93m\\$\\e[0m\  '
+PROMPT_COMMAND='__git_ps1 "\e[36m\u\e[0m\e[31m@\h\e[0m: \e[93m\w\e[0m" " "\\n\$\ '
 
 export PATH="$HOME/.cargo/bin:$PATH"
 

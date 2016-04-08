@@ -8,5 +8,5 @@ ln -svf ${cur_wd}/Xmodmap $HOME/.Xmodmap
 ln -svf ${cur_wd}/muttrc $HOME/.muttrc
 ln -svf ${cur_wd}/tmux $HOME/.tmux
 ln -svf ${cur_wd}/tmux.conf $HOME/.tmux.conf
-ln -svf ${cur_wd}/zshrc $HOME/.zshrc
+ln -svf ${cur_wd}/bashrc $HOME/.bashrc
 ln -svf ${cur_wd}/i3 $HOME/.i3

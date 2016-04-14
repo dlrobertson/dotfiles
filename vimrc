@@ -28,6 +28,8 @@ Plugin 'tpope/vim-git.git'
 
 Plugin 'airblade/vim-gitgutter.git'
 
+Plugin 'gilligan/vim-lldb.git'
+
 Plugin 'vimux'
 
 call vundle#end()

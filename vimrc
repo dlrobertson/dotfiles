@@ -16,7 +16,7 @@ Plugin 'scrooloose/nerdcommenter.git'
 
 Plugin 'Yankring.vim'
 
-Plugin 'edkolev/tmuxline.vim.git'
+"Plugin 'edkolev/tmuxline.vim.git'
 
 Plugin 'vim-airline/vim-airline.git'
 
@@ -28,7 +28,7 @@ Plugin 'tpope/vim-git.git'
 
 Plugin 'airblade/vim-gitgutter.git'
 
-Plugin 'gilligan/vim-lldb.git'
+"Plugin 'gilligan/vim-lldb.git'
 
 Plugin 'vimux'
 
@@ -89,7 +89,7 @@ augroup END
 
 " Airline Settings ---- {{{
 let g:airline_theme                        = 'badwolf'
-let g:airline_extensions                   = ['branch', 'tabline', 'tmuxline']
+let g:airline_extensions                   = ['branch', 'tabline']
 let g:airline_powerline_fonts              = 1
 let g:airline#extensions#hunks#enabled     = 1
 let g:airline#extensions#branch#enabled    = 1

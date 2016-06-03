@@ -11,11 +11,11 @@
 [gpg]
     program=gpg2
 [core]
-    autocrlf = input
     compression = 9
     editor = vim
 [merge]
     tool = vimdiff
+    ff = false
 [sendmail]
     smtpencryption = tls
     smtpserver = smtp.gmail.com

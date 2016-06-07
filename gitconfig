@@ -13,6 +13,7 @@
 [core]
     compression = 9
     editor = vim
+    excludesfile = ~/.gitignore
 [merge]
     tool = vimdiff
     ff = false

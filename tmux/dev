@@ -1,5 +1,0 @@
-rename-session dev
-rename-window Shell
-neww -n Vim vim
-neww -n Mutt mutt
-swap-window -t Shell -s Mutt

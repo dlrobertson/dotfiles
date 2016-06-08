@@ -1,12 +1,21 @@
-cur_wd=$(pwd)
+#!/bin/bash
+
+install_file () {
+    ln -svf $PWD/$1 $HOME/.$1
+}
+
 git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 mkdir ~/.yankring
-ln -svf ${cur_wd}/vimrc $HOME/.vimrc
+install_file vimrc
 vim +PluginInstall +qall
-ln -svf ${cur_wd}/xinitrc $HOME/.xinitrc
-ln -svf ${cur_wd}/Xmodmap $HOME/.Xmodmap
-ln -svf ${cur_wd}/muttrc $HOME/.muttrc
-ln -svf ${cur_wd}/tmux $HOME/.tmux
-ln -svf ${cur_wd}/tmux.conf $HOME/.tmux.conf
-ln -svf ${cur_wd}/bashrc $HOME/.bashrc
-ln -svf ${cur_wd}/i3 $HOME/.i3
+install_file tmux.conf
+install_file bashrc
+install_file i3
+install_file gitconfig
+cat > ~/.gitignore << EOF
+*~
+*.sw[op]
+EOF
+install_file gdbinit
+install_file lldbinit
+install_file lldb_utils.py

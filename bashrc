@@ -39,5 +39,5 @@ source ~/.git-prompt.sh
 
 PROMPT_COMMAND='__git_ps1 "\e[36m\u\e[0m\e[31m@\h\e[0m: \e[93m\w\e[0m" " "\\n\$\ '
 
-export PATH="$PATH:$HOME/.cargo/bin:$HOME/.local/bin"
+export PATH="$PATH:$HOME/.cargo/bin:$HOME/.local/bin:/usr/local/bin"
 

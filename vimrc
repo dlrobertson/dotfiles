@@ -14,9 +14,9 @@ Plugin 'scrooloose/nerdtree.git'
 
 Plugin 'scrooloose/nerdcommenter.git'
 
-Plugin 'Yankring.vim'
+"Plugin 'Yankring.vim'
 
-"Plugin 'edkolev/tmuxline.vim.git'
+Plugin 'edkolev/tmuxline.vim.git'
 
 Plugin 'vim-airline/vim-airline.git'
 
@@ -80,6 +80,22 @@ map Q gq
 
 " }}}
 
+" NVim Settings {{{
+set clipboard=unnamed
+tnoremap <C-h> <C-\><C-n><C-w>h
+tnoremap <C-j> <C-\><C-n><C-w>j
+tnoremap <C-k> <C-\><C-n><C-w>k
+tnoremap <C-l> <C-\><C-n><C-w>l
+tnoremap <C-n> <C-\><C-n>:tabn<cr>
+tnoremap <C-p> <C-\><C-n>:tabp<cr>
+nnoremap <C-h> <C-w>h
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-l> <C-w>l
+nnoremap <C-n> :tabn<cr>
+nnoremap <C-p> :tabp<cr>
+" }}}
+
 " Scala Build Tool Filetype Settings ---- {{{
 augroup filetype_sbt
     autocmd!
@@ -89,7 +105,7 @@ augroup END
 
 " Airline Settings ---- {{{
 let g:airline_theme                        = 'badwolf'
-let g:airline_extensions                   = ['branch', 'tabline']
+let g:airline_extensions                   = ['tmuxline', 'branch', 'tabline']
 let g:airline_powerline_fonts              = 1
 let g:airline#extensions#hunks#enabled     = 1
 let g:airline#extensions#branch#enabled    = 1
@@ -168,11 +184,6 @@ nnoremap <leader>h <C-w>s<C-w>j
 nnoremap <leader>n :tabn<cr>
 nnoremap <leader>p :tabp<cr>
 nnoremap <leader>e :tabe<space>
-
-nnoremap <C-h> <C-w>h
-nnoremap <C-j> <C-w>j
-nnoremap <C-k> <C-w>k
-nnoremap <C-l> <C-w>l
 
 " Yankring
 nnoremap <leader>y :YRShow<cr>

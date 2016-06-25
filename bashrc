@@ -7,13 +7,7 @@ alias ed="ed -p ': p:'"
 
 export SPARK_HOME=/home/drobertson/git/spark
 
-# set up path for spark and go
-#export PATH=${PATH}:${HOME}/dev/go/bin:${SPARK_HOME}/bin
-#export PATH="$(ruby -e 'print Gem.user_dir')/bin:$HOME/.cargo/bin:$PATH"
-
-#export HADOOP_HOME=/usr/local/hadoop
-#export JAVA_HOME=/usr/lib/jvm/java-8-openjdk
-#export PATH=$PATH:/usr/local/bin/:$HADOOP_HOME/bin
+export GPG_TTY=$(tty)
 
 export CPATH=${HOME}/.local/include
 export LD_LIBRARY_PATH=/usr/lib:/usr/lib64:${LD_LIBRARY_PATH}:/usr/local/lib
@@ -40,4 +34,3 @@ source ~/.git-prompt.sh
 PROMPT_COMMAND='__git_ps1 "\e[36m\u\e[0m\e[31m@\h\e[0m: \e[93m\w\e[0m" " "\\n\$\ '
 
 export PATH="$PATH:$HOME/.cargo/bin:$HOME/.local/bin:/usr/local/bin"
-

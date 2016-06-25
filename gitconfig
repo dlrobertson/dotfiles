@@ -1,7 +1,7 @@
 [user]
     name = Dan Robertson
     email = drobertson@tripwire.com
-    signingkey = 71F66667
+    signingkey = 9B846CF79949DC1DFCA042521BE34CFA559DED58
 [color]
     ui = true
     branch = auto

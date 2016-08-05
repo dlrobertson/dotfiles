@@ -19,6 +19,6 @@ xmodmap ~/.Xmodmap
 	#sleep 5m
 #done &
 
-xcompmgr -f &
+#xcompmgr -f &
 
-exec dwm
+exec i3

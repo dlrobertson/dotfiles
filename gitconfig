@@ -17,11 +17,6 @@
 [merge]
     tool = vimdiff
     ff = false
-[sendmail]
-    smtpencryption = tls
-    smtpserver = smtp.gmail.com
-    smtpuser = dan.robertson@anidata.org
-    smtpserverport = 587
 [alias]
     # basic {{{
 	co = checkout

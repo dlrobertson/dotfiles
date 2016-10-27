@@ -12,7 +12,7 @@
     program=gpg2
 [core]
     compression = 9
-    editor = vim
+    editor = nvim
     excludesfile = ~/.gitignore
 [merge]
     tool = vimdiff

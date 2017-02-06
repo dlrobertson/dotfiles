@@ -14,8 +14,6 @@ Plugin 'scrooloose/nerdtree.git'
 
 Plugin 'scrooloose/nerdcommenter.git'
 
-"Plugin 'Yankring.vim'
-
 Plugin 'edkolev/tmuxline.vim.git'
 
 Plugin 'vim-airline/vim-airline.git'
@@ -27,8 +25,6 @@ Plugin 'tpope/vim-fugitive.git'
 Plugin 'tpope/vim-git.git'
 
 Plugin 'airblade/vim-gitgutter.git'
-
-"Plugin 'gilligan/vim-lldb.git'
 
 Plugin 'vimux'
 
@@ -192,4 +188,31 @@ if has('nvim')
     nnoremap <C-n> :tabn<cr>
     nnoremap <C-p> :tabp<cr>
 endif
+" }}}
+
+" Custom Functions {{{
+
+function! CleanUnusedBuffers()
+    let all_buffers = []
+    for tab in range(1, tabpagenr('$'))
+        for buf in tabpagebuflist(tab)
+            call add(all_buffers, buf)
+        endfor
+    endfor
+    for buf in range(1, bufnr('$'))
+        if bufexists(buf) && index(all_buffers, buf) == -1
+            execute ':bdelete ' . buf
+        endif
+    endfor
+endfunction
+
+function! CleanLines()
+    " Clean Crriage Returns
+    execute ':%s/\\r\\n//g'
+    " Clean Line Feeds
+    execute ':%s/\\n//g'
+endfunction
+
+nnoremap <leader>db :call CleanUnusedBuffers()<cr>
+nnoremap <leader>l :call CleanCRandLF()<cr>
 " }}}

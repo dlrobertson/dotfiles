@@ -1,7 +1,6 @@
 [user]
     name = Dan Robertson
-    email = drobertson@tripwire.com
-    signingkey = 9B846CF79949DC1DFCA042521BE34CFA559DED58
+    email = dan.robertson@anidata.org
 [color]
     ui = true
     branch = auto

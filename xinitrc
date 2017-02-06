@@ -14,11 +14,8 @@ fi
 xset r rate 300 44
 xmodmap ~/.Xmodmap
 
-#while true; do
-	#find ~/.wallpapers -type f \( -name '*.jpg' -o -name '*.png' \) -print0 | shuf -n1 -z | xargs -0 feh --bg-scale
-	#sleep 5m
-#done &
+setxkbmap -option caps:escape
 
-#xcompmgr -f &
+xcompmgr -f &
 
 exec i3

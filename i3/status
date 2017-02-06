@@ -1,7 +1,7 @@
 general {
-        output_format = "i3bar"
-        colors = true
-        interval = 5
+    output_format = "i3bar"
+    colors = true
+    interval = 5
 }
 
 order += "load"
@@ -12,24 +12,24 @@ order += "cpu_temperature 0"
 order += "tztime UTC"
 
 ethernet br0 {
-        format_up = "br0: %ip"
-        format_down = "br0: down"
+    format_up = "br0: %ip"
+    format_down = "br0: down"
 }
 
 ethernet eno1 {
-        format_up = "eno1: (%speed)"
-        format_down = "eno1: down"
+    format_up = "eno1: (%speed)"
+    format_down = "eno1: down"
 }
 
 tztime UTC {
-        format = "%Y-%m-%d %H:%M:%S %Z"
-        timezone = "UTC"
+    format = "%Y-%m-%d %H:%M:%S %Z"
+    timezone = "UTC"
 }
 
 load {
-        format = "%5min"
+    format = "%5min"
 }
 
 disk "/" {
-        format = "%free"
+    format = "%free"
 }

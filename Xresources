@@ -1,7 +1,7 @@
 Xcursor.theme: Pulse-Glass
 Xcursor.size: 25
-URxvt.font: xft:Source Code Pro For Powerline:pixelsize=11:hinting=true:antialias=true,xft:Dejavu Sans Mono For Powerline:pixelsize=11:hinting=true:antialias=true,xft:WenQuanYi Bitmap Song:pixelsize=12:medium:antialias=true,xft:WenQuanYi Zen Hei:pixelsize=12:medium:antialias=true
-URxvt.boldFont: xft:Source Code Pro For Powerline:pixelsize=11:bold:hinting=true:antialias=true,xft:Dejavu Sans Mono For Powerline:pixelsize=11:bold:hinting=true:antialias=true,xft:WenQuanYi Bitmap Song:pixelsize=12:medium:antialias=true,xft:WenQuanYi Zen Hei:pixelsize=12:medium:antialias=true
+URxvt.font: xft:Source Code Pro For Powerline:pixelsize=13:hinting=true:antialias=true,xft:Dejavu Sans Mono For Powerline:pixelsize=13:hinting=true:antialias=true,xft:WenQuanYi Bitmap Song:pixelsize=13:medium:antialias=true,xft:WenQuanYi Zen Hei:pixelsize=13:medium:antialias=true
+URxvt.boldFont: xft:Source Code Pro For Powerline:pixelsize=13:bold:hinting=true:antialias=true,xft:Dejavu Sans Mono For Powerline:pixelsize=13:bold:hinting=true:antialias=true,xft:WenQuanYi Bitmap Song:pixelsize=13:medium:antialias=true,xft:WenQuanYi Zen Hei:pixelsize=13:medium:antialias=true
 !URxvt.boldFont:             xft:Source Code Pro for Powerline-10:bold;hinting=True;antialias:True,xft:WenQuanYi Bitmap Song-10:bold;antialias=False,xft:WenQuanYi Zen Hei-10:bold;antialias=True,xft:HanaMinA-10:bold;antialias:True,xft:HanaMinB-10:bold;antialias:True,xft:HanaMinPlus-10:bold;antialias:true
 
 Xft.dpi:        96
@@ -23,9 +23,10 @@ URxvt.urgentOnBell:     true
 URxvt.imLocale:         en_US.UTF-8
 
 URxvt*depth: 32
-URxvt*background: rgba:0019/0013/0007/0090
-!URxvt*foreground: #eddc9a
-URxvt*foreground: #eee3b6
+!URxvt*background: rgba:0019/0013/0007/0090
+URxvt*background: #0f1517
+URxvt*foreground: #eeeeee
+!URxvt*foreground: #eee3b6
 *fading: 25
 !*fadeColor: #002b36
 !*cursorColor: #859900

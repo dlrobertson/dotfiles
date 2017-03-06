@@ -12,11 +12,16 @@ NEEDED_DIRS := bin \
 	sbin \
 	sys
 
+BUSYBOX := /bin/busybox
+
 DIRS := $(addprefix $(WDIR)/, $(NEEDED_DIRS))
 
 DEVS := $(addprefix $(WDIR)/dev/, null tty console)
 
 all: $(WDIR)/init
+
+$(WDIR)$(BUSYBOX):
+	cp -a $(BUSYBOX) $(WDIR)$(BUSYBOX)
 
 $(WDIR):
 	mkdir -p $(WDIR)
@@ -33,8 +38,8 @@ $(WDIR)/dev/console:
 $(DIRS):
 	mkdir -p $(DIRS)
 
-$(WDIR)/init: $(WDIR) $(DIRS) $(DEVS)
-	$(CC) -std=c99 -static -o ./$(WDIR)/init ./init.c
+$(WDIR)/init: $(WDIR) $(DIRS) $(DEVS) $(WDIR)$(BUSYBOX)
+	$(CC) -std=c99 -static -o $(WDIR)/init ./init.c
 
 clean:
 	rm -rf $(WDIR)

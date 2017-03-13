@@ -1,8 +1,10 @@
-WDIR ?= ./initramfs
+WDIR ?= /usr/src/initramfs
+BUILD := ./build
 
 NEEDED_DIRS := bin \
 	dev \
 	etc \
+	etc/udev \
 	lib \
 	lib64 \
 	mnt \
@@ -14,17 +16,27 @@ NEEDED_DIRS := bin \
 
 BUSYBOX := /bin/busybox
 
-DIRS := $(addprefix $(WDIR)/, $(NEEDED_DIRS))
+DIRS := $(addprefix $(BUILD)/, $(NEEDED_DIRS))
 
 DEVS := $(addprefix $(WDIR)/dev/, null tty console)
 
-all: $(WDIR)/init
+UDEV_CONF := $(BUILD)/etc/udev/udev.conf
 
-$(WDIR)$(BUSYBOX):
-	cp -a $(BUSYBOX) $(WDIR)$(BUSYBOX)
+UDEV_RULES := $(BUILD)/etc/udev/rules.d
 
-$(WDIR):
-	mkdir -p $(WDIR)
+all: $(DIRS) $(UDEV_CONF) $(UDEV_RULES) $(BUILD)$(BUSYBOX) $(BUILD)/init
+
+$(BUILD):
+	mkdir -p $(BUILD)
+
+$(UDEV_CONF):
+	cp -a /etc/udev/udev.conf $(BUILD)/etc/udev/udev.conf
+
+$(UDEV_RULES):
+	cp -ar /etc/udev/rules.d $(BUILD)/etc/udev/rules.d
+
+$(BUILD)$(BUSYBOX):
+	cp -a $(BUSYBOX) $(BUILD)$(BUSYBOX)
 
 $(WDIR)/dev/null:
 	mknod -m 666 $(WDIR)/dev/null c 1 3
@@ -38,8 +50,16 @@ $(WDIR)/dev/console:
 $(DIRS):
 	mkdir -p $(DIRS)
 
-$(WDIR)/init: $(WDIR) $(DIRS) $(DEVS) $(WDIR)$(BUSYBOX)
-	$(CC) -std=c99 -static -o $(WDIR)/init ./init.c
+$(BUILD)/init:
+	$(CC) -std=c99 -static -o $(BUILD)/init ./init.c
 
 clean:
+	rm -rf $(BUILD)
+
+clean_initramfs:
 	rm -rf $(WDIR)
+
+create_initramfs:
+	cp -r $(BUILD) $(WDIR)
+
+install: clean_initramfs create_initramfs $(DEVS)

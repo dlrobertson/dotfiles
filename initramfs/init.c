@@ -13,18 +13,11 @@
 #define INIT_BIN "/sbin/init"
 #define NEWROOT "/mnt/root"
 #define RESCUE_SHELL "/bin/busybox"
-#define SWITCHROOT_CMD "/sbin/switch_root"
-#define UDEVD "/sbin/udevd"
-#define UDEVADM "/sbin/udevadm"
 #define ROOT_DEV "/dev/sda3"
 #define ROOT_MOUNT_OPTS "subvol=GEN2/ROOT"
 #define USR_MOUNT_OPTS "subvol=GEN2/usr"
 
 static char* const s_busybox_args[] = {RESCUE_SHELL, "sh", NULL};
-static char* const s_udevd_args[] = {UDEVD, "--daemon", "resolve-names=never", NULL};
-static char* const s_udevadm_1_args[] = {UDEVADM, "trigger", NULL};
-static char* const s_udevadm_2_args[] = {UDEVADM, "settle", NULL};
-static char* const s_switchroot_args[] = {SWITCHROOT_CMD, NEWROOT, "/sbin/init", NULL};
 static char* const s_init_args[] = {INIT_BIN, NULL};
 
 #define TRY_MOUNT(src, dst, fs, flags, data) \

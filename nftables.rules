@@ -5,6 +5,7 @@
 flush ruleset
 
 # Definitions
+define lo = lo
 define ext_if = br0
 define int_if = eno1
 define int_tcp_ports = {53, 22}
@@ -36,9 +37,9 @@ table ip filter {
         tcp flags & (fin|syn|rst|psh|ack|urg) == (fin|psh|urg) drop
         ct state invalid counter drop comment "drop invalid packets"
         ct state {established, related} counter accept comment "accept all connections related to connections made by us"
-        iifname lo accept comment "accept loopback"
-        iifname != lo ip daddr 127.0.0.1/8 counter drop comment "drop connections to loopback not coming from loopback"
-        iifname $int_if ip protocol icmp limit rate 10/minute accept
+        iifname $lo accept comment "accept loopback"
+        iifname != $lo ip daddr 127.0.0.1/8 counter drop comment "drop connections to loopback not coming from loopback"
+        iifname $int_if ip protocol icmp limit rate 10/second accept
         ip protocol icmp drop
 # I don't want an external port open
 # tcp dport 22 limit rate 15/minute counter accept comment "accept ssh"
@@ -80,10 +81,11 @@ table ip6 filter {
         type filter hook input priority 0; policy accept;
         ct state {established, related} counter accept comment "accept all connections related to connections made by us"
         ct state invalid counter drop comment "drop invalid packets"
-        ip6 daddr 0::0/0 icmpv6 type { nd-neighbor-solicit, echo-request, nd-router-advert, nd-neighbor-advert } accept
+        ip6 daddr 0::0/0 icmpv6 type { nd-neighbor-solicit, nd-router-advert, nd-neighbor-advert } accept
+        iifname $int_if ip6 nexthdr icmpv6 limit rate 10/second accept
         ip6 nexthdr icmpv6 drop
-        iifname lo accept comment "accept loopback"
-        iifname != lo ip6 daddr ::1/128 counter drop comment "drop connections to loopback not coming from loopback"
+        iifname $lo accept comment "accept loopback"
+        iifname != $lo ip6 daddr ::1/128 counter drop comment "drop connections to loopback not coming from loopback"
 # I don't want an external port open
 # tcp dport 22 limit rate 15/minute counter accept comment "accept ssh"
         iifname $int_if tcp dport $int_tcp_ports counter accept

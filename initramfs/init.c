@@ -103,7 +103,7 @@ int main(int argc, char** argv, char** envp) {
     TRY_MOUNT("devtmpfs", "/dev", "devtmpfs", 0, NULL);
 
     // sleep while we wait for /dev to be populated
-    sleep(10);
+    sleep(3);
 
     // mount the root
     if(mount(ROOT_DEV, NEWROOT, "btrfs", 0, ROOT_MOUNT_OPTS) != 0) {

@@ -1,54 +1,10 @@
 source "gpg2 -dq ~/.mutt/passwords.gpg |"
-#---------------#
-# Account Hooks #
-#---------------#
-account-hook . "unset imap_user; unset imap_pass; unset tunnel" # unset first!
-account-hook        "imaps://dan.robertson@anidata.org@imap.gmail.com/" "\
-    set imap_user   = dan.robertson@anidata.org \
-        imap_pass   = $my_gpass1"
-account-hook        "imaps://danlrobertson89@imap.gmail.com/" "\
-    set imap_user   = danlrobertson89@gmail.com \
-        imap_pass   = $my_gpass2"
-
-#-------------------------------------#
-# Folders, mailboxes and folder hooks #
-#-------------------------------------#
-# Setup for user1:
-set folder          = imaps://dan.robertson@anidata.org@imap.gmail.com/
-mailboxes           = +INBOX =[Gmail]/Drafts =[Gmail]/'Sent Mail' =[Gmail]/Spam =[Gmail]/Trash
-set spoolfile       = +INBOX
-folder-hook         imaps://dan.robertson@anidata.org@imap.gmail.com/ "\
-    set folder      = imaps://dan.robertson@anidata.org@imap.gmail.com/ \
-        spoolfile   = +INBOX \
-        postponed   = +[Gmail]/Drafts \
-        record      = +[Gmail]/'Sent Mail' \
-        from        = 'Daniel Robertson <dan.robertson@anidata.org> ' \
-        realname    = 'Daniel Robertson' \
-        smtp_url    = smtps://dan.robertson@anidata.org@smtp.gmail.com \
-        smtp_pass   = $my_gpass1"
-
-# Setup for user2:
-set folder          = imaps://danlrobertson89@imap.gmail.com/
-mailboxes           = +INBOX =[Gmail]/Drafts =[Gmail]/'Sent Mail' =[Gmail]/Spam =[Gmail]/Trash
-set spoolfile       = +INBOX
-folder-hook         imaps://danlrobertson89@imap.gmail.com/ "\
-    set folder      = imaps://danlrobertson89@imap.gmail.com/ \
-        spoolfile   = +INBOX \
-        postponed   = +[Gmail]/Drafts \
-        record      = +[Gmail]/'Sent Mail' \
-        from        = 'Daniel Robertson <dan.robertson@anidata.org> ' \
-        realname    = 'Daniel Robertson' \
-        smtp_url    = smtps://danlrobertson89@smtp.gmail.com \
-        smtp_pass   = $my_gpass2"
-# Use TLS
-set ssl_starttls = yes
-set ssl_force_tls = yes
-
-#--------#
-# Macros #
-#--------#
-macro index <F1> "y12<return><return>"
-macro index <F2> "y6<return><return>"
+set spoolfile = "~/mail/anidata"
+source ~/.mutt/accounts/anidata
+folder-hook personal/* source ~/.mutt/accounts/personal
+folder-hook anidata/*  source ~/.mutt/accounts/anidata
+set folder="~/mail/"                # Mailboxes in here
+set move=no
 
 # Cache Directories
 set header_cache = "~/.mutt/cache/headers"
@@ -56,7 +12,7 @@ set message_cachedir = "~/.mutt/cache/bodies"
 set certificate_file = "~/.mutt/certificates"
 
 # Sorting
-set sort_aux=reverse-date-received
+set sort_aux=last-date-received
 set sort=threads
 set sort_re
 set sort_alias=alias     # sort aliases in alpha order by alias name
@@ -74,100 +30,31 @@ push <show-version>
 set quit
 
 # Editor
-set editor = "vim -c 'set spell spelllang=de,en'" 
+set editor = "vi -c 'set spell spelllang=en'" 
 set edit_headers
 
 # GPG Settings
 #source ~/.gpg.rc
-source /usr/share/doc/mutt/samples/gpg.rc
+source /usr/share/doc/mutt-1.8.0/samples/gpg.rc
 set pgp_use_gpg_agent = yes
-set pgp_sign_as = 71F66667
+set pgp_sign_as = 9958BA83402474757D4CD3D33948286731284E46
 set pgp_timeout = 3600
 set crypt_autosign = yes
 set crypt_replyencrypt = yes
 
 # Sidebar
-#set sidebar_delim   = '  │'
-#set sidebar_visible = yes
-#set sidebar_width   = 24
-#color sidebar_new color221 color233
-#set status_chars  = " *%A"
-#set status_format = "───[ Folder: %f ]───[%r%m messages%?n? (%n new)?%?d? (%d to delete)?%?t? (%t tagged)? ]───%>─%?p?( %p postponed )?───"
-#mailboxes "+--Gmail----"\
-#          +INBOX\
-#          +Personal\
-#          +Receipts\
-#          +Travel\
-#          +Work
-#
-#bind index,pager <up> sidebar-prev
-#bind index,pager <down> sidebar-next
-#bind index,pager <right> sidebar-open
+set sidebar_visible = yes
+set sidebar_width   = 24
+mailboxes "+personal" \
+          "+anidata"
+
+bind index,pager <up> sidebar-prev
+bind index,pager <down> sidebar-next
+bind index,pager <right> sidebar-open
 bind pager k previous-line
 bind pager j next-line
 bind index <Return> display-message
 
-# Colors
-color index brightcolor6 color0 ~N
-color index brightcolor1 color0 ~O
-color index brightcolor3 color0 ~F
-color index color0 color2 ~T
-color index brightcolor1 color0 ~D
-mono index bold ~N
-mono index bold ~F
-mono index bold ~T
-mono index bold ~D
-
-color body brightgreen black "(http|ftp|news|telnet|finger)://[^ \"\t\r\n]*"
-color body brightgreen black "mailto:[-a-z_0-9.]+@[-a-z_0-9.]+"
-mono body bold "(http|ftp|news|telnet|finger)://[^ \"\t\r\n]*"
-mono body bold "mailto:[-a-z_0-9.]+@[-a-z_0-9.]+"
-
-color body brightgreen black "[-a-z_0-9.%$]+@[-a-z_0-9.]+\\.[-a-z][-a-z]+"
-
-ignore *
-unignore from to cc date subject Message-Id
-unhdr_order *
-hdr_order from: to: cc: Message-Id: date: subject:
-
-color header color1 color0 "^from:"
-color header color2 color0 "^to:"
-color header color2 color0 "^cc:"
-color header color3 color0 "^Message-Id:"
-color header color3 color0 "^date:"
-color header brightcolor9 color0 "^subject:"
-
-color quoted color1 color0
-color quoted1 color2 color0
-color quoted2 color3 color0
-color quoted3 color4 color0
-color quoted4 color5 color0
-color quoted5 color6 color0
-color quoted6 color7 color0
-color quoted7 color8 color0
-
-color signature brightcolor13 color0
-color indicator brightcolor9 color8
-color attachment color1 color0
-color error color5 color0
-color message color15 color0
-color search brightcolor15 color0
-color status brightcolor1 color0
-color tree brightcolor4 color0
-color normal color7 color8
-color tilde color2 color0
-color bold brightcolor3 color0
-color underline color5 color0
-color markers brightcolor4 color0
-mono underline underline
-mono indicator reverse
-
 # Keybindings
 bind editor <space> noop
 bind index,pager d delete-message
-macro index,pager A "<save-message>=[Gmail]/All Mail<enter><enter>" "Archive"
-macro index gi "<change-folder>=INBOX<enter>" "Go to inbox"
-macro index ga "<change-folder>=[Gmail]/All Mail<enter>" "Go to all mail"
-macro index gs "<change-folder>=[Gmail]/Sent<enter>" "Go to starred messages"
-macro index gd "<change-folder>=[Gmail]/Drafts<enter>" "Go to drafts"
-macro index gt "<change-folder>=[Gmail]/Trash<enter>" "Go to drafts"

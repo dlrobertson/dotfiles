@@ -30,7 +30,7 @@ font pango: Source Code Pro for Powerline 9
 floating_modifier $mod
 
 # start a terminal
-bindsym $mod+Return exec urxvt
+bindsym $mod+Return exec terminology
 bindsym $mod+Shift+Return exec st
 
 # kill focused window
@@ -184,8 +184,4 @@ bar {
     }
 }
 exec --no-startup-id xset r rate 300 44
-exec --no-startup-id xmodmap ~/.Xmodmap
-exec --no-startup-id xrdb -merge ~/.Xresources
-exec --no-startup-id feh --bg-scale ~/.wallpapers/vulkan.png
-exec --no-startup-id xsetroot -solid '#202020'
-exec --no-startup-id dunst
+exec --no-startup-id feh --bg-scale ~/.wallpapers/wallpaper.jpg

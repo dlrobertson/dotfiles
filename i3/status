@@ -17,7 +17,7 @@ ethernet br0 {
 }
 
 ethernet eno1 {
-    format_up = "eno1: (%speed)"
+    format_up = "eno1: (%speed) %ip"
     format_down = "eno1: down"
 }
 

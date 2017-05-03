@@ -1,26 +1,21 @@
+export XDG_RUNTIME_DIR=/tmp
 HISTFILE=~/.histfile
 HISTSIZE=1000
 SAVEHIST=1000
 # This will set the default prompt to the walters theme
 alias ls="ls --color=auto"
 alias ed="ed -p ': p:'"
-
-export SPARK_HOME=/home/drobertson/git/spark
+alias irssi='TERM=screen-256color irssi'
 
 export GPG_TTY=$(tty)
 
-export CPATH=${HOME}/.local/include
 export LD_LIBRARY_PATH=/usr/lib:/usr/lib64:${LD_LIBRARY_PATH}:/usr/local/lib
 export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig:${PKG_CONFIG_PATH}
 
-export GOPATH=$HOME/dev/go
-export LFS=/mnt/lfs
-export EDITOR=/usr/bin/vim
+export EDITOR=/usr/bin/nvim
 export CCACHE_COMPRESS=1
 export CCACHE_CPP2=1
 export TERMINAL=st
-export CC=gcc
-export CXX=g++
 export XDG_RUNTIME_DIR=/tmp
 
 GIT_PS1_SHOWDIRTYSTATE=1

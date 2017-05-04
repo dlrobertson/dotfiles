@@ -6,8 +6,8 @@ flush ruleset
 
 # Definitions
 define lo = lo
-define ext_if = br0
-define int_if = eno1
+define ext_if = eno2
+define int_if = br0
 define int_tcp_ports = {53, 22}
 define int_udp_ports = {53, 67, 68}
 

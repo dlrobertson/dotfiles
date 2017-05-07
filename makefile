@@ -9,11 +9,12 @@ all: $(DEST)/.bashrc nvim $(DEST)/.tmux.conf $(DEST)/.i3 $(DEST)/.gitconfig \
 
 $(DEST)/.bashrc: $(PWD)/bashrc
 	ln -svf $< $@
+	curl https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh > $(DEST)/.git-prompt.sh
 
 $(DEST)/.vimrc: $(PWD)/vimrc
 	ln -svf $< $@
 
-nvim: $(NVIM_DIR) $(NVIM_DIR)/init.vim $(NVIM_DIR)/bundle/Vundle.vim
+nvim: $(NVIM_DIR) $(NVIM_DIR)/bundle/Vundle.vim $(NVIM_DIR)/init.vim
 
 $(NVIM_DIR)/bundle/Vundle.vim:
 	git clone https://github.com/VundleVim/Vundle.vim.git $(NVIM_DIR)/bundle/Vundle.vim
@@ -58,4 +59,4 @@ $(DEST)/.Xresources: $(PWD)/Xresources
 clean:
 	rm -rf $(DEST)/.bashrc $(NVIM_DIR) $(DEST)/.tmux.conf $(DEST)/.i3 $(DEST)/.gitconfig \
 	$(DEST)/.gitignore $(DEST)/.gdbinit $(DEST)/.lldbinit $(DEST)/.lldb_utils.py \
-	$(DEST)/.xinitrc $(DEST)/.muttrc $(DEST)/.Xresources
+	$(DEST)/.xinitrc $(DEST)/.muttrc $(DEST)/.Xresources $(DEST)/.git-prompt.sh

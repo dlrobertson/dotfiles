@@ -3,7 +3,12 @@
 set nocompatible
 filetype off
 
-set rtp+=~/.config/nvim/bundle/Vundle.vim
+if has('nvim')
+    set rtp+=~/.config/nvim/bundle/Vundle.vim
+else
+    set rtp+=~/vim/bundle/Vundle.vim
+endif
+
 call vundle#begin()
 
 Plugin 'gmarik/Vundle.vim'
@@ -153,12 +158,6 @@ nnoremap <leader>Ev :e $MYVIMRC<cr>
 nnoremap <leader>sv :source $MYVIMRC<cr>
 nnoremap <leader>t :NERDTree<cr>
 nnoremap <leader>cd :cd %:h<cr>
-
-" Window movement
-nnoremap <leader>v <C-w>v<C-w>l
-nnoremap <leader>h <C-w>s<C-w>j
-nnoremap <leader>n :tabn<cr>
-nnoremap <leader>p :tabp<cr>
 nnoremap <leader>e :tabe<space>
 
 " Yankring
@@ -172,7 +171,7 @@ onoremap in( :<C-u>:normal! f(vi(<cr>
 onoremap il( :<C-u>:normal! F)vi(<cr>
 " }}}
 
-" NVim Settings {{{
+" Window Movement Settings {{{
 if has('nvim')
     set clipboard=unnamed
     tnoremap <C-h> <C-\><C-n><C-w>h
@@ -181,13 +180,14 @@ if has('nvim')
     tnoremap <C-l> <C-\><C-n><C-w>l
     tnoremap <C-n> <C-\><C-n>:tabn<cr>
     tnoremap <C-p> <C-\><C-n>:tabp<cr>
-    nnoremap <C-h> <C-w>h
-    nnoremap <C-j> <C-w>j
-    nnoremap <C-k> <C-w>k
-    nnoremap <C-l> <C-w>l
-    nnoremap <C-n> :tabn<cr>
-    nnoremap <C-p> :tabp<cr>
 endif
+nnoremap <C-h> <C-w>h
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-l> <C-w>l
+nnoremap <C-n> :tabn<cr>
+nnoremap <C-p> :tabp<cr>
+nnoremap <C-e> :tabe
 " }}}
 
 " Custom Functions {{{
@@ -215,4 +215,7 @@ endfunction
 
 nnoremap <leader>db :call CleanUnusedBuffers()<cr>
 nnoremap <leader>l :call CleanCRandLF()<cr>
+nnoremap <leader>x :%!xxd<cr>
+nnoremap <leader>r :%!xxd -r<cr>
+nnoremap <leader>n :%s/\n/\r/g<cr>
 " }}}

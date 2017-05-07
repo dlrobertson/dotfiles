@@ -78,10 +78,10 @@ table ip nat {
 
 table ip6 filter {
     chain input {
-        type filter hook input priority 0; policy accept;
+        type filter hook input priority 0; policy drop;
         ct state {established, related} counter accept comment "accept all connections related to connections made by us"
         ct state invalid counter drop comment "drop invalid packets"
-        ip6 daddr 0::0/0 icmpv6 type { nd-neighbor-solicit, nd-router-advert, nd-neighbor-advert } accept
+        iifname $int_if ip6 nexthdr ipv6-icmp icmpv6 type { nd-neighbor-advert, nd-neighbor-solicit, nd-router-advert, echo-request } accept
         iifname $int_if ip6 nexthdr icmpv6 limit rate 10/second accept
         ip6 nexthdr icmpv6 drop
         iifname $lo accept comment "accept loopback"

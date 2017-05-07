@@ -224,6 +224,11 @@ function! CallVRFC(rfcnum)
     execute ':vs|view ~/.local/share/rfcs/rfc' . a:rfcnum . '.txt'
 endfunction
 
+function! CallTRFC(rfcnum)
+    execute ':!rfc -q ' . a:rfcnum
+    execute ':tabe|view ~/.local/share/rfcs/rfc' . a:rfcnum . '.txt'
+endfunction
+
 nnoremap <leader>db :call CleanUnusedBuffers()<cr>
 nnoremap <leader>l :call CleanCRandLF()<cr>
 nnoremap <leader>x :%!xxd<cr>
@@ -231,4 +236,5 @@ nnoremap <leader>r :%!xxd -r<cr>
 nnoremap <leader>n :%s/\n/\r/g<cr>
 command! -nargs=1 Rfc call CallRFC(<q-args>)
 command! -nargs=1 Vrfc call CallVRFC(<q-args>)
+command! -nargs=1 Trfc call CallTRFC(<q-args>)
 " }}}

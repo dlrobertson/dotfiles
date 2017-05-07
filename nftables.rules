@@ -79,15 +79,12 @@ table ip nat {
 table ip6 filter {
     chain input {
         type filter hook input priority 0; policy drop;
-        ct state {established, related} counter accept comment "accept all connections related to connections made by us"
         ct state invalid counter drop comment "drop invalid packets"
-        iifname $int_if ip6 nexthdr ipv6-icmp icmpv6 type { nd-neighbor-advert, nd-neighbor-solicit, nd-router-advert, echo-request } accept
-        iifname $int_if ip6 nexthdr icmpv6 limit rate 10/second accept
-        ip6 nexthdr icmpv6 drop
+        ct state {new, established, related} counter accept comment "accept all connections related to connections made by us"
+        iifname $int_if icmpv6 type echo-request accept
+        icmpv6 type { nd-neighbor-advert, nd-neighbor-solicit, nd-router-advert} accept
         iifname $lo accept comment "accept loopback"
         iifname != $lo ip6 daddr ::1/128 counter drop comment "drop connections to loopback not coming from loopback"
-# I don't want an external port open
-# tcp dport 22 limit rate 15/minute counter accept comment "accept ssh"
         iifname $int_if tcp dport $int_tcp_ports counter accept
         iifname $int_if udp dport $int_udp_ports counter accept
         counter comment "count dropped packets"

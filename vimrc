@@ -33,6 +33,8 @@ Plugin 'airblade/vim-gitgutter.git'
 
 Plugin 'vimux'
 
+Plugin 'rfc-syntax'
+
 call vundle#end()
 
 " }}}
@@ -181,8 +183,7 @@ if has('nvim')
     tnoremap <C-n> <C-\><C-n>:tabn<cr>
     tnoremap <C-p> <C-\><C-n>:tabp<cr>
 endif
-nnoremap <C-h> <C-w>h
-nnoremap <C-j> <C-w>j
+nnoremap <C-h> <C-w>h nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
 nnoremap <C-n> :tabn<cr>
@@ -213,9 +214,21 @@ function! CleanLines()
     execute ':%s/\\n//g'
 endfunction
 
+function! CallRFC(rfcnum)
+    execute ':!rfc -q ' . a:rfcnum
+    execute ':view ~/.local/share/rfcs/rfc' . a:rfcnum . '.txt'
+endfunction
+
+function! CallVRFC(rfcnum)
+    execute ':!rfc -q ' . a:rfcnum
+    execute ':vs|view ~/.local/share/rfcs/rfc' . a:rfcnum . '.txt'
+endfunction
+
 nnoremap <leader>db :call CleanUnusedBuffers()<cr>
 nnoremap <leader>l :call CleanCRandLF()<cr>
 nnoremap <leader>x :%!xxd<cr>
 nnoremap <leader>r :%!xxd -r<cr>
 nnoremap <leader>n :%s/\n/\r/g<cr>
+command! -nargs=1 Rfc call CallRFC(<q-args>)
+command! -nargs=1 Vrfc call CallVRFC(<q-args>)
 " }}}

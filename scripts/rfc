@@ -1,0 +1,22 @@
+#!/bin/bash
+
+RFCDIR=$HOME/.local/share/rfcs
+
+if ! [ -f $RFCDIR/rfc$1.txt ]
+then
+    echo "Downloading RFC: $1"
+    curl https://tools.ietf.org/rfc/rfc$1.txt | sed 's/[\x0c\x0d]//g' > $RFCDIR/rfc$1.txt
+    if [ $? -ne 0 ]
+    then
+        echo "Could not download rfc$1!"
+        exit 1
+    fi
+fi
+
+if ! [ -f $RFCDIR/rfc$1.txt ]
+then
+    echo "Could not download rfc$1!"
+    exit 1
+else
+    vi -R $RFCDIR/rfc$1.txt
+fi

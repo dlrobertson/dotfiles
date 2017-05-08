@@ -37,8 +37,11 @@ $(DEST)/.%: $(PWD)/%
 $(DEST)/.gitignore:
 	printf "*~\n*.sw[op]\nbuild/\n" > $@
 
-clean:
-	rm -rf $(RCFILES) $(HELPERS) $(NVIM_DIR)
+$(DEST)/.%: $(PWD)/templates/%
+	envsubst < $< | cat > $@
 
 $(LOCAL_BIN)/%: $(PWD)/scripts/%
 	ln -svf $< $@
+
+clean:
+	rm -rf $(RCFILES) $(HELPERS) $(NVIM_DIR)

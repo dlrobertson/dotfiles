@@ -1,6 +1,7 @@
 [user]
     name = Dan Robertson
-    email = dan.robertson@anidata.org
+    email = $GIT_EMAIL
+    signingkey = $SIGNKEY
 [color]
     ui = true
     branch = auto

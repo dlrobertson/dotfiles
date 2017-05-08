@@ -183,7 +183,8 @@ if has('nvim')
     tnoremap <C-n> <C-\><C-n>:tabn<cr>
     tnoremap <C-p> <C-\><C-n>:tabp<cr>
 endif
-nnoremap <C-h> <C-w>h nnoremap <C-j> <C-w>j
+nnoremap <C-h> <C-w>h
+nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
 nnoremap <C-n> :tabn<cr>

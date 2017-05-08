@@ -3,6 +3,7 @@ LOCAL_BIN ?= $(DEST)/.local/bin
 XDG_CONFIG_HOME ?= $(DEST)/.config
 VIM_DIR ?= $(DEST)/.vim
 NVIM_DIR ?= $(XDG_CONFIG_HOME)/nvim
+NVIM ?= /usr/bin/nvim
 
 HELPERS := $(LOCAL_BIN)/rfc
 
@@ -19,7 +20,10 @@ $(DEST)/.bashrc: $(PWD)/bashrc
 $(DEST)/.vimrc: $(PWD)/vimrc
 	ln -svf $< $@
 
-nvim: $(NVIM_DIR) $(NVIM_DIR)/bundle/Vundle.vim $(NVIM_DIR)/init.vim
+nvim: $(NVIM) $(NVIM_DIR) $(NVIM_DIR)/bundle/Vundle.vim $(NVIM_DIR)/init.vim
+
+$(NVIM):
+	sudo emerge app-editors/neovim
 
 $(NVIM_DIR)/bundle/Vundle.vim:
 	git clone https://github.com/VundleVim/Vundle.vim.git $(NVIM_DIR)/bundle/Vundle.vim
@@ -29,7 +33,7 @@ $(NVIM_DIR):
 
 $(NVIM_DIR)/init.vim: $(PWD)/vimrc
 	ln -svf $< $@
-	nvim +PluginInstall +qall
+	$(NVIM) +PluginInstall +qall
 
 $(DEST)/.%: $(PWD)/%
 	ln -svf $< $@

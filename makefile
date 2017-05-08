@@ -37,8 +37,8 @@ $(DEST)/.%: $(PWD)/%
 $(DEST)/.gitignore:
 	printf "*~\n*.sw[op]\nbuild/\n" > $@
 
-$(DEST)/.%: $(PWD)/templates/%
-	envsubst < $< | cat > $@
+$(DEST)/.%: $(PWD)/templates/% $(DEST)/.bashrc $(DEST)/.bash_profile
+	bash --login -c envsubst < $< | cat > $@
 
 $(LOCAL_BIN)/%: $(PWD)/scripts/%
 	ln -svf $< $@

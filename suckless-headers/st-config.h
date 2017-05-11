@@ -5,8 +5,8 @@
  *
  * font: see http://freedesktop.org/software/fontconfig/fontconfig-user.html
  */
-static char font[] = "Source Code Pro for Powerline:pixelsize=12:style=medium,antialias=true";
-static int borderpx = 2;
+char font[] = "Source Code Pro for Powerline:pixelsize=12.6:style=medium,antialias=true";
+int borderpx = 2;
 
 /*
  * What program is execed by st depends of these precedence rules:
@@ -16,7 +16,7 @@ static int borderpx = 2;
  * 4: value of shell in /etc/passwd
  * 5: value of shell in config.h
  */
-static char shell[] = "/bin/zsh";
+static char shell[] = "/bin/bash";
 static char *utmp = NULL;
 static char stty_args[] = "stty raw pass8 nl -echo -iexten -cstopb 38400";
 
@@ -24,8 +24,8 @@ static char stty_args[] = "stty raw pass8 nl -echo -iexten -cstopb 38400";
 static char vtiden[] = "\033[?6c";
 
 /* Kerning / character bounding-box multipliers */
-static float cwscale = 1.0;
-static float chscale = 1.0;
+float cwscale = 1.0;
+float chscale = 1.0;
 
 /*
  * word delimiter string
@@ -35,26 +35,26 @@ static float chscale = 1.0;
 static char worddelimiters[] = " ";
 
 /* selection timeouts (in milliseconds) */
-static unsigned int doubleclicktimeout = 300;
-static unsigned int tripleclicktimeout = 600;
+unsigned int doubleclicktimeout = 300;
+unsigned int tripleclicktimeout = 600;
 
 /* alt screens */
-static int allowaltscreen = 1;
+int allowaltscreen = 1;
 
 /* frames per second st should at maximum draw to the screen */
-static unsigned int xfps = 120;
-static unsigned int actionfps = 30;
+unsigned int xfps = 120;
+unsigned int actionfps = 30;
 
 /*
  * blinking timeout (set to 0 to disable blinking) for the terminal blinking
  * attribute.
  */
-static unsigned int blinktimeout = 800;
+unsigned int blinktimeout = 800;
 
 /*
  * thickness of underline and bar cursors
  */
-static unsigned int cursorthickness = 2;
+unsigned int cursorthickness = 2;
 
 /*
  * bell volume. It must be a value between -100 and 100. Use 0 for disabling
@@ -63,12 +63,27 @@ static unsigned int cursorthickness = 2;
 static int bellvolume = 0;
 
 /* default TERM value */
-static char termname[] = "xterm-256color";
+char termname[] = "xterm-256color";
 
+/*
+ * spaces per tab
+ *
+ * When you are changing this value, don't forget to adapt the »it« value in
+ * the st.info and appropriately install the st.info in the environment where
+ * you use this st version.
+ *
+ *	it#$tabspaces,
+ *
+ * Secondly make sure your kernel is not expanding tabs. When running `stty
+ * -a` »tab0« should appear. You can tell the terminal to not expand tabs by
+ *  running following command:
+ *
+ *	stty tabs
+ */
 static unsigned int tabspaces = 8;
 
 /* Terminal colors (16 first used in escape sequence) */
-static const char* colorname[] = {
+const char* colorname[] = {
   /* 8 normal colors */
   "#073642",
   "#dc322f",
@@ -87,21 +102,25 @@ static const char* colorname[] = {
   "#6c71c4",
   "#93a1a1",
   "#fdf6e3",
+
   [255] = 0,
+
+  /* more colors */
   "#eeeeee",
-  "#0f1517",
-  "#cb4b16",
-  "#ff0000",
+  "#1b1a18",
+  //"#242321",
+  "#aeee00",
+  "#8cffba",
 };
 
 /*
  * Default colors (colorname index)
  * foreground, background, cursor, reverse cursor
  */
-static unsigned int defaultfg = 256;
-static unsigned int defaultbg = 257;
-static unsigned int defaultcs = 258;
-static unsigned int defaultrcs = 259;
+unsigned int defaultfg = 256;
+unsigned int defaultbg = 257;
+unsigned int defaultcs = 258;
+unsigned int defaultrcs = 259;
 
 /*
  * Default shape of cursor
@@ -110,28 +129,33 @@ static unsigned int defaultrcs = 259;
  * 6: Bar ("|")
  * 7: Snowman ("☃")
  */
-static unsigned int cursorshape = 6;
+unsigned int cursorshape = 4;
+
+/*
+ * Default columns and rows numbers
+ */
+
+unsigned int cols = 80;
+unsigned int rows = 24;
 
 /*
  * Default colour and shape of the mouse cursor
  */
-static unsigned int mouseshape = XC_xterm;
-static unsigned int mousefg = 7;
-static unsigned int mousebg = 0;
+unsigned int mouseshape = XC_xterm;
+unsigned int mousefg = 7;
+unsigned int mousebg = 0;
 
 /*
- * Colors used, when the specific fg == defaultfg. So in reverse mode this
- * will reverse too. Another logic would only make the simple feature too
- * complex.
+ * Color used to display font attributes when fontconfig selected a font which
+ * doesn't match the ones requested.
  */
-static unsigned int defaultitalic = 11;
-static unsigned int defaultunderline = 7;
+unsigned int defaultattr = 11;
 
 /*
  * Internal mouse shortcuts.
  * Beware that overloading Button1 will disable the selection.
  */
-static MouseShortcut mshortcuts[] = {
+MouseShortcut mshortcuts[] = {
 	/* button               mask            string */
 	{ Button4,              XK_ANY_MOD,     "\031" },
 	{ Button5,              XK_ANY_MOD,     "\005" },
@@ -139,21 +163,22 @@ static MouseShortcut mshortcuts[] = {
 
 /* Internal keyboard shortcuts. */
 #define MODKEY Mod1Mask
+#define TERMMOD (ControlMask|ShiftMask)
 
-static Shortcut shortcuts[] = {
+Shortcut shortcuts[] = {
 	/* mask                 keysym          function        argument */
 	{ XK_ANY_MOD,           XK_Break,       sendbreak,      {.i =  0} },
 	{ ControlMask,          XK_Print,       toggleprinter,  {.i =  0} },
 	{ ShiftMask,            XK_Print,       printscreen,    {.i =  0} },
 	{ XK_ANY_MOD,           XK_Print,       printsel,       {.i =  0} },
-	{ MODKEY|ShiftMask,     XK_Prior,       xzoom,          {.f = +1} },
-	{ MODKEY|ShiftMask,     XK_Next,        xzoom,          {.f = -1} },
-	{ MODKEY|ShiftMask,     XK_Home,        xzoomreset,     {.f =  0} },
-	{ ShiftMask,            XK_Insert,      selpaste,       {.i =  0} },
-	{ MODKEY|ShiftMask,     XK_Insert,      clippaste,      {.i =  0} },
-	{ MODKEY|ShiftMask,     XK_C,           clipcopy,       {.i =  0} },
-	{ MODKEY|ShiftMask,     XK_V,           clippaste,      {.i =  0} },
-	{ MODKEY,               XK_Num_Lock,    numlock,        {.i =  0} },
+	{ TERMMOD,              XK_Prior,       zoom,           {.f = +1} },
+	{ TERMMOD,              XK_Next,        zoom,           {.f = -1} },
+	{ TERMMOD,              XK_Home,        zoomreset,      {.f =  0} },
+	{ TERMMOD,              XK_C,           clipcopy,       {.i =  0} },
+	{ TERMMOD,              XK_V,           clippaste,      {.i =  0} },
+	{ TERMMOD,              XK_Y,           selpaste,       {.i =  0} },
+	{ TERMMOD,              XK_Num_Lock,    numlock,        {.i =  0} },
+	{ TERMMOD,              XK_I,           iso14755,       {.i =  0} },
 };
 
 /*
@@ -198,7 +223,7 @@ static uint ignoremod = Mod2Mask|XK_SWITCH_MOD;
  * Note that if you want to use ShiftMask with selmasks, set this to an other
  * modifier, set to 0 to not use it.
  */
-static uint forceselmod = ShiftMask;
+uint forceselmod = ShiftMask;
 
 /*
  * This is the huge key array which defines all compatibility to the Linux
@@ -263,23 +288,39 @@ static Key key[] = {
 	{ XK_KP_8,          XK_ANY_MOD,     "\033Ox",       +2,    0,    0},
 	{ XK_KP_9,          XK_ANY_MOD,     "\033Oy",       +2,    0,    0},
 	{ XK_Up,            ShiftMask,      "\033[1;2A",     0,    0,    0},
-	{ XK_Up,            ControlMask,    "\033[1;5A",     0,    0,    0},
 	{ XK_Up,            Mod1Mask,       "\033[1;3A",     0,    0,    0},
+	{ XK_Up,         ShiftMask|Mod1Mask,"\033[1;4A",     0,    0,    0},
+	{ XK_Up,            ControlMask,    "\033[1;5A",     0,    0,    0},
+	{ XK_Up,      ShiftMask|ControlMask,"\033[1;6A",     0,    0,    0},
+	{ XK_Up,       ControlMask|Mod1Mask,"\033[1;7A",     0,    0,    0},
+	{ XK_Up,ShiftMask|ControlMask|Mod1Mask,"\033[1;8A",  0,    0,    0},
 	{ XK_Up,            XK_ANY_MOD,     "\033[A",        0,   -1,    0},
 	{ XK_Up,            XK_ANY_MOD,     "\033OA",        0,   +1,    0},
 	{ XK_Down,          ShiftMask,      "\033[1;2B",     0,    0,    0},
-	{ XK_Down,          ControlMask,    "\033[1;5B",     0,    0,    0},
 	{ XK_Down,          Mod1Mask,       "\033[1;3B",     0,    0,    0},
+	{ XK_Down,       ShiftMask|Mod1Mask,"\033[1;4B",     0,    0,    0},
+	{ XK_Down,          ControlMask,    "\033[1;5B",     0,    0,    0},
+	{ XK_Down,    ShiftMask|ControlMask,"\033[1;6B",     0,    0,    0},
+	{ XK_Down,     ControlMask|Mod1Mask,"\033[1;7B",     0,    0,    0},
+	{ XK_Down,ShiftMask|ControlMask|Mod1Mask,"\033[1;8B",0,    0,    0},
 	{ XK_Down,          XK_ANY_MOD,     "\033[B",        0,   -1,    0},
 	{ XK_Down,          XK_ANY_MOD,     "\033OB",        0,   +1,    0},
 	{ XK_Left,          ShiftMask,      "\033[1;2D",     0,    0,    0},
-	{ XK_Left,          ControlMask,    "\033[1;5D",     0,    0,    0},
 	{ XK_Left,          Mod1Mask,       "\033[1;3D",     0,    0,    0},
+	{ XK_Left,       ShiftMask|Mod1Mask,"\033[1;4D",     0,    0,    0},
+	{ XK_Left,          ControlMask,    "\033[1;5D",     0,    0,    0},
+	{ XK_Left,    ShiftMask|ControlMask,"\033[1;6D",     0,    0,    0},
+	{ XK_Left,     ControlMask|Mod1Mask,"\033[1;7D",     0,    0,    0},
+	{ XK_Left,ShiftMask|ControlMask|Mod1Mask,"\033[1;8D",0,    0,    0},
 	{ XK_Left,          XK_ANY_MOD,     "\033[D",        0,   -1,    0},
 	{ XK_Left,          XK_ANY_MOD,     "\033OD",        0,   +1,    0},
 	{ XK_Right,         ShiftMask,      "\033[1;2C",     0,    0,    0},
-	{ XK_Right,         ControlMask,    "\033[1;5C",     0,    0,    0},
 	{ XK_Right,         Mod1Mask,       "\033[1;3C",     0,    0,    0},
+	{ XK_Right,      ShiftMask|Mod1Mask,"\033[1;4C",     0,    0,    0},
+	{ XK_Right,         ControlMask,    "\033[1;5C",     0,    0,    0},
+	{ XK_Right,   ShiftMask|ControlMask,"\033[1;6C",     0,    0,    0},
+	{ XK_Right,    ControlMask|Mod1Mask,"\033[1;7C",     0,    0,    0},
+	{ XK_Right,ShiftMask|ControlMask|Mod1Mask,"\033[1;8C",0,   0,    0},
 	{ XK_Right,         XK_ANY_MOD,     "\033[C",        0,   -1,    0},
 	{ XK_Right,         XK_ANY_MOD,     "\033OC",        0,   +1,    0},
 	{ XK_ISO_Left_Tab,  ShiftMask,      "\033[Z",        0,    0,    0},
@@ -300,6 +341,7 @@ static Key key[] = {
 	{ XK_Delete,        XK_ANY_MOD,     "\033[P",       -1,    0,    0},
 	{ XK_Delete,        XK_ANY_MOD,     "\033[3~",      +1,    0,    0},
 	{ XK_BackSpace,     XK_NO_MOD,      "\177",          0,    0,    0},
+	{ XK_BackSpace,     Mod1Mask,       "\033\177",      0,    0,    0},
 	{ XK_Home,          ShiftMask,      "\033[2J",       0,   -1,    0},
 	{ XK_Home,          ShiftMask,      "\033[1;2H",     0,   +1,    0},
 	{ XK_Home,          XK_ANY_MOD,     "\033[H",        0,   -1,    0},
@@ -410,7 +452,16 @@ static Key key[] = {
  * ButtonRelease and MotionNotify.
  * If no match is found, regular selection is used.
  */
-static uint selmasks[] = {
+uint selmasks[] = {
 	[SEL_RECTANGULAR] = Mod1Mask,
 };
+
+/*
+ * Printable characters in ASCII, used to estimate the advance width
+ * of single wide characters.
+ */
+char ascii_printable[] =
+	" !\"#$%&'()*+,-./0123456789:;<=>?"
+	"@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_"
+	"`abcdefghijklmnopqrstuvwxyz{|}~";
 

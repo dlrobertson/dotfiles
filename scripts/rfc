@@ -30,6 +30,14 @@ do
             QUIET=1
             shift
             ;;
+        -l | --list)
+            for rfcfile in $(ls $RFCDIR)
+            do
+                rfc=$(echo $rfcfile | sed 's/rfc\([[:digit:]]\+\).txt/\1/g')
+                curl https://tools.ietf.org/html/rfc$rfc -so - | grep -iPo '(?<=title>)(.*)(?=</title>)'
+            done
+            exit 0
+            ;;
         -h | --help)
             echo "$0 <rfc num>"
             exit 0
@@ -87,9 +95,9 @@ then
             exit 1
         elif [ $NUM_RFCS -eq 1 ]
         then
-            vi -c "setfiletype rfc" -R $RFC_TXTS
+            exec vi -c "setfiletype rfc" -R $RFC_TXTS
         else
-            vi -o 1 -c "setfiletype rfc" -R $RFC_TXTS
+            exec vi -o 1 -c "setfiletype rfc" -R $RFC_TXTS
         fi
     fi
 fi

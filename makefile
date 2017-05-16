@@ -4,14 +4,15 @@ XDG_CONFIG_HOME ?= $(DEST)/.config
 VIM_DIR ?= $(DEST)/.vim
 NVIM_DIR ?= $(XDG_CONFIG_HOME)/nvim
 NVIM ?= /usr/bin/nvim
+SWAY_DIR ?= $(XDG_CONFIG_HOME)/sway
 
 HELPERS := $(LOCAL_BIN)/rfc
 
 RCFILES := $(DEST)/.bashrc $(DEST)/.tmux.conf $(DEST)/.i3 $(DEST)/.gitconfig \
 	$(DEST)/.gitignore $(DEST)/.gdbinit $(DEST)/.lldbinit $(DEST)/.lldb_utils.py \
-	$(DEST)/.xinitrc $(DEST)/.muttrc $(DEST)/.Xresources
+	$(DEST)/.xinitrc $(DEST)/.muttrc $(DEST)/.Xresources $(SWAY_DIR)
 
-all: nvim $(RCFILES) $(HELPERS)
+all: nvim sway $(RCFILES) $(HELPERS)
 
 $(DEST)/.bashrc: $(PWD)/bashrc
 	ln -svf $< $@
@@ -34,6 +35,9 @@ $(NVIM_DIR):
 $(NVIM_DIR)/init.vim: $(PWD)/vimrc
 	ln -svf $< $@
 	$(NVIM) +PluginInstall +qall
+
+$(DEST)/.config/%: $(PWD)/%
+	ln -svf $< $@
 
 $(DEST)/.%: $(PWD)/%
 	ln -svf $< $@

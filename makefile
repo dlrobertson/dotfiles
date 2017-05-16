@@ -12,7 +12,7 @@ RCFILES := $(DEST)/.bashrc $(DEST)/.tmux.conf $(DEST)/.i3 $(DEST)/.gitconfig \
 	$(DEST)/.gitignore $(DEST)/.gdbinit $(DEST)/.lldbinit $(DEST)/.lldb_utils.py \
 	$(DEST)/.xinitrc $(DEST)/.muttrc $(DEST)/.Xresources $(SWAY_DIR)
 
-all: nvim sway $(RCFILES) $(HELPERS)
+all: nvim sway $(RCFILES) $(LOCAL_BIN) $(HELPERS)
 
 $(DEST)/.bashrc: $(PWD)/bashrc
 	ln -svf $< $@
@@ -48,8 +48,11 @@ $(DEST)/.gitignore:
 $(DEST)/.%: $(PWD)/templates/% $(DEST)/.bashrc $(DEST)/.bash_profile
 	bash --login -c envsubst < $< | cat > $@
 
-$(LOCAL_BIN)/%: $(PWD)/scripts/%
-	ln -svf $< $@
+$(LOCAL_BIN):
+	mkdir -p $(LOCAL_BIN)
+	mkdir -p $(DEST)/.local/share/rfcs
+
+$(HELPERS): $(LOCAL_BIN)
 
 clean:
 	rm -rf $(RCFILES) $(HELPERS) $(NVIM_DIR)

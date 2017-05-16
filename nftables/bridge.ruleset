@@ -1,0 +1,17 @@
+#!/sbin/nft -f
+
+# Bridge
+
+table bridge filter {
+    chain input {
+        type filter hook input priority 0; policy accept;
+    }
+
+    chain output {
+        type filter hook output priority 0; policy accept;
+    }
+
+    chain forward {
+        type filter hook forward priority 0; policy accept;
+    }
+}

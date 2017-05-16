@@ -1,31 +1,5 @@
 #!/sbin/nft -f
 
-# Flus releset
-
-flush ruleset
-
-# Definitions
-define lo = lo
-define ext_if = eno2
-define int_if = br0
-define int_tcp_ports = {53, 22}
-define int_udp_ports = {53, 67, 68}
-
-# Bridge
-table bridge filter {
-    chain input {
-        type filter hook input priority 0; policy accept;
-    }
-
-    chain output {
-        type filter hook output priority 0; policy accept;
-    }
-
-    chain forward {
-        type filter hook forward priority 0; policy accept;
-    }
-}
-
 # IPv4
 
 table ip filter {
@@ -41,8 +15,6 @@ table ip filter {
         iifname != $lo ip daddr 127.0.0.1/8 counter drop comment "drop connections to loopback not coming from loopback"
         iifname $int_if ip protocol icmp limit rate 10/second accept
         ip protocol icmp drop
-# I don't want an external port open
-# tcp dport 22 limit rate 15/minute counter accept comment "accept ssh"
         iifname $int_if tcp dport $int_tcp_ports counter accept
         iifname $int_if udp dport $int_udp_ports counter accept
         counter comment "count dropped packets"
@@ -57,20 +29,6 @@ table ip filter {
         type filter hook forward priority 0; policy drop;
         iifname $ext_if oifname $int_if ct state {established, related} counter accept comment "accept all connections related to connections made by us"
         iifname $int_if oifname $ext_if ct state {new, established, related} counter accept comment "accept all connections related to connections made by us"
-    }
-}
-
-# NAT
-
-table ip nat {
-    chain prerouting {
-        type nat hook prerouting priority 0;
-        policy accept;
-    }
-    chain postrouting {
-        type nat hook postrouting priority 100;
-        policy accept;
-        oifname $ext_if masquerade;
     }
 }
 
@@ -99,19 +57,5 @@ table ip6 filter {
         type filter hook forward priority 0; policy drop;
         iifname $ext_if oifname $int_if ct state {established, related} counter accept comment "accept all connections related to connections made by us"
         iifname $int_if oifname $ext_if ct state {new, established, related} counter accept comment "accept all connections related to connections made by us"
-    }
-}
-
-# IPv6
-
-table ip6 nat {
-    chain prerouting {
-        type nat hook prerouting priority 0;
-        policy accept;
-    }
-    chain postrouting {
-        type nat hook postrouting priority 100;
-        policy accept;
-        oifname $ext_if masquerade;
     }
 }

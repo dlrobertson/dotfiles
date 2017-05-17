@@ -51,6 +51,7 @@ bindsym $mod+$left focus left
 bindsym $mod+$down focus down
 bindsym $mod+$up focus up
 bindsym $mod+$right focus right
+bindsym $mod+a focus parent
 
 bindsym $mod+Shift+$left move left
 bindsym $mod+Shift+$down move down
@@ -92,8 +93,8 @@ mode "window" {
     bindsym Escape mode "default"
 }
 bindsym $mod+w mode "window"
-bindsym $mod+Shift+h split h
-bindsym $mod+Shift+v split v
+bindsym $mod+Shift+backslash split h
+bindsym $mod+minus split v
 
 mode "resize" {
     bindsym $left resize shrink width 10 px or 10 ppt
@@ -126,8 +127,8 @@ bindsym $mod+space focus mode_togle
 # TODO
 
 # Scratchpad
-bindsym $mod+Shift+minus move scratchpad
-bindsym $mod+minus scratchpad show
+bindsym $mod+Shift+t move scratchpad
+bindsym $mod+t scratchpad show
 
 # Border styles
 bindsym $mod+b border toggle

@@ -1,14 +1,17 @@
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <sys/mount.h>
+
+#include <fcntl.h>
 #include <unistd.h>
 #include <dirent.h>
 #include <errno.h>
-#include <fcntl.h>
+
 #include <stdbool.h>
 #include <stdio.h>
 #include <string.h>
+#include <strings.h>
 #include <stdlib.h>
-#include <sys/mount.h>
-#include <sys/types.h>
-#include <sys/stat.h>
 
 #define INIT_BIN "/sbin/init"
 #define NEWROOT "/mnt/root"
@@ -23,7 +26,7 @@ static char* const s_init_args[] = {INIT_BIN, NULL};
 #define TRY_MOUNT(src, dst, fs, flags, data) \
     if(mount(src, dst, fs, flags, data) != 0) { \
         fprintf(stderr, "ERROR: mount(%s, %s, %s, %d, %s) failed errno=%s\n", \
-                src ? src : "NULL", dst ? dst : "NULL", fs, flags, \
+                src ? src : "NULL", dst ? dst : "NULL", fs ? fs : "NULL", flags, \
                 (data) ? (const char*)data : "NULL", strerror(errno)); \
         execve(RESCUE_SHELL, s_busybox_args, envp); \
     }

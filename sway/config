@@ -118,7 +118,7 @@ bindsym $mod+Control+v layout splitv
 bindsym $mod+Control+h layout splith
 
 # Toggle floating
-bindsym $mod+Shift+space floating toggle
+bindsym $mod+Shift+f floating toggle
 
 # Swap between floating and tiling windows
 bindsym $mod+space focus mode_togle
@@ -175,4 +175,4 @@ gaps inner 5
 
 include /etc/sway/config.d/*
 output * bg ~/.wallpapers/bg1.jpg fill
-exec startup sway
+exec xset -display :0 r rate 300 44

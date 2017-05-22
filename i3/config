@@ -88,7 +88,7 @@ bindsym $mod+w layout tabbed
 bindsym $mod+e layout toggle split
 
 # toggle tiling / floating
-bindsym $mod+Shift+space floating toggle
+bindsym $mod+Shift+f floating toggle
 
 # change focus between tiling / floating windows
 bindsym $mod+space focus mode_toggle
@@ -183,5 +183,5 @@ bar {
         statusline $normfg
     }
 }
-exec --no-startup-id xset r rate 300 44
+exec --no-startup-id xset -display :0 r rate 300 44
 exec --no-startup-id feh --bg-scale ~/.wallpapers/wallpaper.jpg

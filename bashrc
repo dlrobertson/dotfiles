@@ -1,4 +1,7 @@
 export XDG_RUNTIME_DIR=/tmp
+export XKB_DEFAULT_LAYOUT=us,us
+export XKB_DEFAULT_VARIANT=,dvp
+export XKB_DEFAULT_OPTIONS=grp:lctrl_lwin_rctrl_menu,caps:escape
 HISTFILE=~/.histfile
 HISTSIZE=1000
 SAVEHIST=1000

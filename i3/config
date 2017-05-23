@@ -170,4 +170,5 @@ bar {
     }
 }
 exec --no-startup-id xset r rate 300 44
+exec --no-startup-id xmodmap ~/.xmodmap
 exec --no-startup-id feh --bg-scale ~/.wallpapers/wallpaper.jpg

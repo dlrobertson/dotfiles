@@ -23,8 +23,8 @@ URxvt.urgentOnBell:     true
 URxvt.imLocale:         en_US.UTF-8
 
 URxvt*depth: 32
-!URxvt*background: rgba:0019/0013/0007/0090
-URxvt*background: #0f1517
+URxvt*background: rgba:0019/0013/0007/aaaa
+!URxvt*background: #0f1517
 URxvt*foreground: #eeeeee
 !URxvt*foreground: #eee3b6
 *fading: 25

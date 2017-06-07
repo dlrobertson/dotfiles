@@ -1,15 +1,42 @@
 #!/bin/bash
-LEASES=$(cat /var/lib/misc/dnsmasq.leases)
-for name in `virsh list --name`
-do
-    MAC=$(virsh domiflist $name | awk '$3 == "br1" {print $5}')
+
+get_ip_of_vm () {
+    local name=$1
+    local MAC=$(virsh domiflist $name 2> /dev/null | awk '$3 == "br1" {print $5}')
     if [ -n $MAC ]
     then
-        echo "${name}"
-        echo ""
         cat /var/lib/misc/dnsmasq.leases | awk "\$2 == \"$MAC\" { print \"\tip:\t\" \$3 \"\n\tmac:\t\" \$2 \"\n\"}"
-    else
-        echo "${name}"
-        echo ""
     fi
-done
+}
+
+if hash virsh 2> /dev/null
+then
+    if [ -z $1 ]
+    then
+        for name in `virsh list --name`
+        do
+            echo "${name}"
+            echo ""
+            get_ip_of_vm $name
+        done
+    else
+        for name in $@
+        do
+            echo $name
+            echo ""
+            state=$(virsh domstate $name)
+            if [ $? -eq 0 ]
+            then
+                if [[ $state == "running" ]]
+                then
+                    get_ip_of_vm $name
+                else
+                    echo -e "\t$state"
+                fi
+            fi
+            echo ""
+        done
+    fi
+else
+    echo "virsh not found!"
+fi

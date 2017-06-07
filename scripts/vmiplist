@@ -24,7 +24,7 @@ then
         do
             echo $name
             echo ""
-            state=$(virsh domstate $name)
+            state=$(virsh domstate $name 2> /dev/null)
             if [ $? -eq 0 ]
             then
                 if [[ $state == "running" ]]
@@ -33,10 +33,14 @@ then
                 else
                     echo -e "\t$state"
                 fi
+            else
+                echo -e "\tERROR: domain not defined!"
             fi
             echo ""
         done
     fi
+    exit 0
 else
-    echo "virsh not found!"
+    echo "ERROR: virsh not found!"
+    exit 1
 fi

@@ -1,0 +1,15 @@
+#!/bin/bash
+LEASES=$(cat /var/lib/misc/dnsmasq.leases)
+for name in `virsh list --name`
+do
+    MAC=$(virsh domiflist $name | awk '$3 == "br1" {print $5}')
+    if [ -n $MAC ]
+    then
+        echo "${name}"
+        echo ""
+        cat /var/lib/misc/dnsmasq.leases | awk "\$2 == \"$MAC\" { print \"\tip:\t\" \$3 \"\n\tmac:\t\" \$2 \"\n\"}"
+    else
+        echo "${name}"
+        echo ""
+    fi
+done

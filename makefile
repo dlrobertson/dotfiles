@@ -6,7 +6,7 @@ NVIM_DIR ?= $(XDG_CONFIG_HOME)/nvim
 NVIM ?= /usr/bin/nvim
 SWAY_DIR ?= $(XDG_CONFIG_HOME)/sway
 
-HELPERS := $(LOCAL_BIN)/rfc
+HELPERS := $(addprefix $(LOCAL_BIN)/, rfc vmiplist)
 
 RCFILES := $(DEST)/.bashrc $(DEST)/.tmux.conf $(DEST)/.i3 $(DEST)/.gitconfig \
 	$(DEST)/.gitignore $(DEST)/.gdbinit $(DEST)/.lldbinit $(DEST)/.lldb_utils.py \
@@ -52,10 +52,8 @@ $(LOCAL_BIN):
 	mkdir -p $(LOCAL_BIN)
 	mkdir -p $(DEST)/.local/share/rfcs
 
-$(LOCAL_BIN)/%: $(DEST)/scripts/%
+$(LOCAL_BIN)/%: $(PWD)/scripts/%
 	ln -svf $< $@
-
-$(HELPERS): $(LOCAL_BIN)
 
 clean:
 	rm -rf $(RCFILES) $(HELPERS) $(NVIM_DIR)

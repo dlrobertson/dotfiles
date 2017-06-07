@@ -34,7 +34,9 @@ set $term /usr/local/bin/st
 font pango:DejaVu Sans Mono 9
 
 # Management
-#floating_modifier $mod normal
+floating_modifier $mod
+bindsym $Mod+Shift+space floating toggle
+bindsym $Mod+space floating toggle
 
 bindsym $mod+f fullscreen
 bindsym $mod+Shift+c kill
@@ -117,10 +119,7 @@ bindsym $mod+Control+v layout splitv
 bindsym $mod+Control+h layout splith
 
 # Toggle floating
-bindsym $mod+Shift+space floating toggle
-
-# Swap between floating and tiling windows
-bindsym $mod+space focus mode_togle
+#bindsym $mod+Shift+space floating toggle
 
 # Screengrab
 # TODO
@@ -136,7 +135,7 @@ bindsym $mod+b border toggle
 set $dmenu_font Inconsolata-9
 set $menu dmenu_run
 
-bindsym $mod+Return exec $term
+bindsym $mod+Return exec urxvt
 bindsym $mod+Shift+Return exec $term
 
 bindsym $mod+d exec $menu -fn "$dmenu_font" -nb "$normbg" -nf "$normfg"
@@ -162,13 +161,11 @@ bar {
     status_command i3status --config ~/.i3/status
     position top
     tray_output none
-    font pango:Inconsolata 10
+    font pango:Inconsolata 8
     separator_symbol ":|:"
     colors {
         background $normbg
         statusline $normfg
     }
 }
-exec --no-startup-id xset r rate 300 44
-exec --no-startup-id xmodmap ~/.xmodmap
-exec --no-startup-id feh --bg-scale ~/.wallpapers/wallpaper.jpg
+include ~/.i3/config.d/*

@@ -143,7 +143,7 @@ bindsym $mod+Shift+Return exec $term
 bindsym $mod+d exec $menu -fn "$dmenu_font" -nb "$normbg" -nf "$normfg"
 bindsym $mod+p exec $menu -fn "$dmenu_font" -nb "$normbg" -nf "$normfg"
 
-bindsym $mod+x exec swaylock -c "000000"
+bindsym $mod+x exec swaylock -c "000000cc"
 
 # Default colors
 client.focused          $normfg $normfg $normbg $normfg   $normfg
@@ -155,7 +155,11 @@ client.background       $normfg
 
 focus_follows_mouse no
 
+border normal
 default_border pixel 1
+
+for_window [class="Conky"] floating enable
+for_window [class="Conky"] sticky enable
 
 bar {
     position top
@@ -174,5 +178,4 @@ gaps outer 5
 gaps inner 5
 
 include /etc/sway/config.d/*
-output * bg ~/.wallpapers/bg1.jpg fill
-exec xset -display :0 r rate 300 44
+include ~/.config/sway/config.d/*

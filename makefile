@@ -52,6 +52,9 @@ $(LOCAL_BIN):
 	mkdir -p $(LOCAL_BIN)
 	mkdir -p $(DEST)/.local/share/rfcs
 
+$(LOCAL_BIN)/%: $(DEST)/scripts/%
+	ln -svf $< $@
+
 $(HELPERS): $(LOCAL_BIN)
 
 clean:

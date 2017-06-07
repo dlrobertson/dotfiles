@@ -4,30 +4,12 @@ general {
     interval = 5
 }
 
-order += "load"
-order += "disk /"
-order += "ethernet br0"
-order += "ethernet eno1"
-order += "cpu_temperature 0"
 order += "tztime UTC"
-
-ethernet br0 {
-    format_up = "br0: %ip"
-    format_down = "br0: down"
-}
-
-ethernet eno1 {
-    format_up = "eno1: (%speed) %ip"
-    format_down = "eno1: down"
-}
+order += "disk /"
 
 tztime UTC {
     format = "%Y-%m-%d %H:%M:%S %Z"
     timezone = "UTC"
-}
-
-load {
-    format = "%5min"
 }
 
 disk "/" {

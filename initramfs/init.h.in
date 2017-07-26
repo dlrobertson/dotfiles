@@ -1,0 +1,10 @@
+#ifndef INITRAMFS_INIT_H
+#define INITRAMFS_INIT_H
+
+#define INIT_BIN "/sbin/init"
+#define NEWROOT "/mnt/root"
+#define RESCUE_SHELL "/bin/busybox"
+#define ROOT_DEV "/dev/sda3"
+#define ROOT_MOUNT_OPTS "subvol=GEN2/ROOT"
+
+#endif

@@ -50,8 +50,11 @@ $(WDIR)/dev/console:
 $(DIRS):
 	mkdir -p $(DIRS)
 
-$(BUILD)/init:
-	$(CC) -std=c99 -static -o $(BUILD)/init ./init.c
+./init.h: ./init.h.in
+	cp $< $@
+
+$(BUILD)/init: ./init.c ./init.h
+	$(CC) -std=c99 -static -I./ -o $@ $<
 
 clean:
 	rm -rf $(BUILD)

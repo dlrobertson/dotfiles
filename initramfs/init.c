@@ -13,12 +13,7 @@
 #include <strings.h>
 #include <stdlib.h>
 
-#define INIT_BIN "/sbin/init"
-#define NEWROOT "/mnt/root"
-#define RESCUE_SHELL "/bin/busybox"
-#define ROOT_DEV "/dev/sda3"
-#define ROOT_MOUNT_OPTS "subvol=GEN2/ROOT"
-#define USR_MOUNT_OPTS "subvol=GEN2/usr"
+#include <init.h>
 
 static char* const s_busybox_args[] = {RESCUE_SHELL, "sh", NULL};
 static char* const s_init_args[] = {INIT_BIN, NULL};
@@ -69,16 +64,16 @@ void delete_all_of_device(const char* src, dev_t rootdev) {
                 if(not_dot(d->d_name)) {
                     newdir_size = strlen(d->d_name) + 2 + strlen(src);
                     newdir = malloc(newdir_size);
-	            bzero(newdir, newdir_size);
+                    bzero(newdir, newdir_size);
                     bIter = newdir;
                     aEnd = src + strlen(src);
                     for(aIter = src; aIter != aEnd; ++aIter, ++bIter) {
                         *bIter = *aIter;
                     }
-		    if(newdir[strlen(newdir) - 1] != '/') {
+                    if(newdir[strlen(newdir) - 1] != '/') {
                     	*(bIter) = '/';
-		    	++bIter;
-		    }
+                        ++bIter;
+                    }
                     aEnd = d->d_name + strlen(d->d_name);
                     for(aIter = d->d_name; aIter != aEnd; ++aIter, ++bIter) {
                         *bIter = *aIter;
@@ -111,9 +106,6 @@ int main(int argc, char** argv, char** envp) {
     // mount the root
     if(mount(ROOT_DEV, NEWROOT, "btrfs", 0, ROOT_MOUNT_OPTS) != 0) {
         TRY_MOUNT("/dev/sdb1", NEWROOT, "btrfs", 0, ROOT_MOUNT_OPTS);
-        TRY_MOUNT("/dev/sdb1", NEWROOT "/usr", "btrfs", 0, USR_MOUNT_OPTS);
-    } else {
-        TRY_MOUNT(ROOT_DEV, NEWROOT "/usr", "btrfs", 0, USR_MOUNT_OPTS);
     }
 
     // unmount mountpoints other than root

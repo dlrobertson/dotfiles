@@ -2,10 +2,13 @@
 
 get_ip_of_vm () {
     local name=$1
-    local MAC=$(virsh domiflist $name 2> /dev/null | awk '$3 ~ /br[0-9]/ {print $5}')
-    if [ -n $MAC ]
+    local MACS=$(virsh domiflist $name 2> /dev/null | awk '$3 ~ /br[0-9]/ {print $5}')
+    if [ -n "$MACS" ]
     then
-        cat /var/lib/misc/dnsmasq.leases | awk "\$2 == \"$MAC\" { print \"\tip:\t\" \$3 \"\n\tmac:\t\" \$2 \"\n\"}"
+        for mac in $MACS
+        do
+            cat /var/lib/misc/dnsmasq.leases | awk "\$2 == \"$mac\" { print \"\tip:\t\" \$3 \"\n\tmac:\t\" \$2 \"\n\"}"
+        done
     fi
 }
 

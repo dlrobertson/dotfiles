@@ -3,7 +3,7 @@ LOCAL_BIN ?= $(DEST)/.local/bin
 XDG_CONFIG_HOME ?= $(DEST)/.config
 VIM_DIR ?= $(DEST)/.vim
 NVIM_DIR ?= $(XDG_CONFIG_HOME)/nvim
-NVIM ?= /usr/bin/nvim
+NVIM ?= $(shell which nvim 2> /dev/null)
 SWAY_DIR ?= $(XDG_CONFIG_HOME)/sway
 
 HELPERS := $(addprefix $(LOCAL_BIN)/, rfc vmiplist)
@@ -21,10 +21,13 @@ $(DEST)/.bashrc: $(PWD)/bashrc
 $(DEST)/.vimrc: $(PWD)/vimrc
 	ln -svf $< $@
 
-nvim: $(NVIM) $(NVIM_DIR) $(NVIM_DIR)/bundle/Vundle.vim $(NVIM_DIR)/init.vim
+nvim: nvim_check $(NVIM_DIR) $(NVIM_DIR)/bundle/Vundle.vim $(NVIM_DIR)/init.vim
 
-$(NVIM):
-	sudo emerge app-editors/neovim
+nvim_check:
+ifeq ($(NVIM),)
+	@echo "Must install neovim before continuing"
+	@exit 1
+endif
 
 $(NVIM_DIR)/bundle/Vundle.vim:
 	git clone https://github.com/VundleVim/Vundle.vim.git $(NVIM_DIR)/bundle/Vundle.vim

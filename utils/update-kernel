@@ -1,0 +1,138 @@
+#!/bin/bash
+
+function fatal_error () {
+    if [ $# -gt 0 ]
+    then
+        echo "$0: $@"
+    else
+        echo "$0: Fatal Error"
+    fi
+    exit 1
+}
+
+function show_help () {
+    echo "Usage: $0"
+    echo "\
+Options: -h | --help                This
+     -p | --previous <version>  Previous kernel version to upgrade from
+     -n | --new <version>       Kernel version to upgrade to
+     -i | --interactive         Prompt the user before upgrading"
+}
+
+interactive=0
+
+if [ $# -gt 0 ]
+then
+    while ! [ -z "$1" ]
+    do
+        case "$1" in
+            -h|--help)
+                show_help
+                exit 0
+                ;;
+            -p|--previous)
+                previous=$2
+                shift 2
+                ;;
+            -n|--new)
+                future=$2
+                shift 2
+                ;;
+            -i|--interactive)
+                interactive=1
+                shift
+                ;;
+            *)
+                echo "Unknown option: $1"
+                show_help
+                shift
+                exit 1
+                ;;
+        esac
+    done
+fi
+
+if [[ "$(whoami)" != "root" ]]
+then
+    fatal_error "Must be run as root"
+fi
+
+if [ -z $future ]
+then
+    new_version=$(eselect kernel list | awk '$2 ~ /linux-*/ {print $2}'|
+                  sed -re 's/linux-([0-9]+\.[0-9]+\.[0-9]+)-gentoo/\1/g' |sort -rk2 | head -n 1)
+    if [ -z "$new_version" ]
+    then
+        fatal_error "Could not infer the upgrade target from eselect kernel list"
+    fi
+elif [ -d /usr/src/linux-$future-gentoo ]
+then
+    new_version=$future
+else
+    fatal_error "/usr/src/linux-$1-gentoo is not a valid directory"
+fi
+
+if [ -z $previous ]
+then
+    old_version=$(readlink /usr/src/linux | sed -re 's/linux-([0-9]+\.[0-9]+\.[0-9]+)-gentoo/\1/g')
+    if [[ "$new_version" == "$old_version" ]]
+    then
+        fatal_error "$new_version and $old_version are the same kernel source"
+    fi
+elif [ -n $previous ]
+then
+    if [ -d /usr/src/linux-$previous-gentoo ]
+    then
+        old_version=$previous
+    else
+        fatal_error "/usr/src/linux-$previous-gentoo is not a valid directory"
+    fi
+else
+    fatal_error
+fi
+
+target_idx=$(eselect kernel list | awk "\$2 == \"linux-$new_version-gentoo\" {print \$1}" |
+             sed -re 's/^\[([0-9]+)\]/\1/')
+if [ -z $target_idx ]
+then
+    fatal_error "Could not determine the target index via eselect"
+fi
+
+old=/usr/src/linux-$old_version-gentoo
+new=/usr/src/linux-$new_version-gentoo
+
+if [ $interactive -ne 0 ]
+then
+    echo "Upgrading from $old to $new"
+    echo "Is this correct? [Y/N]"
+    read yn
+else
+    yn="Y"
+fi
+
+if [[ $yn =~ [Yy] ]]
+then
+    if [ -f $old/.config ]
+    then
+        cp -v $old/.config $new/.config
+        cd $new
+        make oldconfig || fatal_error "make oldconfig failed"
+        make -j9 || fatal_error "Building the kernel failed"
+        make modules_install || fatal_error "Installing the modules failed"
+        if [ -f /boot/efi/boot/bootx64.efi ]
+        then
+            cp -v /boot/efi/boot/bootx64.efi /boot/backup-kernel || fatal_error "Installing the backup kernel failed"
+        fi
+        cp -v arch/x86_64/boot/bzImage /boot/efi/boot/bootx64.efi || fatal_error "Installing the kernel failed"
+        emerge nvidia-drivers || fatal_error "Re-installing nvidia-drivers failed"
+        eselect kernel set $target_idx || fatal_error "eselect update failed"
+    else
+        fatal_error "$old/.config was not found!"
+    fi
+elif [[ $yn =~ [Nn] ]]
+then
+    exit 0
+else
+    echo "Assuming you meant no."
+    exit 0
+fi

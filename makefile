@@ -21,7 +21,7 @@ $(DEST)/.bashrc: $(PWD)/bashrc
 $(DEST)/.vimrc: $(PWD)/vimrc
 	ln -svf $< $@
 
-nvim: nvim_check $(NVIM_DIR) $(NVIM_DIR)/bundle/Vundle.vim $(NVIM_DIR)/init.vim
+nvim: nvim_check $(NVIM_DIR) $(NVIM_DIR)/bundle/neobundle.vim $(NVIM_DIR)/init.vim
 
 nvim_check:
 ifeq ($(NVIM),)
@@ -29,15 +29,15 @@ ifeq ($(NVIM),)
 	@exit 1
 endif
 
-$(NVIM_DIR)/bundle/Vundle.vim:
-	git clone https://github.com/VundleVim/Vundle.vim.git $(NVIM_DIR)/bundle/Vundle.vim
+$(NVIM_DIR)/bundle/neobundle.vim:
+	git clone https://github.com/Shougo/neobundle.vim $@
 
 $(NVIM_DIR):
 	mkdir -p $(NVIM_DIR)
 
 $(NVIM_DIR)/init.vim: $(PWD)/vimrc
 	ln -svf $< $@
-	$(NVIM) +PluginInstall +qall
+	$(NVIM) +NeoBundleInstall +qall
 
 $(DEST)/.config/%: $(PWD)/%
 	ln -svf $< $@

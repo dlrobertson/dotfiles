@@ -4,38 +4,56 @@ set nocompatible
 filetype off
 
 if has('nvim')
-    set rtp+=~/.config/nvim/bundle/Vundle.vim
+    set rtp+=~/.config/nvim/bundle/neobundle.vim
+    call neobundle#begin(expand('~/.config/nvim/bundle/'))
 else
-    set rtp+=~/vim/bundle/Vundle.vim
+    set rtp+=~/vim/bundle/neobundle.vim
+    call neobundle#begin(expand('~/.vim/bundle/'))
 endif
 
-call vundle#begin()
+NeoBundleFetch 'Shougo/neobundle.vim'
 
-Plugin 'gmarik/Vundle.vim'
+NeoBundle 'morhetz/gruvbox'
 
-Plugin 'rust-lang/rust.vim.git'
+NeoBundle 'dracula/vim'
 
-Plugin 'scrooloose/nerdtree.git'
+NeoBundle 'gmarik/Vundle.vim'
 
-Plugin 'scrooloose/nerdcommenter.git'
+NeoBundle 'rust-lang/rust.vim.git'
 
-Plugin 'edkolev/tmuxline.vim.git'
+NeoBundle 'scrooloose/nerdtree.git'
 
-Plugin 'vim-airline/vim-airline.git'
+NeoBundle 'scrooloose/nerdcommenter.git'
 
-Plugin 'vim-airline/vim-airline-themes.git'
+NeoBundle 'edkolev/tmuxline.vim.git'
 
-Plugin 'tpope/vim-fugitive.git'
+NeoBundle 'vim-airline/vim-airline.git'
 
-Plugin 'tpope/vim-git.git'
+NeoBundle 'vim-airline/vim-airline-themes.git'
 
-Plugin 'airblade/vim-gitgutter.git'
+NeoBundle 'tpope/vim-fugitive.git'
 
-Plugin 'vimux'
+NeoBundle 'tpope/vim-git.git'
 
-Plugin 'rfc-syntax'
+NeoBundle 'airblade/vim-gitgutter.git'
 
-call vundle#end()
+NeoBundleFetch 'vimux'
+
+NeoBundleFetch 'rfc-syntax'
+
+NeoBundle 'jiangmiao/auto-pairs'
+
+NeoBundle 'majutsushi/tagbar'
+
+NeoBundle 'scrooloose/nerdtree'
+
+NeoBundle 'terryma/vim-multiple-cursors'
+
+NeoBundle 'Shougo/unite.vim'
+
+NeoBundle 'Shougo/vimproc', {'build' : {'linux' : 'make',},}
+
+call neobundle#end()
 
 " }}}
 
@@ -43,43 +61,69 @@ call vundle#end()
 
 filetype plugin indent on
 syntax on
-syntax enable
-set hidden
-
-set wildmenu
-set wildmode=list:longest
-set ttyfast
-
-set showcmd
-set hlsearch
-set smartcase
-set backspace=indent,eol,start
-set autoindent
-set nostartofline
+set nocursorline
+set title
+set noautoindent
 set ruler
-set rulerformat=%l\:%c
+set shortmess=aoOTI
+set showmode
+set splitbelow
+set splitright
 set laststatus=2
-set confirm
-set visualbell
-set t_vb=
-set cmdheight=1
-set number
-set notimeout ttimeout ttimeoutlen=200
-set pastetoggle=<F11>
+set nomodeline
+set showcmd
+set showmatch
 set tabstop=4
 set shiftwidth=4
-set softtabstop=4
 set expandtab
-set incsearch
-set scrolloff=2
-set modelines=0
-set encoding=utf-8
-set nu
+set cinoptions=(0,m1,:1
+set formatoptions=tcqr2
+set laststatus=2
+set nomodeline
+set clipboard=unnamed
+set softtabstop=4
+set showtabline=1
+set smartcase
+set sidescroll=5
+set scrolloff=4
+set hlsearch
+set ttyfast
+set history=10000
+set hidden
+set number
+set backspace=indent,eol,start
+set ttimeoutlen=100
 
-set exrc
-set ff=unix
-set secure
-map Q gq
+" }}}
+
+" Better completion
+set complete=.,w,b,u,t
+set completeopt=longest,menuone,preview
+
+" Leader
+let mapleader = ","
+let maplocalleader = "\\"
+
+" Cursorline ---- {{{
+" Only show cursorline in the current window and in normal mode.
+
+augroup cline
+    au!
+    au WinLeave,InsertEnter * set nocursorline
+    au WinEnter,InsertLeave * set cursorline
+augroup END
+
+" }}}
+
+" Line Return ---- {{{
+
+augroup line_return
+    au!
+    au BufReadPost *
+        \ if line("'\"") > 0 && line("'\"") <= line("$") |
+        \     execute 'normal! g`"zvzz' |
+        \ endif
+augroup END
 
 " }}}
 
@@ -112,11 +156,35 @@ let g:tmuxline_preset = {
       \'z'    : '#H'}
 " }}}
 
+" Color scheme ---- {{{
+autocmd ColorScheme * highlight ExtraWhitespace ctermbg=red
+set background=dark
+colorscheme default
+" Whitespace ---- {{{
+function CatchWhiteSpace()
+    match ExtraWhitespace /\s\+\%#\@<!$/
+endfunction
+
+augroup extra_whitespace
+    au!
+    au BufNewFile,BufRead,InsertLeave * call CatchWhiteSpace()
+augroup END
+" }}}
+" }}}
+
 " Vimscript file settings ---- {{{
 augroup filetype_vim
     autocmd!
     autocmd FileType vim setlocal foldmethod=marker
 augroup END
+" }}}
+
+" Folding ---- {{{
+set foldlevelstart=0
+
+" Space to toggle folds.
+nnoremap <Space> za
+vnoremap <Space> za
 " }}}
 
 " Leader mapping definitions ---- {{{
@@ -138,10 +206,6 @@ inoremap <up> <nop>
 inoremap <down> <nop>
 inoremap <left> <nop>
 inoremap <right> <nop>
-
-" Normal navigation (possible removal)
-nnoremap j gj
-nnoremap k gk
 
 " No help key
 inoremap <F1> <ESC>
@@ -190,6 +254,35 @@ nnoremap <C-l> <C-w>l
 nnoremap <C-n> :tabn<cr>
 nnoremap <C-p> :tabp<cr>
 nnoremap <C-e> :tabe
+" }}}
+
+" NERD Tree ---- {{{
+
+noremap  <F2> :NERDTreeToggle<cr>
+inoremap <F2> <esc>:NERDTreeToggle<cr>
+
+augroup ps_nerdtree
+     au!
+
+     au Filetype nerdtree setlocal nolist
+augroup END
+
+let NERDTreeHighlightCursorline = 1
+let NERDTreeIgnore = ['.vim$', '\~$', '.*\.pyc$', 'pip-log\.txt$', 'whoosh_index',
+                                 \ 'xapian_index', '.*.pid', 'monitor.py', '.*-fixtures-.*.json',
+                                  \ '.*\.o$', 'db.db', 'tags.bak', '.*\.pdf$', '.*\.mid$',
+                                  \ '.*\.midi$']
+
+let NERDTreeMinimalUI = 1
+let NERDTreeDirArrows = 1
+let NERDChristmasTree = 1
+let NERDTreeChDirMode = 2
+let NERDTreeMapJumpFirstChild = 'gK'
+
+" }}}
+
+" Tagbar ---- {{{
+nnoremap <F9> :TagbarToggle<CR>
 " }}}
 
 " Custom Functions {{{

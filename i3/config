@@ -144,16 +144,21 @@ bindsym $mod+p exec $menu -fn "$dmenu_font" -nb "$normbg" -nf "$normfg"
 bindsym $mod+x exec i3lock -c "000000"
 
 # Default colors
-client.focused          $normfg $normfg $normbg $normfg   $normfg
-client.focused_inactive $normbg $normbg $normfg $normbg   $normbg
-client.unfocused        $normbg $normbg $normfg $normbg   $normbg
-client.urgent           $normfg $normfg $normbg $normfg   $normfg
-client.placeholder      $normbg $normbg $normfg $normbg   $normbg
-client.background       $normfg
+set $focused          #1b1b1b
+set $focused-inactive #222222
+set $text             #ffffff
+set $text-inactive    #888888
+set $focused-urgent   #900000
+set $indicador        #00ff00
+set $separator        #666666
+set $bordor           #5b6365
+
+client.focused          $bordor $focused-inactive  $text           $bordor           $bordor
+client.unfocused        $bordor $focused-inactive  $text-inactive  $focused-inactive $bordor
+client.focused_inactive $bordor $focused-inactive  $text-inactive  $focused-inactive $bordor
+client.urgent           $bordor $focused-inactive  $focused-urgent $focused-inactive $bordor
 
 focus_follows_mouse no
-
-new_window pixel 1
 
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
@@ -164,8 +169,11 @@ bar {
     font pango:Inconsolata 8
     separator_symbol ":|:"
     colors {
-        background $normbg
-        statusline $normfg
+        background $focused-inactive
+        separator  $separator
+        focused_workspace  $bordor           $focused          $text
+        inactive_workspace $focused-inactive $focused-inactive $text-inactive
+        urgent_workspace   $focused-inactive $focused-urgent   $text
     }
 }
 exec --no-startup-id compton -b

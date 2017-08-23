@@ -17,8 +17,6 @@ NeoBundle 'morhetz/gruvbox'
 
 NeoBundle 'dracula/vim'
 
-NeoBundle 'gmarik/Vundle.vim'
-
 NeoBundle 'rust-lang/rust.vim.git'
 
 NeoBundle 'scrooloose/nerdtree.git'
@@ -45,13 +43,17 @@ NeoBundle 'jiangmiao/auto-pairs'
 
 NeoBundle 'majutsushi/tagbar'
 
-NeoBundle 'scrooloose/nerdtree'
-
-NeoBundle 'terryma/vim-multiple-cursors'
-
 NeoBundle 'Shougo/unite.vim'
 
-NeoBundle 'Shougo/vimproc', {'build' : {'linux' : 'make',},}
+NeoBundle 'Shougo/vimproc.vim', {
+            \ 'build' : {
+            \     'windows' : 'tools\\update-dll-mingw',
+            \     'cygwin' : 'make -f make_cygwin.mak',
+            \     'mac' : 'make',
+            \     'linux' : 'make',
+            \     'unix' : 'gmake',
+            \ },
+        \ }
 
 call neobundle#end()
 

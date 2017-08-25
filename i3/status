@@ -4,8 +4,13 @@ general {
     interval = 5
 }
 
+order += "battery 0"
 order += "tztime UTC"
 order += "disk /"
+
+battery 0 {
+    format = "%status %remaining (%emptytime %consumption)"
+}
 
 tztime UTC {
     format = "%Y-%m-%d %H:%M:%S %Z"

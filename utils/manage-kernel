@@ -89,7 +89,7 @@ then
     if [ -z $future ]
     then
         new_version=$(eselect kernel list | awk '$2 ~ /linux-*/ {print $2}'|
-                      sed -re 's/linux-([0-9]+\.[0-9]+\.[0-9]+)-gentoo/\1/g' |sort -rk2 | head -n 1)
+                      sed -re 's/linux-([0-9]+\.[0-9]+\.[0-9]+)-gentoo/\1/g' | tail -n 1)
         if [ -z "$new_version" ]
         then
             fatal_error "Could not infer the upgrade target from eselect kernel list"
@@ -148,7 +148,6 @@ then
             make oldconfig || fatal_error "make oldconfig failed"
             build_kernel
             eselect kernel set $target_idx || fatal_error "eselect update failed"
-            emerge nvidia-drivers || fatal_error "Re-installing nvidia-drivers failed"
             for i in /usr/src/modules/*
             do
 		cd $i

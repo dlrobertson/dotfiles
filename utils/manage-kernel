@@ -148,13 +148,16 @@ then
             make oldconfig || fatal_error "make oldconfig failed"
             build_kernel
             eselect kernel set $target_idx || fatal_error "eselect update failed"
-            for i in /usr/src/modules/*
-            do
-		cd $i
-                KVER=$new_version-gentoo make clean
-                KVER=$new_version-gentoo make -j9
-                KVER=$new_version-gentoo make install
-            done
+            if [ -d /usr/src/modules ]
+            then
+                for i in /usr/src/modules/*
+                do
+                    cd $i
+                    KVER=$new_version-gentoo make clean
+                    KVER=$new_version-gentoo make -j9
+                    KVER=$new_version-gentoo make install
+                done
+            fi
         else
             fatal_error "$old/.config was not found!"
         fi

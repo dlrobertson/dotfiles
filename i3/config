@@ -12,8 +12,6 @@ set $right l
 set $normbg #130d07
 set $normfg #ecd67d
 
-set $st /usr/local/bin/st
-
 ## Workspaces
 
 set $ws0 0
@@ -29,7 +27,7 @@ set $ws9 9:vms
 
 # Defaults
 set $mod Mod1
-set $term /usr/local/bin/st
+set $term st
 
 font pango:DejaVu Sans Mono 9
 

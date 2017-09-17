@@ -1,46 +1,58 @@
 DEST ?= $(HOME)
 LOCAL_BIN ?= $(DEST)/.local/bin
-XDG_CONFIG_HOME ?= $(DEST)/.config
-VIM_DIR ?= $(DEST)/.vim
-NVIM_DIR ?= $(XDG_CONFIG_HOME)/nvim
-NVIM ?= $(shell which nvim 2> /dev/null)
-SWAY_DIR ?= $(XDG_CONFIG_HOME)/sway
+XDG_CONFIG_HOME := $(DEST)/.config
+
+VIM ?= nvim
+ifeq ($(VIM), nvim)
+	VIMDIR := $(XDG_CONFIG_HOME)/nvim
+	NEOBUNDLE := $(VIMDIR)/bundle/neobundle.vim
+	VIMRC := $(VIMDIR)/init.vim
+else ifeq ($(VIM), vim)
+	VIMDIR := $(DEST)/.vim
+	NEOBUNDLE := $(VIMDIR)/bundle/neobundle.vim
+	VIMRC := $(DEST)/.vimrc
+else
+	echo "Do not know how to install for $(VIM)"
+	exit 1
+endif
+
+SWAYDIR ?= $(XDG_CONFIG_HOME)/sway
 
 HELPERS := $(addprefix $(LOCAL_BIN)/, rfc vmiplist)
 
-RCFILES := $(DEST)/.bashrc $(DEST)/.tmux.conf $(DEST)/.i3 $(DEST)/.gitconfig \
-	$(DEST)/.gitignore $(DEST)/.gdbinit $(DEST)/.lldbinit $(DEST)/.lldb_utils.py \
-	$(DEST)/.xinitrc $(DEST)/.muttrc $(DEST)/.Xresources $(SWAY_DIR) \
-	$(DEST)/.radare2rc
+GENERICRCS := \
+	.bashrc .tmux.conf .i3 .gitconfig .gitignore .gdbinit .lldbinit .lldb_utils.py \
+	.xinitrc .muttrc .Xresources .radare2rc .gnupg/gpg-agent.conf
 
-all: nvim sway $(RCFILES) $(LOCAL_BIN) $(HELPERS)
+DOTFILES := $(VIMRC) $(SWAYDIR) $(addprefix $(DEST)/, $(GENERICRCS))
 
-$(DEST)/.bashrc: $(PWD)/bashrc
-	ln -svf $< $@
+all: dirs $(DOTFILES) $(HELPERS)
+
+dirs: $(DEST) $(XDG_CONFIG_HOME) $(VIMDIR) $(GPGDIR) $(NEOBUNDLE) $(LOCAL_BIN)
+
+$(DEST):
+	mkdir -p $(DEST)
+
+$(XDG_CONFIG_HOME):
+	mkdir -p $(XDG_CONFIG_HOME)
+
+$(VIMDIR):
+	mkdir -p $(VIMDIR)
+
+$(GPGDIR):
+	mkdir -p $(GPGDIR)
+
+$(DEST)/.git-prompt.sh:
 	curl https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh > $(DEST)/.git-prompt.sh
 
-$(DEST)/.vimrc: $(PWD)/vimrc
-	ln -svf $< $@
-
-nvim: nvim_check $(NVIM_DIR) $(NVIM_DIR)/bundle/neobundle.vim $(NVIM_DIR)/init.vim
-
-nvim_check:
-ifeq ($(NVIM),)
-	@echo "Must install neovim before continuing"
-	@exit 1
-endif
-
-$(NVIM_DIR)/bundle/neobundle.vim:
+$(NEOBUNDLE):
 	git clone https://github.com/Shougo/neobundle.vim $@
 
-$(NVIM_DIR):
-	mkdir -p $(NVIM_DIR)
-
-$(NVIM_DIR)/init.vim: $(PWD)/vimrc
+$(VIMRC): $(PWD)/myvimrc
 	ln -svf $< $@
-	$(NVIM) +NeoBundleInstall +qall
+	$(VIM) +NeoBundleInstall +qall
 
-$(DEST)/.config/%: $(PWD)/%
+$(XDG_CONFIG_HOME)/%: $(PWD)/%
 	ln -svf $< $@
 
 $(DEST)/.%: $(PWD)/%
@@ -49,7 +61,10 @@ $(DEST)/.%: $(PWD)/%
 $(DEST)/.gitignore:
 	printf "*~\n*.sw[op]\nbuild/\n" > $@
 
-$(DEST)/.%: $(PWD)/templates/% $(DEST)/.bashrc $(DEST)/.bash_profile
+$(DEST)/.gnupg/gpg-agent.conf: $(GPGDIR)
+	echo "pinentry-program /usr/bin/pinentry-tty" > $@
+
+$(DEST)/.%: $(PWD)/templates/% $(DEST)/.bash_profile
 	bash --login -c envsubst < $< | cat > $@
 
 $(LOCAL_BIN):
@@ -60,4 +75,4 @@ $(LOCAL_BIN)/%: $(PWD)/scripts/%
 	ln -svf $< $@
 
 clean:
-	rm -rf $(RCFILES) $(HELPERS) $(NVIM_DIR)
+	rm -rf $(DOTFILES) $(HELPERS) $(VIMDIR)

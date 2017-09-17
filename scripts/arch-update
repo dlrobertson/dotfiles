@@ -1,0 +1,99 @@
+#!/bin/bash
+
+function main () {
+    if getent group wheel | grep &> /dev/null "$USER"
+    then
+        # If the user is in the group wheel, we assume they
+        # are in the sudoers file and can run sudo. Let's
+        # go ahead and update the packages tracked by pacman
+        # too.
+        pacman_update
+    fi
+
+    # Update the packages not tracked by pacman too.
+    update_local $HOME/sys/git build_from_source
+    update_local $HOME/sys/aur build_from_aur
+}
+
+function update_local () {
+    # Generic function that takes a directory containing
+    # git repos, and a function used to build the repo
+    # if the repo has been updated
+    local repo_dir=$1
+    local build_fn=$2
+    if [ -d $repo_dir ]
+    then
+        for d in $repo_dir/*
+        do
+            echo "Checking $(basename $d) for updates..."
+            cd $d
+            updated=$(update_repo $d)
+            if [ $updated -ne 0 ]
+            then
+                echo "Updating: $(basename $d)"
+                eval $build_fn $d
+            fi
+        done
+    fi
+}
+
+function update_repo () {
+    # NB: Use merge-base so we can tack on local haxx
+    # and the git pull -r *usually* :'( will not cause
+    # problems
+    local d=$1
+    git fetch -q origin
+    LOCAL=$(git merge-base @ origin)
+    ORIGIN=$(git rev-parse origin)
+    if [ $LOCAL != $ORIGIN ]
+    then
+        git pull -q -r origin master
+        echo "1"
+    else
+        echo "0"
+    fi
+}
+
+function build_from_source () {
+    # NB: This assumes you have already run configure the first
+    # time you installed the repo from source. This merely keeps
+    # the installed binaries up to date.
+    local d=$1
+    if [ -f Makefile -o -f makefile ]
+    then
+        make clean install
+        if [ $? -ne 0 ]
+        then
+            echo "Failed to install $(basename $d)"
+        fi
+    elif [ -f install.sh ]
+    then
+        # Some very strange repos out in the wild do not use
+        # a normal build system. Instead they use an ./install.sh.
+        ./install.sh
+    fi
+}
+
+function build_from_aur () {
+    # Use makepkg to build the repo. This is used for aur
+    # repository clones.
+    local d=$1
+    makepkg -icf --noconfirm
+    if [ $? -eq 0 ]
+    then
+        echo "Failed to install $(basename $d)"
+    fi
+}
+
+function pacman_update () {
+    # Update the system packages with pacman.
+    # NB: Requires the user to be in the sudoers file.
+    sudo pacman -Syu --noconfirm
+    if [ $? -ne 0 ]
+    then
+        echo "Pacman update failed!"
+        exit 1
+    fi
+}
+
+main $@

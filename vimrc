@@ -129,10 +129,15 @@ augroup END
 
 " }}}
 
-" Scala Build Tool Filetype Settings ---- {{{
+" Random Filetype Settings ---- {{{
 augroup filetype_sbt
     autocmd!
     autocmd BufNewFile,BufRead *.sbt set filetype=scala
+augroup END
+
+augroup filetype_nse
+    autocmd!
+    autocmd BufNewFile,BufRead *.nse set filetype=lua
 augroup END
 " }}}
 

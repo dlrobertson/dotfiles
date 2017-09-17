@@ -1,0 +1,15 @@
+# Debugging
+e dbg.bep = entry
+e dbg.follow = false
+
+# Assembly
+e asm.syntax = att
+e asm.flags = true
+e asm.lines.call = true
+e asm.linesout = true
+
+# Color
+e scr.color = true
+eco xvilka
+ec prompt red
+e scr.utf8 = true

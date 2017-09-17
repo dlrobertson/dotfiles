@@ -10,7 +10,8 @@ HELPERS := $(addprefix $(LOCAL_BIN)/, rfc vmiplist)
 
 RCFILES := $(DEST)/.bashrc $(DEST)/.tmux.conf $(DEST)/.i3 $(DEST)/.gitconfig \
 	$(DEST)/.gitignore $(DEST)/.gdbinit $(DEST)/.lldbinit $(DEST)/.lldb_utils.py \
-	$(DEST)/.xinitrc $(DEST)/.muttrc $(DEST)/.Xresources $(SWAY_DIR)
+	$(DEST)/.xinitrc $(DEST)/.muttrc $(DEST)/.Xresources $(SWAY_DIR) \
+	$(DEST)/.radare2rc
 
 all: nvim sway $(RCFILES) $(LOCAL_BIN) $(HELPERS)
 

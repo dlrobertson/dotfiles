@@ -94,6 +94,7 @@ int main(int argc, char** argv, char** envp) {
     // needed vars
     struct stat st;
     dev_t rootdev;
+    int local_err;
 
     // mount necessary fs
     TRY_MOUNT("proc", "/proc", "proc", 0, NULL);
@@ -105,7 +106,21 @@ int main(int argc, char** argv, char** envp) {
 
     // mount the root
     if(mount(ROOT_DEV, NEWROOT, "btrfs", 0, ROOT_MOUNT_OPTS) != 0) {
-        TRY_MOUNT("/dev/sdb1", NEWROOT, "btrfs", 0, ROOT_MOUNT_OPTS);
+        local_err = errno;
+#ifdef BTRFS_RAID1
+        TRY_MOUNT(RAID1_MIRROR, NEWROOT, "btrfs", 0, ROOT_MOUNT_OPTS);
+#ifdef MOUNT_USR
+        TRY_MOUNT(RAID1_MIRROR, USR_NEWROOT, "btrfs", 0, USR_MOUNT_OPTS);
+#endif // MOUNT_USR
+#else
+        fprintf(stderr, "ERROR: mount(%s, %s, %s, %d, %s) failed errno=%s\n",
+                ROOT_DEV, NEWROOT, "btrfs", 0, ROOT_MOUNT_OPTS, strerror(local_err));
+        execve(RESCUE_SHELL, s_busybox_args, envp);
+#endif // BTRFS_RAID1
+    } else {
+#ifdef MOUNT_USR
+        TRY_MOUNT(ROOT_DEV, USR_NEWROOT, "btrfs", 0, USR_MOUNT_OPTS);
+#endif // MOUNT_USR
     }
 
     // unmount mountpoints other than root

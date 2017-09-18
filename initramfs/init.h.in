@@ -7,4 +7,16 @@
 #define ROOT_DEV "/dev/sda3"
 #define ROOT_MOUNT_OPTS "subvol=GEN2/ROOT"
 
+// NB: this is only used for btrfs raid1
+// #define BTRFS_RAID1 1
+#ifdef BTRFS_RAID1
+#define RAID1_MIRROR "/dev/sdb"
+#endif // BTRFS_RAID1
+
+// #define MOUNT_USR 1
+#ifdef MOUNT_USR
+#define USR_NEWROOT "/mnt/root/usr"
+#define USR_MOUNT_OPTS "subvol=GEN2/usr"
+#endif // MOUNT_USR
+
 #endif

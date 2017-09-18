@@ -10,6 +10,11 @@ e asm.linesout = true
 
 # Color
 e scr.color = true
+e scr.rgbcolor = true
+e scr.utf8 = true
+e scr.zoneflags = true
 eco xvilka
 ec prompt red
-e scr.utf8 = true
+
+# Zoom
+e zoom.byte = f

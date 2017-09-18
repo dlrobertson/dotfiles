@@ -103,7 +103,7 @@ then
 
     if [ -z $previous ]
     then
-        old_version=$(readlink /usr/src/linux | sed -re 's/linux-([0-9]+\.[0-9]+\.[0-9]+)-gentoo/\1/g')
+        old_version=$(readlink /usr/src/linux | sed -re 's/\/usr\/src\/linux-([0-9]+\.[0-9]+\.[0-9]+)-gentoo\//\1/g')
         if [[ "$new_version" == "$old_version" ]]
         then
             fatal_error "$new_version and $old_version are the same kernel source"

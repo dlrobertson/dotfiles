@@ -12,7 +12,6 @@ alias irssi='TERM=screen-256color irssi'
 
 export GPG_TTY=$(tty)
 
-export LD_LIBRARY_PATH=/usr/lib:/usr/lib64:${LD_LIBRARY_PATH}:/usr/local/lib
 export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig:${PKG_CONFIG_PATH}
 
 export EDITOR=/usr/bin/nvim

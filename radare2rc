@@ -17,3 +17,6 @@ ec prompt red
 
 # Zoom
 e zoom.byte = f
+
+# Other config
+cfg.editor = vi

@@ -103,7 +103,7 @@ then
 
     if [ -z $previous ]
     then
-        old_version=$(readlink /usr/src/linux | sed -re 's/\/usr\/src\/linux-([0-9]+\.[0-9]+\.[0-9]+)-gentoo\//\1/g')
+        old=/usr/src/$(readlink /usr/src/linux)
         if [[ "$new_version" == "$old_version" ]]
         then
             fatal_error "$new_version and $old_version are the same kernel source"
@@ -112,7 +112,7 @@ then
     then
         if [ -d /usr/src/linux-$previous-gentoo ]
         then
-            old_version=$previous
+            old=/usr/src/linux-$previous-gentoo
         else
             fatal_error "/usr/src/linux-$previous-gentoo is not a valid directory"
         fi
@@ -127,7 +127,6 @@ then
         fatal_error "Could not determine the target index via eselect"
     fi
 
-    old=/usr/src/linux-$old_version-gentoo
     new=/usr/src/linux-$new_version-gentoo
 
     if [ $interactive -ne 0 ]

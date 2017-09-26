@@ -22,7 +22,7 @@ HELPERS := $(addprefix $(LOCAL_BIN)/, rfc vmiplist)
 
 GENERICRCS := \
 	.bashrc .tmux.conf .i3 .gitconfig .gitignore .gdbinit .lldbinit .lldb_utils.py \
-	.xinitrc .muttrc .Xresources .radare2rc .gnupg/gpg-agent.conf
+	.xinitrc .muttrc .Xresources .radare2rc .gnupg/gpg-agent.conf .git-prompt.sh
 
 DOTFILES := $(VIMRC) $(SWAYDIR) $(addprefix $(DEST)/, $(GENERICRCS))
 
@@ -61,7 +61,7 @@ $(DEST)/.%: $(PWD)/%
 $(DEST)/.gitignore:
 	printf "*~\n*.sw[op]\nbuild/\n" > $@
 
-$(DEST)/.gnupg/gpg-agent.conf: $(GPGDIR)
+$(DEST)/.gnupg/gpg-agent.conf:
 	echo "pinentry-program /usr/bin/pinentry-tty" > $@
 
 $(DEST)/.%: $(PWD)/templates/% $(DEST)/.bash_profile

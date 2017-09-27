@@ -22,13 +22,13 @@ HELPERS := $(addprefix $(LOCAL_BIN)/, rfc vmiplist)
 
 GENERICRCS := \
 	.bashrc .tmux.conf .i3 .gitconfig .gitignore .gdbinit .lldbinit .lldb_utils.py \
-	.xinitrc .muttrc .Xresources .radare2rc .gnupg/gpg-agent.conf .git-prompt.sh
+	.xinitrc .muttrc .Xresources .radare2rc .git-prompt.sh
 
 DOTFILES := $(VIMRC) $(SWAYDIR) $(addprefix $(DEST)/, $(GENERICRCS))
 
 all: dirs $(DOTFILES) $(HELPERS)
 
-dirs: $(DEST) $(XDG_CONFIG_HOME) $(VIMDIR) $(GPGDIR) $(NEOBUNDLE) $(LOCAL_BIN)
+dirs: $(DEST) $(XDG_CONFIG_HOME) $(VIMDIR) $(NEOBUNDLE) $(LOCAL_BIN)
 
 $(DEST):
 	mkdir -p $(DEST)
@@ -38,9 +38,6 @@ $(XDG_CONFIG_HOME):
 
 $(VIMDIR):
 	mkdir -p $(VIMDIR)
-
-$(GPGDIR):
-	mkdir -p $(GPGDIR)
 
 $(DEST)/.git-prompt.sh:
 	curl https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh > $(DEST)/.git-prompt.sh
@@ -60,9 +57,6 @@ $(DEST)/.%: $(PWD)/%
 
 $(DEST)/.gitignore:
 	printf "*~\n*.sw[op]\nbuild/\n" > $@
-
-$(DEST)/.gnupg/gpg-agent.conf:
-	echo "pinentry-program /usr/bin/pinentry-tty" > $@
 
 $(DEST)/.%: $(PWD)/templates/% $(DEST)/.bash_profile
 	bash --login -c envsubst < $< | cat > $@

@@ -39,8 +39,6 @@ NeoBundleFetch 'vimux'
 
 NeoBundleFetch 'rfc-syntax'
 
-NeoBundle 'jiangmiao/auto-pairs'
-
 NeoBundle 'majutsushi/tagbar'
 
 NeoBundle 'Shougo/unite.vim'

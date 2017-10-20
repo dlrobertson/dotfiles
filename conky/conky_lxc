@@ -1,0 +1,27 @@
+conky.config = {
+	alignment = 'bottom_left',
+	background = true,
+	color2 = '073642',
+	cpu_avg_samples = 2,
+	default_color = 'dc322f',
+	double_buffer = true,
+    use_xft = true,
+	font = 'Inconsolata:size=10',
+	draw_shades = false,
+	gap_x = 25,
+	gap_y = 13,
+	minimum_width = 200,
+	no_buffers = true,
+	own_window = true,
+	own_window_type = 'override',
+	own_window_transparent = true,
+    own_window_hints = 'above',
+	update_interval = 1.0,
+	use_xft = true,
+}
+conky.text = [[
+$color${font Bitstream Vera Sans:size=20}LXCs$font$color2$hr
+${color}${font Bitstream Vera Sans:bold:size=8}
+${voffset 5}${execi 10 lxc list --format=json | jq '.[] | select(.state.status == "Running") | {name: .name, addresses: [(.state.network | to_entries[] | .value.addresses[] | select(.family == "inet" and .scope == "global") | .address)]}'}
+${voffset 30}
+]]

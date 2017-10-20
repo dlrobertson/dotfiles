@@ -16,7 +16,7 @@ else
 	exit 1
 endif
 
-SWAYDIR ?= $(XDG_CONFIG_HOME)/sway
+XDGCONF ?= $(XDG_CONFIG_HOME)/sway $(XDG_CONFIG_HOME)/conky
 
 HELPERS := $(addprefix $(LOCAL_BIN)/, rfc vmiplist)
 
@@ -24,7 +24,7 @@ GENERICRCS := \
 	.bashrc .tmux.conf .i3 .gitconfig .gitignore .gdbinit .lldbinit .lldb_utils.py \
 	.xinitrc .muttrc .Xresources .radare2rc .git-prompt.sh
 
-DOTFILES := $(VIMRC) $(SWAYDIR) $(addprefix $(DEST)/, $(GENERICRCS))
+DOTFILES := $(VIMRC) $(XDGCONF) $(addprefix $(DEST)/, $(GENERICRCS))
 
 all: dirs $(DOTFILES) $(HELPERS)
 
@@ -69,4 +69,4 @@ $(LOCAL_BIN)/%: $(PWD)/scripts/%
 	ln -svf $< $@
 
 clean:
-	rm -rf $(DOTFILES) $(HELPERS) $(VIMDIR)
+	rm -rf $(DOTFILES) $(HELPERS) $(VIMDIR) $(XDGCONF)

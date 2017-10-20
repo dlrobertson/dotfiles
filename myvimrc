@@ -1,4 +1,4 @@
-" Vundle plugins ---- {{{
+" NeoBundle plugins ---- {{{
 
 set nocompatible
 filetype off
@@ -35,9 +35,7 @@ NeoBundle 'tpope/vim-git.git'
 
 NeoBundle 'airblade/vim-gitgutter.git'
 
-NeoBundleFetch 'vimux'
-
-NeoBundleFetch 'rfc-syntax'
+NeoBundle 'vimux'
 
 NeoBundle 'majutsushi/tagbar'
 
@@ -153,6 +151,8 @@ let g:tmuxline_preset = {
 autocmd ColorScheme * highlight ExtraWhitespace ctermbg=red
 set background=dark
 colorscheme default
+hi clear SpellBad
+hi SpellBad ctermbg=grey ctermfg=red
 " Whitespace ---- {{{
 function CatchWhiteSpace()
     match ExtraWhitespace /\s\+\%#\@<!$/

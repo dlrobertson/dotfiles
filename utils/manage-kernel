@@ -157,6 +157,14 @@ then
                     KVER=$new_version-gentoo make install
                 done
             fi
+            if ! equery d nvidia-drivers /dev/null
+            then
+                emerge nvidia-drivers
+                if [ $? -ne 0 ]
+                then
+                    exit 1
+                fi
+            fi
         else
             fatal_error "$old/.config was not found!"
         fi

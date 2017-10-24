@@ -16,7 +16,6 @@
     excludesfile = ~/.gitignore
 [merge]
     tool = vimdiff
-    ff = false
 [alias]
     # basic {{{
 	co = checkout

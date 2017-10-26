@@ -40,7 +40,11 @@ $(VIMDIR):
 	mkdir -p $(VIMDIR)
 
 $(DEST)/.git-prompt.sh:
+ifeq ($(wildcard /usr/share/git/git-prompt.sh),)
 	curl https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh > $(DEST)/.git-prompt.sh
+else
+	ln -svf /usr/share/git/git-prompt.sh $@
+endif
 
 $(NEOBUNDLE):
 	git clone https://github.com/Shougo/neobundle.vim $@

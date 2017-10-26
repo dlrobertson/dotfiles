@@ -123,6 +123,11 @@ augroup filetype_nse
     autocmd!
     autocmd BufNewFile,BufRead *.nse set filetype=lua
 augroup END
+
+augroup filetype_cl
+    autocmd!
+    autocmd BufNewFile,BufRead *.cl set filetype=c
+augroup END
 " }}}
 
 " Airline Settings ---- {{{

@@ -1,12 +1,12 @@
 #!/bin/bash
 
 RFCDIR=$HOME/.local/share/rfcs
+MANIFEST=$RFCDIR/manifest.txt
 
 RFCS=""
 RFC_TXTS=""
 NUM_RFCS=0
 QUIET=0
-DETAILED=0
 LIST=0
 
 while :
@@ -27,10 +27,6 @@ do
                     ;;
             esac
             exit $EXIT_CODE
-            ;;
-        -d | --detailed)
-            DETAILED=1
-            shift
             ;;
         -q | --quiet)
             QUIET=1
@@ -58,16 +54,22 @@ done
 
 if [ $LIST -ne 0 ]
 then
-    for rfcfile in $(ls $RFCDIR)
-    do
-        rfc=$(echo $rfcfile | sed 's/rfc\([[:digit:]]\+\).txt/\1/g')
-        if [ $DETAILED -ne 0 ]
-        then
-            curl https://tools.ietf.org/html/rfc$rfc -so - | grep -iPo '(?<=title>)(.*)(?=</title>)'
-        else
-            echo "RFC:  $rfc"
-        fi
-    done
+    if ! [ -f $RFCDIR/manifest.txt ]
+    then
+        for rfcfile in $(ls $RFCDIR)
+        do
+            rfc=$(echo $rfcfile | sed 's/rfc\([[:digit:]]\+\).txt/\1/g')
+            curl https://tools.ietf.org/html/rfc$rfc -so - |\
+                echo "$(grep -iPo '(?<=title>)(.*)(?=</title>)')" >> \
+                $RFCDIR/manifest.txt
+            if [ $? -ne 0 ]
+            then
+                echo "Failed to update manifest"
+                exit 1
+            fi
+        done
+    fi
+    cat $RFCDIR/manifest.txt
     exit 0
 fi
 
@@ -91,6 +93,12 @@ do
             then
                 echo "Could not download rfc$1!"
                 exit 1
+            fi
+            if ! [ -f $MANIFEST ] || ! grep "^RFC $rfc" -i $MANIFEST
+            then
+                curl https://tools.ietf.org/html/rfc$rfc -so - |\
+                    echo "$(grep -iPo '(?<=title>)(.*)(?=</title>)')" >> \
+                    $RFCDIR/manifest.txt
             fi
             sed -i 's/[\x0c\x0d]//g' $RFCDIR/rfc$rfc.txt
         fi

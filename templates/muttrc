@@ -1,9 +1,6 @@
-source "gpg2 -dq ~/.mutt/passwords.gpg |"
-set spoolfile = "~/mail/anidata"
-source ~/.mutt/accounts/anidata
-folder-hook personal/* source ~/.mutt/accounts/personal
-folder-hook anidata/*  source ~/.mutt/accounts/anidata
-set folder="~/mail/"                # Mailboxes in here
+folder-hook personal/* source "gpg2 -dq ~/.mutt/accounts/personal.gpg |"
+folder-hook anidata/*  source "gpg2 -dq ~/.mutt/accounts/anidata.gpg |"
+source "gpg2 -dq ~/.mutt/accounts/personal.gpg |"
 set move=no
 
 # Cache Directories
@@ -30,27 +27,17 @@ push <show-version>
 set quit
 
 # Editor
-set editor = "vi -c 'set spell spelllang=en'" 
+set editor = "vi -c 'set spell spelllang=en'"
 set edit_headers
 
 # GPG Settings
-#source ~/.gpg.rc
-source /usr/share/doc/mutt-1.8.0/samples/gpg.rc
+source ~/.gpg.rc
 set pgp_use_gpg_agent = yes
 set pgp_sign_as = $SIGNKEY
 set pgp_timeout = 3600
 set crypt_autosign = yes
 set crypt_replyencrypt = yes
 
-# Sidebar
-set sidebar_visible = yes
-set sidebar_width   = 24
-mailboxes "+personal" \
-          "+anidata"
-
-bind index,pager <up> sidebar-prev
-bind index,pager <down> sidebar-next
-bind index,pager <right> sidebar-open
 bind pager k previous-line
 bind pager j next-line
 bind index <Return> display-message
@@ -58,3 +45,15 @@ bind index <Return> display-message
 # Keybindings
 bind editor <space> noop
 bind index,pager d delete-message
+
+# Macros
+macro index,pager <f1> "<sync-mailbox><enter-command>source \"gpg2 -dq ~/.mutt/accounts/personal.gpg |\"<enter><change-folder>!<enter>"
+macro index,pager <f2> "<sync-mailbox><enter-command>source \"gpg2 -dq ~/.mutt/accounts/anidata.gpg |\"<enter><change-folder>!<enter>"
+
+# Colors
+#     Area       FG           BG      Status
+color normal     red          default
+color attachment brightyellow default
+color index      brightred    default "~N"
+color status	 yellow       default
+color tree       magenta      default

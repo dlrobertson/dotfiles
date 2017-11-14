@@ -27,7 +27,8 @@ push <show-version>
 set quit
 
 # Editor
-set editor = "vi -c 'set spell spelllang=en'"
+# Ensure columns are less than 78 characters in length
+set editor = "vi -c 'set spell spelllang=en' -c 'set textwidth=80' -c 'set wrapmargin=2'"
 set edit_headers
 
 # GPG Settings

@@ -326,7 +326,7 @@ nnoremap <leader>l :call CleanCRandLF()<cr>
 nnoremap <leader>x :%!xxd<cr>
 nnoremap <leader>r :%!xxd -r<cr>
 nnoremap <leader>n :%s/\n/\r/g<cr>
-command! -nargs=1 Rfc call CallRFC(<q-args>)
-command! -nargs=1 Vrfc call CallVRFC(<q-args>)
-command! -nargs=1 Trfc call CallTRFC(<q-args>)
+command! -nargs=1 RfcSplit call CallRFC(<q-args>)
+command! -nargs=1 RfcVSplit call CallVRFC(<q-args>)
+command! -nargs=1 RfcTab call CallTRFC(<q-args>)
 " }}}

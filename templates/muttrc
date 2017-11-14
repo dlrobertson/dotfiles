@@ -1,5 +1,5 @@
 folder-hook personal/* source "gpg2 -dq ~/.mutt/accounts/personal.gpg |"
-folder-hook anidata/*  source "gpg2 -dq ~/.mutt/accounts/anidata.gpg |"
+folder-hook work/*  source "gpg2 -dq ~/.mutt/accounts/work.gpg |"
 source "gpg2 -dq ~/.mutt/accounts/personal.gpg |"
 set move=no
 
@@ -49,7 +49,7 @@ bind index,pager d delete-message
 
 # Macros
 macro index,pager <f1> "<sync-mailbox><enter-command>source \"gpg2 -dq ~/.mutt/accounts/personal.gpg |\"<enter><change-folder>!<enter>"
-macro index,pager <f2> "<sync-mailbox><enter-command>source \"gpg2 -dq ~/.mutt/accounts/anidata.gpg |\"<enter><change-folder>!<enter>"
+macro index,pager <f2> "<sync-mailbox><enter-command>source \"gpg2 -dq ~/.mutt/accounts/work.gpg |\"<enter><change-folder>!<enter>"
 
 # Colors
 #     Area       FG           BG      Status

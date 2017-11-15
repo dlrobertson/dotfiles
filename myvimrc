@@ -31,6 +31,8 @@ NeoBundle 'vim-airline/vim-airline-themes.git'
 
 NeoBundle 'tpope/vim-fugitive.git'
 
+NeoBundle 'rfc-syntax'
+
 NeoBundle 'tpope/vim-git.git'
 
 NeoBundle 'airblade/vim-gitgutter.git'
@@ -92,8 +94,6 @@ set number
 set backspace=indent,eol,start
 set ttimeoutlen=100
 
-" }}}
-
 " Better completion
 set complete=.,w,b,u,t
 set completeopt=longest,menuone,preview
@@ -102,6 +102,8 @@ set completeopt=longest,menuone,preview
 let mapleader = ","
 let maplocalleader = "\\"
 
+" }}}
+"
 " Cursorline ---- {{{
 " Only show cursorline in the current window and in normal mode.
 

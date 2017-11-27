@@ -43,6 +43,8 @@ NeoBundle 'majutsushi/tagbar'
 
 NeoBundle 'Shougo/unite.vim'
 
+NeoBundle 'vmchale/ion-vim'
+
 NeoBundle 'Shougo/vimproc.vim', {
             \ 'build' : {
             \     'windows' : 'tools\\update-dll-mingw',

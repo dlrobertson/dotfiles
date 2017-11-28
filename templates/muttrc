@@ -25,6 +25,7 @@ set pager_context=3
 set status_on_top
 push <show-version>
 set quit
+auto_view text/html
 
 # Editor
 # Ensure columns are less than 78 characters in length
@@ -33,6 +34,8 @@ set edit_headers
 
 # GPG Settings
 source ~/.gpg.rc
+set pgp_autosign
+set pgp_replysign
 set pgp_use_gpg_agent = yes
 set pgp_sign_as = $SIGNKEY
 set pgp_timeout = 3600

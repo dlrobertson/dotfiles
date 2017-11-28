@@ -16,7 +16,9 @@ else
 	exit 1
 endif
 
-XDGCONF ?= $(XDG_CONFIG_HOME)/sway $(XDG_CONFIG_HOME)/conky
+XDGCONFDIRS ?= sway conky ion
+
+XDGCONF := $(addprefix $(XDG_CONFIG_HOME)/, $(XDGCONFDIRS))
 
 HELPERS := $(addprefix $(LOCAL_BIN)/, rfc vmiplist)
 

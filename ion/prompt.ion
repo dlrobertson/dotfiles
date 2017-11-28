@@ -1,0 +1,3 @@
+fn PROMPT
+    echo -en "${c::0x55,bold}${USER}${c::default}:${c::0x4B}${PWD}${c::reset}\$ "
+end

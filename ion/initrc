@@ -1,0 +1,6 @@
+source $parent(@args[0])/local.ion
+source $parent(@args[0])/prompt.ion
+
+export LANG=en_US.utf8
+export EDITOR=nvim
+export TERMINAL=st

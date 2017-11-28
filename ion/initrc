@@ -1,5 +1,13 @@
-source $parent(@args[0])/local.ion
-source $parent(@args[0])/prompt.ion
+#!/usr/bin/env ion
+
+# Don't know why this would be set, but if it is go
+# ahead and use it
+if not test $XDG_CONFIG_HOME
+    export XDG_CONFIG_HOME = "$HOME/.config"
+end
+
+source $XDG_CONFIG_HOME/ion/local.ion
+source $XDG_CONFIG_HOME/ion/prompt.ion
 
 export LANG=en_US.utf8
 export EDITOR=nvim

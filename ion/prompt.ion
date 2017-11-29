@@ -1,3 +1,51 @@
+#!/usr/bin/env ion
+
+fn git_eread file:str var:str
+    if test -r $file
+        read "$var" < $file
+    end
+end
+
+fn git_prompt default:str g:str is_bare:bool short_sha:str
+    let head = ""
+    git_eread "$g/HEAD" head
+    let b = "${c::0x11}$short_sha${c::reset}"
+    if test $starts_with("$head", "ref: ") -eq 1
+        let b = "${c::0x22}$(git describe --contains --all HEAD)${c::reset}"
+    end
+    let untracked modified cached stashed = ""
+    git ls-files --others --exclude-standard --directory --no-empty-directory --error-unmatch -- ":/*" &> /dev/null; and let untracked = "\%"
+    git diff --no-ext-diff --quiet; or let modified = "\*"
+    git diff --no-ext-diff --cached --quiet; or let cached = "\+"
+    git rev-parse --verify --quiet refs/stash; and let stashed = "\$"
+    let s = "${c::0x22}${cached}${c::0xf60}\\${modified}${untracked}${c::0xf6}\\${stashed}${c::reset}"
+    if test -n $untracked || test -n $modified || test -n $stashed || test -n $cached
+        echo -en "$default ($b $s)\$ "
+    else
+        echo -en "$default ($b)\$ "
+    end
+end
+
+fn get_repo_info default:str
+    let repo_info = "$(git rev-parse --git-dir --is-inside-git-dir --is-bare-repository --is-inside-work-tree --short HEAD ^> /dev/null)"
+    if test -z $repo_info
+        echo -n "$default\$ "
+    else
+        let array_info:str[] = [@split($repo_info, " ")]
+        if @array_info[1]
+            echo -n "$default (${c::0x22}GII_DIR!${c::reset}) \$"
+        else if @array_info[3]
+            git_prompt $default @array_info[0] @array_info[2] @array_info[4]
+        else
+            echo -n "$default\$ "
+        end
+    end
+end
+
+fn git_ps1 default:str
+    get_repo_info $default
+end
+
 fn PROMPT
-    echo -en "${c::0x55,bold}${USER}${c::default}:${c::0x4B}${PWD}${c::reset}\$ "
+    git_ps1 "${c::0x55,bold}${USER}${c::default}:${c::0x4B}${PWD}${c::reset}"
 end

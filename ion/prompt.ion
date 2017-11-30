@@ -46,6 +46,16 @@ fn git_ps1 default:str
     get_repo_info $default
 end
 
+
 fn PROMPT
-    git_ps1 "${c::0x55,bold}${USER}${c::default}:${c::0x4B}${PWD}${c::reset}"
+    let default_prompt = "${c::0x55,bold}${USER}${c::default}:${c::0x4B}${PWD}${c::reset}"
+    if test $? -eq 0
+        git_ps1 "$default_prompt"
+    else
+        if test -n $DISPLAY
+            git_ps1 "${c::0xf60}(╯°□°）╯ ┻━┻ $default_prompt"
+        else
+            git_ps1 "${c::0xf60}[$?] $default_prompt"
+        end
+    end
 end

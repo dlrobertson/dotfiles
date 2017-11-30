@@ -27,7 +27,7 @@ set $ws9 9:vms
 
 # Defaults
 set $mod Mod1
-set $term st
+set $term alacritty
 
 font pango:DejaVu Sans Mono 9
 
@@ -132,7 +132,7 @@ bindsym $mod+b border toggle
 # Basic Apps
 set $menu rofi -show run
 
-bindsym $mod+Return exec urxvt
+bindsym $mod+Return exec st
 bindsym $mod+Shift+Return exec $term
 
 bindsym $mod+d exec $menu

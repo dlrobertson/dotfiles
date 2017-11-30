@@ -16,7 +16,7 @@ else
 	exit 1
 endif
 
-XDGCONFDIRS ?= sway conky ion
+XDGCONFDIRS ?= sway conky ion alacritty
 
 XDGCONF := $(addprefix $(XDG_CONFIG_HOME)/, $(XDGCONFDIRS))
 
@@ -33,46 +33,46 @@ all: dirs $(DOTFILES) $(HELPERS)
 dirs: $(DEST) $(XDG_CONFIG_HOME) $(VIMDIR) $(NEOBUNDLE) $(LOCAL_BIN)
 
 $(DEST):
-	mkdir -p $(DEST)
+	@mkdir -p $(DEST)
 
 $(XDG_CONFIG_HOME):
-	mkdir -p $(XDG_CONFIG_HOME)
+	@mkdir -p $(XDG_CONFIG_HOME)
 
 $(VIMDIR):
-	mkdir -p $(VIMDIR)
+	@mkdir -p $(VIMDIR)
 
 $(DEST)/.git-prompt.sh:
 ifeq ($(wildcard /usr/share/git/git-prompt.sh),)
-	curl https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh > $(DEST)/.git-prompt.sh
+	@curl https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh > $(DEST)/.git-prompt.sh
 else
-	ln -svf /usr/share/git/git-prompt.sh $@
+	@ln -svf /usr/share/git/git-prompt.sh $@
 endif
 
 $(NEOBUNDLE):
-	git clone https://github.com/Shougo/neobundle.vim $@
+	@git clone https://github.com/Shougo/neobundle.vim $@
 
 $(VIMRC): $(PWD)/myvimrc
-	ln -svf $< $@
-	$(VIM) +NeoBundleInstall +qall
+	@ln -svf $< $@
+	@$(VIM) +NeoBundleInstall +qall
 
 $(XDG_CONFIG_HOME)/%: $(PWD)/%
-	ln -svf $< $@
+	@ln -svf $< $@
 
 $(DEST)/.%: $(PWD)/%
-	ln -svf $< $@
+	@ln -svf $< $@
 
 $(DEST)/.gitignore:
-	printf "*~\n*.sw[op]\nbuild/\n" > $@
+	@printf "*~\n*.sw[op]\nbuild/\n" > $@
 
 $(DEST)/.%: $(PWD)/templates/% $(DEST)/.bash_profile
-	bash --login -c envsubst < $< | cat > $@
+	@bash --login -c envsubst < $< | cat > $@
 
 $(LOCAL_BIN):
-	mkdir -p $(LOCAL_BIN)
-	mkdir -p $(DEST)/.local/share/rfcs
+	@mkdir -p $(LOCAL_BIN)
+	@mkdir -p $(DEST)/.local/share/rfcs
 
 $(LOCAL_BIN)/%: $(PWD)/scripts/%
-	ln -svf $< $@
+	@ln -svf $< $@
 
 clean:
-	rm -rf $(DOTFILES) $(HELPERS) $(VIMDIR) $(XDGCONF)
+	@rm -rf $(DOTFILES) $(HELPERS) $(VIMDIR) $(XDGCONF)

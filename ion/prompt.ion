@@ -22,26 +22,26 @@ fn git_prompt default:str g:str is_bare:bool short_sha:str
     or eval let cached = "\+"
     git rev-parse --verify --quiet refs/stash &> /dev/null
     and eval let stashed = "\$"
-    let s = "${c::0x22}${cached}${c::0xf60}\\${modified}${untracked}${c::0xf6}\\${stashed}${c::reset}"
+    let s = "${c::0x22}${cached}${c::0xf60}${modified}${untracked}${c::0xf6}${stashed}${c::reset}"
     if test -n $untracked || test -n $modified || test -n $stashed || test -n $cached
-        echo -en "$default ($b $s) \$ "
+        echo -en "$default ($b $s) "'$ '
     else
-        echo -en "$default ($b) \$ "
+        echo -en "$default ($b) "'$ '
     end
 end
 
 fn get_repo_info default:str
     let repo_info = "$(git rev-parse --git-dir --is-inside-git-dir --is-bare-repository --is-inside-work-tree --short HEAD ^> /dev/null)"
     if test -z $repo_info
-        echo -n "$default\$ "
+        echo -n "$default "'$ '
     else
         let array_info:str[] = [@split($repo_info, " ")]
         if @array_info[1]
-            echo -n "$default (${c::0x22}GII_DIR!${c::reset}) \$"
+            echo -n "$default (${c::0x22}GII_DIR!${c::reset}) $"
         else if @array_info[3]
             git_prompt $default @array_info[0] @array_info[2] @array_info[4]
         else
-            echo -n "$default\$ "
+            echo -n "$default "'$ '
         end
     end
 end
@@ -52,9 +52,9 @@ end
 
 
 fn PROMPT
-    let user = "${c::0x0ff,bold}${USER}${c::reset}${c::0xff0}\@$(hostname)"
+    let user = "${c::0x0ff,bold}${USER}${c::reset}${c::0xff0}"'@'"$(hostname)"
     let curdir = "${c::0xf06}${MWD}${c::reset}"
-    let default = "$user${c::default}: $curdir"
+    let default = "$user${c::default}:$curdir"
     if test $? -eq 0
         git_ps1 $default
     else

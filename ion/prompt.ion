@@ -1,5 +1,7 @@
 #!/usr/bin/env ion
 
+let GIT=/usr/bin/git
+
 fn git_eread file:str var:str
     if test -r $file
         read "$var" < $file
@@ -8,19 +10,37 @@ end
 
 fn git_prompt default:str g:str is_bare:bool short_sha:str
     let head = ""
-    git_eread "$g/HEAD" head
-    let b = "${c::0xa00}$short_sha${c::reset}"
-    if test $starts_with("$head", "ref: ") -eq 1
-        let b = "${c::0x22}$(git describe --contains --all HEAD)${c::reset}"
+    if test -L "$g/HEAD"
+        let b = "$($GIT symbolic-ref HEAD 2> /dev/null)"
+    else
+        git_eread "$g/HEAD" head
+        if test $starts_with($head, "ref: ") -eq 1
+            let b = @split("$head")[1]
+        else
+            let b = "$head"
+        end
+        if test $b = $head
+            $GIT describe --tags --exact-match HEAD &> /dev/null
+            if test $? -eq 0
+                let b = "${c::0x22}$($GIT describe --tags --exact-match HEAD ^> /dev/null)${c::reset}"
+            else
+                let b = "${c::0xa00}(${short_sha}...)${c::reset}"
+            end
+        else
+            if test $starts_with($b, "refs/heads/") -eq 1
+                let b = $b[11..]
+                let b = "${c::0x22}$b${c::reset}"
+            end
+        end
     end
     let untracked modified cached stashed = ""
-    git ls-files --others --exclude-standard --directory --no-empty-directory --error-unmatch -- ":/*" &> /dev/null
+    $GIT ls-files --others --exclude-standard --directory --no-empty-directory --error-unmatch -- ":/*" &> /dev/null
     and eval let untracked = "\%"
-    git diff --no-ext-diff --quiet
+    $GIT diff --no-ext-diff --quiet
     or eval let modified = "\\\*"
-    git diff --no-ext-diff --cached --quiet
+    $GIT diff --no-ext-diff --cached --quiet
     or eval let cached = "\+"
-    git rev-parse --verify --quiet refs/stash &> /dev/null
+    $GIT rev-parse --verify --quiet refs/stash &> /dev/null
     and eval let stashed = "\$"
     let s = "${c::0x22}${cached}${c::0xf60}${modified}${untracked}${c::0xf6}${stashed}${c::reset}"
     if test -n $untracked || test -n $modified || test -n $stashed || test -n $cached
@@ -31,7 +51,7 @@ fn git_prompt default:str g:str is_bare:bool short_sha:str
 end
 
 fn get_repo_info default:str
-    let repo_info = "$(git rev-parse --git-dir --is-inside-git-dir --is-bare-repository --is-inside-work-tree --short HEAD ^> /dev/null)"
+    let repo_info = "$($GIT rev-parse --git-dir --is-inside-git-dir --is-bare-repository --is-inside-work-tree --short HEAD ^> /dev/null)"
     if test -z $repo_info
         echo -n "$default "'$ '
     else
@@ -52,7 +72,7 @@ end
 
 
 fn PROMPT
-    let user = "${c::0x0ff,bold}${USER}${c::reset}${c::0xff0}"'@'"$(hostname)"
+    let user = "${c::0x0ff,bold}${USER}${c::reset}${c::0xff0}"'@'"$(/bin/hostname)"
     let curdir = "${c::0xf06}${MWD}${c::reset}"
     let default = "$user${c::default}:$curdir"
     if test $? -eq 0

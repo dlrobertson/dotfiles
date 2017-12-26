@@ -79,7 +79,7 @@ fn PROMPT
         git_ps1 $default
     else
         if test -n $DISPLAY
-            git_ps1 "${c::0xf60}(╯°□°）╯ ┻━┻ $default"
+            git_ps1 "${c::0xf60}(╯°□°)╯ ┻━┻ $default"
         else
             git_ps1 "${c::0xf60}[$?] $default"
         end

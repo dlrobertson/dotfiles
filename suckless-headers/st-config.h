@@ -5,7 +5,7 @@
  *
  * font: see http://freedesktop.org/software/fontconfig/fontconfig-user.html
  */
-char font[] = "Source Code Pro for Powerline:pixelsize=14:style=medium,antialias=true";
+char font[] = "Source Code Pro:pixelsize=14:style=medium,antialias=true";
 int borderpx = 2;
 
 /*

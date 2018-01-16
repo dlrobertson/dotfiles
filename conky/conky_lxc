@@ -22,6 +22,6 @@ conky.config = {
 conky.text = [[
 $color${font Bitstream Vera Sans:size=20}LXCs$font$color2$hr
 ${color}${font Bitstream Vera Sans:bold:size=8}
-${voffset 5}${execi 10 lxc list --format=json | jq '.[] | select(.state.status == "Running") | {name: .name, addresses: [(.state.network | to_entries[] | .value.addresses[] | select(.family == "inet" and .scope == "global") | .address)]}'}
+${voffset 5}${execi 10 hash lxc &> /dev/null && list --format=json | jq '.[] | select(.state.status == "Running") | {name: .name, addresses: [(.state.network | to_entries[] | .value.addresses[] | select(.family == "inet" and .scope == "global") | .address)]}'}
 ${voffset 30}
 ]]

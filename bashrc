@@ -6,7 +6,7 @@ HISTFILE=~/.histfile
 HISTSIZE=1000
 SAVEHIST=1000
 # This will set the default prompt to the walters theme
-alias ls="ls --color=auto"
+alias ls="ls -G"
 alias ed="ed -p ': p:'"
 alias irssi='TERM=screen-256color irssi'
 

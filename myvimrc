@@ -13,9 +13,7 @@ endif
 
 NeoBundleFetch 'Shougo/neobundle.vim'
 
-NeoBundle 'morhetz/gruvbox'
-
-NeoBundle 'dracula/vim'
+NeoBundle 'solarized'
 
 NeoBundle 'rust-lang/rust.vim.git'
 
@@ -159,7 +157,7 @@ let g:tmuxline_preset = {
 " Color scheme ---- {{{
 autocmd ColorScheme * highlight ExtraWhitespace ctermbg=red
 set background=dark
-colorscheme default
+colorscheme solarized
 hi clear SpellBad
 hi SpellBad ctermbg=grey ctermfg=red
 " Whitespace ---- {{{

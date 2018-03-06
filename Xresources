@@ -1,8 +1,7 @@
 Xcursor.theme: Pulse-Glass
 Xcursor.size: 25
-URxvt.font: xft:Source Code Pro For Powerline:pixelsize=13:hinting=true:antialias=true,xft:Dejavu Sans Mono For Powerline:pixelsize=13:hinting=true:antialias=true,xft:WenQuanYi Bitmap Song:pixelsize=13:medium:antialias=true,xft:WenQuanYi Zen Hei:pixelsize=13:medium:antialias=true
-URxvt.boldFont: xft:Source Code Pro For Powerline:pixelsize=13:bold:hinting=true:antialias=true,xft:Dejavu Sans Mono For Powerline:pixelsize=13:bold:hinting=true:antialias=true,xft:WenQuanYi Bitmap Song:pixelsize=13:medium:antialias=true,xft:WenQuanYi Zen Hei:pixelsize=13:medium:antialias=true
-!URxvt.boldFont:             xft:Source Code Pro for Powerline-10:bold;hinting=True;antialias:True,xft:WenQuanYi Bitmap Song-10:bold;antialias=False,xft:WenQuanYi Zen Hei-10:bold;antialias=True,xft:HanaMinA-10:bold;antialias:True,xft:HanaMinB-10:bold;antialias:True,xft:HanaMinPlus-10:bold;antialias:true
+URxvt.font: xft:Source Code Pro:pixelsize=13:hinting=true:antialias=true,xft:Dejavu Sans Mono For Powerline:pixelsize=13:hinting=true:antialias=true,xft:WenQuanYi Bitmap Song:pixelsize=13:medium:antialias=true,xft:WenQuanYi Zen Hei:pixelsize=13:medium:antialias=true
+URxvt.boldFont: xft:Source Code Pro:pixelsize=13:bold:hinting=true:antialias=true,xft:Dejavu Sans Mono For Powerline:pixelsize=13:bold:hinting=true:antialias=true,xft:WenQuanYi Bitmap Song:pixelsize=13:medium:antialias=true,xft:WenQuanYi Zen Hei:pixelsize=13:medium:antialias=true
 
 Xft.dpi:        96
 Xft.antialias:  true

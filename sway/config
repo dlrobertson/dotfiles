@@ -132,14 +132,13 @@ bindsym $mod+t scratchpad show
 bindsym $mod+b border toggle
 
 # Basic Apps
-set $dmenu_font Inconsolata-9
-set $menu dmenu_run
+set $menu rofi -show run
 
 bindsym $mod+Return exec urxvt
 bindsym $mod+Shift+Return exec $term
 
-bindsym $mod+d exec $menu -fn "$dmenu_font" -nb "$normbg" -nf "$normfg"
-bindsym $mod+p exec $menu -fn "$dmenu_font" -nb "$normbg" -nf "$normfg"
+bindsym $mod+d exec $menu
+bindsym $mod+p exec $menu
 
 bindsym $mod+x exec swaylock -c "000000cc"
 

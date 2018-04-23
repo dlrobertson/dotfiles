@@ -157,7 +157,11 @@ let g:tmuxline_preset = {
 " Color scheme ---- {{{
 autocmd ColorScheme * highlight ExtraWhitespace ctermbg=red
 set background=dark
-colorscheme solarized
+try
+    colorscheme solarized
+catch
+    colorscheme default
+endtry
 hi clear SpellBad
 hi SpellBad ctermbg=grey ctermfg=red
 " Whitespace ---- {{{

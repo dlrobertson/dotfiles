@@ -54,14 +54,19 @@ done
 
 if [ $LIST -ne 0 ]
 then
-    if ! [ -f $RFCDIR/manifest.txt ]
+    rfcfiles=$(ls $RFCDIR)
+    if [ -z "$rfcfiles" ]
     then
-        for rfcfile in $(ls $RFCDIR)
+        exit 0
+    fi
+    if ! [ -f $MANIFEST ]
+    then
+        for rfcfile in $rfcfiles
         do
             rfc=$(echo $rfcfile | sed 's/rfc\([[:digit:]]\+\).txt/\1/g')
             curl https://tools.ietf.org/html/rfc$rfc -so - |\
                 echo "$(grep -iPo '(?<=title>)(.*)(?=</title>)')" >> \
-                $RFCDIR/manifest.txt
+                $MANIFEST
             if [ $? -ne 0 ]
             then
                 echo "Failed to update manifest"
@@ -69,7 +74,7 @@ then
             fi
         done
     fi
-    cat $RFCDIR/manifest.txt
+    cat $MANIFEST
     exit 0
 fi
 
@@ -98,7 +103,7 @@ do
             then
                 curl https://tools.ietf.org/html/rfc$rfc -so - |\
                     echo "$(grep -iPo '(?<=title>)(.*)(?=</title>)')" >> \
-                    $RFCDIR/manifest.txt
+                    $MANIFEST
             fi
             sed -i 's/[\x0c\x0d]//g' $RFCDIR/rfc$rfc.txt
         fi

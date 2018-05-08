@@ -5,12 +5,14 @@ XDG_CONFIG_HOME := $(DEST)/.config
 VIM ?= nvim
 ifeq ($(VIM), nvim)
 	VIMDIR := $(XDG_CONFIG_HOME)/nvim
-	NEOBUNDLE := $(VIMDIR)/bundle/neobundle.vim
 	VIMRC := $(VIMDIR)/init.vim
+	VIMAUTOLOAD := $(HOME)/.local/share/nvim/site/autoload
+	VIMPLUGINDIR := $(HOME)/.local/share/nvim/plugged
 else ifeq ($(VIM), vim)
 	VIMDIR := $(DEST)/.vim
-	NEOBUNDLE := $(VIMDIR)/bundle/neobundle.vim
 	VIMRC := $(DEST)/.vimrc
+	VIMAUTOLOAD := $(VIMDIR)/autoload
+	VIMPLUGINDIR := $(HOME)/.vim/plugged
 else
 	echo "Do not know how to install for $(VIM)"
 	exit 1
@@ -30,7 +32,7 @@ DOTFILES := $(VIMRC) $(XDGCONF) $(addprefix $(DEST)/, $(GENERICRCS))
 
 all: dirs $(DOTFILES) $(HELPERS)
 
-dirs: $(DEST) $(XDG_CONFIG_HOME) $(VIMDIR) $(NEOBUNDLE) $(LOCAL_BIN)
+dirs: $(DEST) $(XDG_CONFIG_HOME) $(VIMDIR) $(VIMAUTOLOAD)/plug.vim $(LOCAL_BIN)
 
 $(DEST):
 	@mkdir -p $(DEST)
@@ -48,12 +50,15 @@ else
 	@ln -svf /usr/share/git/git-prompt.sh $@
 endif
 
-$(NEOBUNDLE):
-	@git clone https://github.com/Shougo/neobundle.vim $@
+$(VIMAUTOLOAD):
+	mkdir -p $@
+
+$(VIMAUTOLOAD)/plug.vim: $(VIMAUTOLOAD)
+	@curl -fLo $@ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 
 $(VIMRC): $(PWD)/myvimrc
 	@ln -svf $< $@
-	@$(VIM) +NeoBundleInstall +qall
+	@$(VIM) +PlugInstall +qall
 
 $(XDG_CONFIG_HOME)/%: $(PWD)/%
 	@ln -svf $< $@
@@ -75,4 +80,4 @@ $(LOCAL_BIN)/%: $(PWD)/scripts/%
 	@ln -svf $< $@
 
 clean:
-	@rm -rf $(DOTFILES) $(HELPERS) $(VIMDIR) $(XDGCONF)
+	@rm -rf $(DOTFILES) $(HELPERS) $(VIMDIR) $(VIMAUTOLOAD) $(VIMPLUGINDIR) $(XDGCONF)

@@ -130,7 +130,7 @@ bindsym $mod+t scratchpad show
 bindsym $mod+b border toggle
 
 # Basic Apps
-set $menu rofi -show run
+set $menu rofi -theme solarized -font "Inconsolata 12" -show run
 
 bindsym $mod+Return exec st
 bindsym $mod+Shift+Return exec $term

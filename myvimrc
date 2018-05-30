@@ -223,9 +223,6 @@ nnoremap <leader>e :tabe<space>
 " Yankring
 nnoremap <leader>y :YRShow<cr>
 
-" <Esc> mods
-inoremap jk <Esc>
-
 " Usefull shortcuts
 onoremap in( :<C-u>:normal! f(vi(<cr>
 onoremap il( :<C-u>:normal! F)vi(<cr>

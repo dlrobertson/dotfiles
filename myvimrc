@@ -1,4 +1,4 @@
-" NeoBundle plugins ---- {{{
+" Plugins ---- {{{
 
 set nocompatible
 filetype off
@@ -13,10 +13,12 @@ Plug 'altercation/vim-colors-solarized'
 
 Plug 'rust-lang/rust.vim'
 
+if has('nvim')
 Plug 'autozimu/LanguageClient-neovim', {
     \ 'branch': 'next',
     \ 'do': 'bash install.sh',
     \ }
+endif
 
 Plug 'scrooloose/nerdtree'
 
@@ -38,7 +40,7 @@ Plug 'airblade/vim-gitgutter'
 
 Plug 'majutsushi/tagbar'
 
-Plug 'vmchale/ion-vim'
+Plug 'https://gitlab.redox-os.org/redox-os/ion-vim'
 
 Plug 'junegunn/fzf'
 

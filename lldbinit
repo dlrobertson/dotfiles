@@ -1,6 +1,1 @@
 command alias b breakpoint
-
-script import os, sys
-script exec(open(os.path.join(os.path.expanduser("~"), ".lldb_utils.py")).read())
-command alias pwd script print os.getcwd()
-command script add -f chdir cd

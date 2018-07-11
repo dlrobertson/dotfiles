@@ -14,7 +14,7 @@ export GPG_TTY=$(tty)
 
 export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig:${PKG_CONFIG_PATH}
 
-export EDITOR=/usr/bin/nvim
+export EDITOR=nvim
 export CCACHE_COMPRESS=1
 export CCACHE_CPP2=1
 export TERMINAL=st
@@ -31,4 +31,5 @@ source ~/.git-prompt.sh
 
 PROMPT_COMMAND='__git_ps1 "\e[36m\u\e[0m\e[31m@\h\e[0m: \e[93m\w\e[0m" "\n⇒ "'
 
+set -o vi
 export TERM=xterm-256color

@@ -152,7 +152,7 @@ client.background       $normfg
 
 focus_follows_mouse no
 
-border normal
+#border normal
 default_border pixel 1
 
 for_window [class="Conky"] floating enable

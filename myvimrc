@@ -44,6 +44,8 @@ Plug 'https://gitlab.redox-os.org/redox-os/ion-vim'
 
 Plug 'junegunn/fzf'
 
+Plug 'CraneStation/cranelift.vim'
+
 if has('nvim')
     Plug 'Shougo/deoplete.nvim'
 endif
@@ -125,6 +127,11 @@ augroup END
 augroup filetype_cl
     autocmd!
     autocmd BufNewFile,BufRead *.cl set filetype=c
+augroup END
+
+augroup filetype_clif
+    autocmd!
+    autocmd BufNewFile,BufRead *.clif set filetype=clif
 augroup END
 " }}}
 

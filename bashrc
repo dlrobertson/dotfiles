@@ -1,4 +1,3 @@
-export XDG_RUNTIME_DIR=/tmp
 export XKB_DEFAULT_LAYOUT=us,us
 export XKB_DEFAULT_VARIANT=,dvp
 export XKB_DEFAULT_OPTIONS=grp:lctrl_lwin_rctrl_menu,caps:escape
@@ -18,7 +17,6 @@ export EDITOR=nvim
 export CCACHE_COMPRESS=1
 export CCACHE_CPP2=1
 export TERMINAL=st
-export XDG_RUNTIME_DIR=/tmp
 
 GIT_PS1_SHOWDIRTYSTATE=1
 GIT_PS1_SHOWUNTRACKEDFILES=1

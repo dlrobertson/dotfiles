@@ -46,6 +46,10 @@ Plug 'junegunn/fzf'
 
 Plug 'CraneStation/cranelift.vim'
 
+Plug 'let-def/vimbufsync'
+
+Plug 'whonore/Coqtail'
+
 if has('nvim')
     Plug 'Shougo/deoplete.nvim'
 endif
@@ -341,4 +345,9 @@ command! -nargs=1 Rfc call CallRFC(<q-args>)
 command! -nargs=1 RfcSplit call CallSRFC(<q-args>)
 command! -nargs=1 RfcVSplit call CallVRFC(<q-args>)
 command! -nargs=1 RfcTab call CallTRFC(<q-args>)
+" }}}
+
+" CoqTail ---- {{{
+let g:coqtail_nomap = 1
+let g:coqtail_noident = 1
 " }}}

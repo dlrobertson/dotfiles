@@ -67,7 +67,7 @@ $(DEST)/.%: $(PWD)/%
 	@ln -svf $< $@
 
 $(DEST)/.gitignore:
-	@printf "*~\n*.sw[op]\nbuild/\n" > $@
+	@printf "*~\n*.sw[op]\nbuild/\n.vimrc\n.nvimrc\n" > $@
 
 $(DEST)/.%: $(PWD)/templates/% $(DEST)/.bash_profile
 	@bash --login -c envsubst < $< | cat > $@

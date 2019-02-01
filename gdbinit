@@ -3,3 +3,5 @@ set print sevenbit-strings on
 set print asm-demangle on
 set auto-load safe-path /
 alias -a di = disass
+set breakpoint pending on
+set confirm off

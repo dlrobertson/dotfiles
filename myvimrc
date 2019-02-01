@@ -94,6 +94,8 @@ set hidden
 set number
 set backspace=indent,eol,start
 set ttimeoutlen=100
+set exrc
+set secure
 
 " Better completion
 set complete=.,w,b,u,t
@@ -136,6 +138,11 @@ augroup END
 augroup filetype_clif
     autocmd!
     autocmd BufNewFile,BufRead *.clif set filetype=clif
+augroup END
+
+augroup filetype_rust
+    autocmd!
+    autocmd BufNewFile,BufRead *.lalrpop set filetype=rust
 augroup END
 " }}}
 

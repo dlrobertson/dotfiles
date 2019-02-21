@@ -37,7 +37,7 @@ source ~/.gpg.rc
 set pgp_autosign
 set pgp_replysign
 set pgp_use_gpg_agent = yes
-set pgp_sign_as = $SIGNKEY
+set pgp_sign_as = @@SIGNKEY@@
 set pgp_timeout = 3600
 set crypt_autosign = yes
 set crypt_replyencrypt = yes

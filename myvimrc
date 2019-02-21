@@ -144,6 +144,15 @@ augroup filetype_rust
     autocmd!
     autocmd BufNewFile,BufRead *.lalrpop set filetype=rust
 augroup END
+
+augroup filetype_qf
+    autocmd!
+    autocmd FileType qf call AdjustWindowHeight(3, 10)
+
+    function! AdjustWindowHeight(minheight, maxheight)
+      exe max([min([line("$"), a:maxheight]), a:minheight]) . "wincmd _"
+    endfunction
+augroup END
 " }}}
 
 " Airline Settings ---- {{{

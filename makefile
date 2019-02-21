@@ -70,7 +70,10 @@ $(DEST)/.gitignore:
 	@printf "*~\n*.sw[op]\nbuild/\n.vimrc\n.nvimrc\n" > $@
 
 $(DEST)/.%: $(PWD)/templates/% $(DEST)/.bash_profile
-	@bash --login -c envsubst < $< | cat > $@
+	@cp -v $< $@
+	@sed -ie 's/@@GIT_EMAIL@@/$(GIT_EMAIL)/' $@
+	@sed -ie 's/@@SIGNKEY@@/$(SIGNKEY)/' $@
+	@[[ -f $<.tail ]] && cat $<.tail >> $@ || echo "No $<.tail configured"
 
 $(LOCAL_BIN):
 	@mkdir -p $(LOCAL_BIN)

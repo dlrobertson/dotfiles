@@ -60,7 +60,7 @@ $(VIMRC): $(PWD)/myvimrc
 	@ln -svf $< $@
 	@$(VIM) +PlugInstall +qall
 
-$(XDG_CONFIG_HOME)/%: $(PWD)/%
+$(XDG_CONFIG_HOME)/%: $(PWD)/xdg/%
 	@ln -svf $< $@
 
 $(DEST)/.%: $(PWD)/%
@@ -69,11 +69,16 @@ $(DEST)/.%: $(PWD)/%
 $(DEST)/.gitignore:
 	@printf "*~\n*.sw[op]\nbuild/\n.vimrc\n.nvimrc\n" > $@
 
+$(DEST)/.%: $(PWD)/templates/% $(DEST)/.bash_profile $(PWD)/templates/%.tail
+	@cp -v $< $@
+	@sed -ie 's/@@GIT_EMAIL@@/$(GIT_EMAIL)/' $@
+	@sed -ie 's/@@SIGNKEY@@/$(SIGNKEY)/' $@
+	@cat $<.tail >> $@
+
 $(DEST)/.%: $(PWD)/templates/% $(DEST)/.bash_profile
 	@cp -v $< $@
 	@sed -ie 's/@@GIT_EMAIL@@/$(GIT_EMAIL)/' $@
 	@sed -ie 's/@@SIGNKEY@@/$(SIGNKEY)/' $@
-	@[[ -f $<.tail ]] && cat $<.tail >> $@ || echo "No $<.tail configured"
 
 $(LOCAL_BIN):
 	@mkdir -p $(LOCAL_BIN)

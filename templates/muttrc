@@ -1,7 +1,6 @@
-folder-hook personal/* source "gpg2 -dq ~/.mutt/accounts/personal.gpg |"
-folder-hook work/*  source "gpg2 -dq ~/.mutt/accounts/work.gpg |"
-source "gpg2 -dq ~/.mutt/accounts/personal.gpg |"
-set move=no
+# Setup mbsync and msmtp
+macro index G "!mbsync -a^M" "Update through mbsync"
+set sendmail="/usr/bin/msmtp"
 
 # Cache Directories
 set header_cache = "~/.mutt/cache/headers"
@@ -18,11 +17,12 @@ hdr_order Date: From: To: Cc: Reply-To: Subject:
 
 # Other
 set move = no
-set imap_keepalive = 900
+set imap_keepalive = 112
 set markers
 set smart_wrap
 set pager_context=3
 set status_on_top
+set timeout = 15
 push <show-version>
 set quit
 auto_view text/html
@@ -50,10 +50,6 @@ bind index <Return> display-message
 bind editor <space> noop
 bind index,pager d delete-message
 
-# Macros
-macro index,pager <f1> "<sync-mailbox><enter-command>source \"gpg2 -dq ~/.mutt/accounts/personal.gpg |\"<enter><change-folder>!<enter>"
-macro index,pager <f2> "<sync-mailbox><enter-command>source \"gpg2 -dq ~/.mutt/accounts/work.gpg |\"<enter><change-folder>!<enter>"
-
 # Colors
 #     Area       FG           BG      Status
 color normal     red          default
@@ -61,3 +57,10 @@ color attachment brightyellow default
 color index      brightred    default "~N"
 color status	 yellow       default
 color tree       magenta      default
+
+# Useful macros
+macro index,pager <f1> "<sync-mailbox><enter-command>source ~/.mutt/main<enter><change-folder>!<enter>"
+macro index,pager <f2> "<sync-mailbox><enter-command>source ~/.mutt/gmail<enter><change-folder>!<enter>"
+
+# Default to the main mailbox
+source ~/.mutt/main

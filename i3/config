@@ -173,11 +173,8 @@ bar {
         urgent_workspace   $focused-inactive $focused-urgent   $text
     }
 }
-exec --no-startup-id conky -c ~/.config/conky/conky_main
-exec --no-startup-id conky -c ~/.config/conky/conky_vms
-exec --no-startup-id conky -c ~/.config/conky/conky_lxc
 exec --no-startup-id compton -b
 exec --no-startup-id xset r rate 300 44
-exec --no-startup-id setxkbmap -layout us,us -variant ,dvp -option grp:lctrl_lwin_rctrl_menu,caps:escape
+exec --no-startup-id setxkbmap -layout us,us -variant ,dvorak -option grp:rctrl_rshift_toggle,caps:escape
 exec --no-startup-id xrdb -merge ~/.Xresources
 exec --no-startup-id feh --bg-scale ~/.wallpapers/bg.jpg

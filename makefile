@@ -22,7 +22,7 @@ XDGCONFDIRS ?= sway ion alacritty tridactyl
 
 XDGCONF := $(addprefix $(XDG_CONFIG_HOME)/, $(XDGCONFDIRS))
 
-HELPERS := $(addprefix $(LOCAL_BIN)/, rfc vmiplist)
+HELPERS := $(addprefix $(LOCAL_BIN)/, rfc)
 
 GENERICRCS := \
 	.bashrc .tmux.conf .i3 .gitconfig .gitignore .gdbinit \

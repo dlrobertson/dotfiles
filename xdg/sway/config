@@ -27,9 +27,9 @@ set $ws9 9:vms
 
 # Defaults
 set $mod Mod1
-set $term st
+set $term alacritty
 
-font pango:DejaVu Sans Mono 9
+font pango:Hack Mono 8
 
 # Management
 floating_modifier $mod normal
@@ -40,7 +40,6 @@ bindsym $mod+Shift+r reload
 bindsym $mod+Shift+e exit
 bindsym $mod+Shift+q exit
 bindsym $mod+Control+r restart
-bindsym $mod+Shift+r reload
 
 # Movement
 

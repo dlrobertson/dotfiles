@@ -41,10 +41,14 @@ set pgp_sign_as = @@SIGNKEY@@
 set pgp_timeout = 3600
 set crypt_autosign = yes
 set crypt_replyencrypt = yes
+set crypt_replysignencrypted = yes
 
 bind pager k previous-line
 bind pager j next-line
 bind index <Return> display-message
+
+# Notify
+set new_mail_command="notify-send 'New Email' '%n new messages, %u unread.' &"
 
 # Keybindings
 bind editor <space> noop

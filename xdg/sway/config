@@ -9,8 +9,18 @@ set $up k
 set $right l
 
 # colors
-set $normbg #130d07
-set $normfg #ecd67d
+set $grey  #1c1a17
+
+# solarized
+set $black   #073642
+set $red     #dc322f
+set $green   #859900
+set $yellow  #b58900
+set $blue    #268bd2
+set $magenta #d33682
+set $cyan    #2aa198
+set $white   #eee8d5
+set $orange  #cb4b16
 
 ## Workspaces
 
@@ -29,7 +39,7 @@ set $ws9 9:vms
 set $mod Mod1
 set $term alacritty
 
-font pango:Hack Mono 8
+font pango:Hack Mono 9
 
 # Management
 floating_modifier $mod normal
@@ -142,31 +152,28 @@ bindsym $mod+p exec $menu
 bindsym $mod+x exec swaylock -c "000000cc"
 
 # Default colors
-client.focused          $normfg $normfg $normbg $normfg   $normfg
-client.focused_inactive $normbg $normbg $normfg $normbg   $normbg
-client.unfocused        $normbg $normbg $normfg $normbg   $normbg
-client.urgent           $normfg $normfg $normbg $normfg   $normfg
-client.placeholder      $normbg $normbg $normfg $normbg   $normbg
-client.background       $normfg
+client.focused          $red     $red     $black   $black   $red
+client.focused_inactive $black   $black   $red     $black   $black
+client.unfocused        $black   $grey    $yellow  $black   $black
+client.urgent           $magenta $red     $grey    $red     $magenta
+client.placeholder      $yellow  $grey    $cyan    $grey    $yellow
+client.background       $grey
 
 focus_follows_mouse no
-
-#border normal
-default_border pixel 1
-
-for_window [class="Conky"] floating enable
-for_window [class="Conky"] sticky enable
+default_border pixel 3
 
 bar {
     position top
     font pango:Inconsolata 10
     separator_symbol ":|:"
     colors {
-        statusline $normfg
-        background $normbg
-        separator #303030
-        inactive_workspace $normbg $normbg $normfg
-        focused_workspace #202020 $normfg $normbg
+        statusline $red
+        background $grey
+        separator $yellow
+        inactive_workspace $black $grey $cyan
+        focused_workspace $red $black $red
+        active_workspace $black $grey $cyan
+        urgent_workspace $black $red $black
     }
 }
 

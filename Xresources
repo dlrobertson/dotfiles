@@ -22,8 +22,8 @@ URxvt.urgentOnBell:     true
 URxvt.imLocale:         en_US.UTF-8
 
 URxvt*depth: 32
-URxvt*background: rgba:0019/0013/0007/aaaa
-URxvt*foreground: #eeeeee
+URxvt*background: #1c1a17
+URxvt*foreground: #eaeaea
 *fading: 25
 *pointerColorBackground: #586e75
 *pointerColorForeground: #93a1a1

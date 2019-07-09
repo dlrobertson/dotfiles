@@ -1,7 +1,7 @@
 Xcursor.theme: Pulse-Glass
 Xcursor.size: 25
-URxvt.font: xft:Hack:pixelsize=13:hinting=true:antialias=true,xft:Dejavu Sans Mono For Powerline:pixelsize=13:hinting=true:antialias=true,xft:WenQuanYi Bitmap Song:pixelsize=13:medium:antialias=true,xft:WenQuanYi Zen Hei:pixelsize=13:medium:antialias=true
-URxvt.boldFont: xft:Hack:pixelsize=13:bold:hinting=true:antialias=true,xft:Dejavu Sans Mono For Powerline:pixelsize=13:bold:hinting=true:antialias=true,xft:WenQuanYi Bitmap Song:pixelsize=13:medium:antialias=true,xft:WenQuanYi Zen Hei:pixelsize=13:medium:antialias=true
+URxvt.font: xft:Hack:pixelsize=10:hinting=true:antialias=true,xft:Dejavu Sans Mono For Powerline:pixelsize=10:hinting=true:antialias=true,xft:WenQuanYi Bitmap Song:pixelsize=10:medium:antialias=true,xft:WenQuanYi Zen Hei:pixelsize=10:medium:antialias=true
+URxvt.boldFont: xft:Hack:pixelsize=10:bold:hinting=true:antialias=true,xft:Dejavu Sans Mono For Powerline:pixelsize=10:bold:hinting=true:antialias=true,xft:WenQuanYi Bitmap Song:pixelsize=10:medium:antialias=true,xft:WenQuanYi Zen Hei:pixelsize=10:medium:antialias=true
 
 Xft.dpi:        96
 Xft.antialias:  true

@@ -9,7 +9,6 @@ export GPG_TTY=$(tty)
 
 export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig:${PKG_CONFIG_PATH}
 
-export EDITOR=nvim
 export CCACHE_COMPRESS=1
 export CCACHE_CPP2=1
 export TERMINAL=alacritty

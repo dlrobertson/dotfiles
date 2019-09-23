@@ -73,7 +73,7 @@ set laststatus=2
 set nomodeline
 set showcmd
 set showmatch
-set tabstop=4
+set tabstop=8
 set shiftwidth=4
 set expandtab
 set cinoptions=(0,m1,:1
@@ -96,6 +96,8 @@ set ttimeoutlen=100
 set exrc
 set secure
 set colorcolumn=101
+set list
+set listchars=tab:▸-
 
 " Better completion
 set complete=.,w,b,u,t

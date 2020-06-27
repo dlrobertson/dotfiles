@@ -18,7 +18,7 @@ else
 	exit 1
 endif
 
-XDGCONFDIRS ?= sway ion alacritty tridactyl
+XDGCONFDIRS ?= sway ion alacritty tridactyl starship.toml
 
 XDGCONF := $(addprefix $(XDG_CONFIG_HOME)/, $(XDGCONFDIRS))
 

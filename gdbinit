@@ -14,6 +14,10 @@ set print pretty on
 handle SIGALRM print nopass
 handle SIGTRAP print nopass
 set confirm off
+tui new-layout mine {-horizontal src 1 asm 1} 1 cmd 1
+layout mine
+focus cmd
+set tui compact-source on
 
 define start_gef
   source ~/git/gef/gef.py

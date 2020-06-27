@@ -80,7 +80,6 @@ set cinoptions=(0,m1,:1
 set formatoptions=tcqr2
 set laststatus=2
 set nomodeline
-set clipboard=unnamedplus
 set softtabstop=4
 set showtabline=1
 set smartcase
@@ -250,7 +249,6 @@ onoremap il( :<C-u>:normal! F)vi(<cr>
 
 " Window Movement Settings {{{
 if has('nvim')
-    set clipboard=unnamed
     tnoremap <C-h> <C-\><C-n><C-w>h
     tnoremap <C-j> <C-\><C-n><C-w>j
     tnoremap <C-k> <C-\><C-n><C-w>k

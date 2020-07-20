@@ -13,8 +13,8 @@ export CCACHE_COMPRESS=1
 export CCACHE_CPP2=1
 export TERMINAL=alacritty
 
-if [ -x $HOME/.cargo/bin/starship ]; then
-    eval "$($HOME/.cargo/bin/starship init bash)"
+if command -v starship &> /dev/null; then
+    eval "$(starship init bash)"
 elif [ -f $HOME/.git-prompt.sh ]; then
     GIT_PS1_SHOWDIRTYSTATE=1
     GIT_PS1_SHOWUNTRACKEDFILES=1

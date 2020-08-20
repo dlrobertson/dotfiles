@@ -15,18 +15,18 @@
     editor = nvim
     excludesfile = ~/.gitignore
 [merge]
-    tool = nvimdiff
+    tool = vimdiff
     conflictstyle = diff3
     prompt = false
 [mergetool "nvimdiff"]
     cmd = nvim -d $BASE $LOCAL $REMOTE $MERGED -c '$wincmd w' -c 'wincmd J'
 [diff]
-    tool = nvimdiff
+    tool = vimdiff
 [difftool "nvimdiff"]
     cmd = nvim -d $LOCAL $REMOTE
 [alias]
     # basic {{{
-	co = checkout
+    co = checkout
     br = branch
     ci = commit
     st = status -s

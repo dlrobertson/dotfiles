@@ -20,6 +20,8 @@ Plug 'autozimu/LanguageClient-neovim', {
     \ }
 endif
 
+Plug 'ctrlpvim/ctrlp.vim'
+
 Plug 'scrooloose/nerdtree'
 
 Plug 'scrooloose/nerdcommenter'
@@ -39,8 +41,6 @@ Plug 'tpope/vim-git'
 Plug 'airblade/vim-gitgutter'
 
 Plug 'majutsushi/tagbar'
-
-Plug 'https://gitlab.redox-os.org/redox-os/ion-vim'
 
 Plug 'junegunn/fzf'
 
@@ -146,7 +146,7 @@ augroup END
 " }}}
 
 " Airline Settings ---- {{{
-let g:airline_theme                        = 'badwolf'
+let g:airline_theme                        = 'simple'
 let g:airline_extensions                   = ['tmuxline', 'branch', 'tabline']
 let g:airline_powerline_fonts              = 1
 let g:airline#extensions#hunks#enabled     = 1
@@ -291,7 +291,14 @@ let NERDTreeMapJumpFirstChild = 'gK'
 " }}}
 
 " Tagbar ---- {{{
-nnoremap <F9> :TagbarToggle<CR>
+nnoremap <silent> <Leader>b :TagbarToggle<CR>
+" }}}
+
+" CtrlP ---- {{{
+"nnoremap <leader>p :CtrlPTag<cr>
+let g:ctrlp_map = '<leader>p'
+let g:ctrlp_cmd = 'CtrlP'
+let g:ctrlp_root_markers = ['Cargo.toml']
 " }}}
 
 " Custom Functions {{{

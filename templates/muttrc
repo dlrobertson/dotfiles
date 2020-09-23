@@ -1,7 +1,3 @@
-# Setup mbsync and msmtp
-macro index G "!mbsync -a^M" "Update through mbsync"
-set sendmail="/usr/bin/msmtp"
-
 # Cache Directories
 set header_cache = "~/.mutt/cache/headers"
 set message_cachedir = "~/.mutt/cache/bodies"
@@ -11,12 +7,19 @@ set certificate_file = "~/.mutt/certificates"
 set sort_aux=last-date-received
 set sort=threads
 set sort_re
-set sort_alias=alias     # sort aliases in alpha order by alias name
+set askbcc=no
 set auto_tag = yes
+set imap_check_subscribed
+set sort_alias=alias     # sort aliases in alpha order by alias name
+set reverse_alias=yes
+set status_on_top
+set alias_file=~/.mutt/aliases
+set pager_index_lines=6
+set mark_old=no
 hdr_order Date: From: To: Cc: Reply-To: Subject:
+source $alias_file
 
 # Other
-set move = no
 set imap_keepalive = 112
 set markers
 set smart_wrap
@@ -33,22 +36,20 @@ set editor = "vi -c 'set spell spelllang=en' -c 'set textwidth=80' -c 'set wrapm
 set edit_headers
 
 # GPG Settings
-source ~/.gpg.rc
-set pgp_autosign
+set crypt_use_gpgme=yes
 set pgp_replysign
-set pgp_use_gpg_agent = yes
-set pgp_sign_as = @@SIGNKEY@@
-set pgp_timeout = 3600
-set crypt_autosign = yes
-set crypt_replyencrypt = yes
-set crypt_replysignencrypted = yes
+set crypt_autosign=yes
+set crypt_verify_sig=yes
+set crypt_replysign=yes
+set crypt_replyencrypt=yes
+set crypt_replysignencrypted=yes
 
 bind pager k previous-line
 bind pager j next-line
 bind index <Return> display-message
 
 # Notify
-set new_mail_command="notify-send 'New Email' '%n new messages, %u unread.' &"
+#set new_mail_command="notify-send 'New Email' '%n new messages, %u unread.' &"
 
 # Keybindings
 bind editor <space> noop
@@ -56,15 +57,41 @@ bind index,pager d delete-message
 
 # Colors
 #     Area       FG           BG      Status
-color normal     red          default
-color attachment brightyellow default
-color index      brightred    default "~N"
-color status	 yellow       default
-color tree       magenta      default
+color normal     white         default
+color attachment brightyellow  default
+color tree       green         default
+color quoted     brightblue    default
+color index      green         default "~N"
+color status     yellow        black
+color indicator  yellow        black
+color header     brightred     default subject
+color hdrdefault red           default
+color message    red           default
+color signature  red           default
+color attachment yellow        default
+color search     brightyellow  red
+color tilde      brightmagenta default
+color markers    red           default
 
 # Useful macros
-macro index,pager <f1> "<sync-mailbox><enter-command>source ~/.mutt/main<enter><change-folder>!<enter>"
-macro index,pager <f2> "<sync-mailbox><enter-command>source ~/.mutt/gmail<enter><change-folder>!<enter>"
+macro index,pager ,m "<sync-mailbox><enter-command>source 'gpg -d @@MUTT_CONF@@ |'<enter><change-folder>!<enter>"
+macro index,pager ,c "<collapse-all><tag-pattern>~(~N)<enter><tag-prefix-cond><collapse-thread>"
 
-# Default to the main mailbox
-source ~/.mutt/main
+unset collapse_unread
+bind index - collapse-thread
+bind index _ collapse-all
+
+# Message display
+ignore "Authentication-Results:"
+ignore "DomainKey-Signature:"
+ignore "DKIM-Signature:"
+ignore "X-"
+ignore "X-Mailer"
+ignore "ARC-"
+ignore "List-"
+ignore "Errors-"
+ignore "User-agent"
+
+hdr_order Date From To Cc
+
+source "gpg -dq @@MUTT_CONF@@ |"

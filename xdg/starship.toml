@@ -1,23 +1,23 @@
 # Don't print a new line at the start of the prompt
 add_newline = false
 
-prompt_order = [
-    "username",
-    "hostname",
-    "directory",
-    "git_branch",
-    "git_commit",
-    "git_state",
-    "git_status",
-    "docker_context",
-    "rust",
-    "line_break",
-    "env_var",
-    "cmd_duration",
-    "memory_usage",
-    "jobs",
-    "character",
-]
+format = """\
+    $username\
+    ($hostname)\
+    $directory\
+    $git_branch\
+    $git_commit\
+    $git_state\
+    $git_status\
+    $docker_context\
+    $rust\
+    $line_break\
+    $env_var\
+    $cmd_duration\
+    $memory_usage\
+    $jobs\
+    $character\
+    """
 
 [env_var]
 variable = "SHELL"
@@ -31,19 +31,15 @@ style_root = "bold red"
 style_user = "cyan"
 
 [hostname]
-prefix = "("
-suffix = ")"
 style = "bold red"
 ssh_only = false
 disabled = false
 
 [memory_usage]
 disabled = false
-show_percentage = true
-show_swap = true
+format = "$symbol [${ram}(${swap})]($style) "
 threshold = 75
-symbol = ""
-separator = "/"
+symbol = "-"
 style = "bold red"
 
 [jobs]
@@ -52,7 +48,7 @@ threshold = 1
 
 # Replace the "❯" symbol in the prompt with "➜"
 [character]      # The name of the module we are configuring is "character"
-symbol = "➜"     # The "symbol" segment is being set to "➜"
+success_symbol = "➜"     # The "symbol" segment is being set to "➜"
 error_symbol = "✖"
 
 [battery]

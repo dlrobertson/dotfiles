@@ -24,11 +24,11 @@ XDGCONF := $(addprefix $(XDG_CONFIG_HOME)/, $(XDGCONFDIRS))
 
 HELPERS := $(addprefix $(LOCAL_BIN)/, rfc)
 
-GENERICRCS := \
+GENERICS := \
 	.bashrc .tmux.conf .i3 .gitconfig .gitignore .gdbinit \
-	.xinitrc .muttrc .Xresources .radare2rc .git-prompt.sh
+	.xinitrc .Xresources .radare2rc .git-prompt.sh
 
-DOTFILES := $(VIMRC) $(XDGCONF) $(addprefix $(DEST)/, $(GENERICRCS))
+DOTFILES := $(VIMRC) $(XDGCONF) $(addprefix $(DEST)/, $(GENERICS))
 
 all: dirs $(DOTFILES) $(HELPERS)
 

@@ -141,10 +141,12 @@ bindsym $mod+t scratchpad show
 bindsym $mod+b border toggle
 
 # Basic Apps
-set $menu rofi -show run
+set $menu exec $term --class=launcher -e bash -c 'compgen -c | grep -v fzf | sort -u | fzf --layout=reverse | xargs -r swaymsg -t command exec'
+for_window [app_id="^launcher"] focus, floating enabled, border pixel 1, opacity 0.8
 
 bindsym $mod+Return exec urxvt
-bindsym $mod+Shift+Return exec $term
+bindsym $mod+Shift+Return exec $term --class=terminal
+for_window [app_id="^terminal"] border pixel 1, opacity 0.98
 
 bindsym $mod+d exec $menu
 bindsym $mod+p exec $menu

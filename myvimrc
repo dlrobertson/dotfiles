@@ -26,8 +26,6 @@ Plug 'scrooloose/nerdtree'
 
 Plug 'scrooloose/nerdcommenter'
 
-Plug 'edkolev/tmuxline.vim'
-
 Plug 'vim-airline/vim-airline'
 
 Plug 'vim-airline/vim-airline-themes'
@@ -147,24 +145,11 @@ augroup END
 
 " Airline Settings ---- {{{
 let g:airline_theme                        = 'simple'
-let g:airline_extensions                   = ['tmuxline', 'branch', 'tabline']
+let g:airline_extensions                   = ['branch', 'tabline']
 let g:airline_powerline_fonts              = 1
 let g:airline#extensions#hunks#enabled     = 1
 let g:airline#extensions#branch#enabled    = 1
 let g:airline#extensions#tabline#enabled   = 1
-let g:airline#extensions#tmuxline#enabled  = 1
-" }}}
-
-" Tmuxline Settings ---- {{{
-let g:tmuxline_preset = {
-      \'a'    : '#S',
-      \'b'    : '#W',
-      \'c'    : "#(cat /proc/loadavg | cut -d ' ' -f 1,4)",
-      \'win'  : '#I #W',
-      \'cwin' : '#I #W',
-      \'x'    : "#(acpi -b | grep -Po '[[:digit:]]\+%')",
-      \'y'    : '%a %R',
-      \'z'    : '#H'}
 " }}}
 
 " Color scheme ---- {{{

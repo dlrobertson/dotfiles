@@ -18,20 +18,28 @@ disabled = true
 
 [username]
 show_always = true
-format = "[$user]($style)@"
-style_user = "bold dimmed cyan"
+format = "[$user]($style)[@](dimmed)"
+style_user = "bold cyan"
 style_root = "bold bright red"
 
 [hostname]
 ssh_only = false
-format = "[$hostname]($style) in "
-style = "bold dimmed red"
+format = "[$hostname]($style)[:](dimmed)"
+style = "bold red"
 
 [git_branch]
 disabled = false
+format = "[$symbol$branch(:$remote_branch)]($style) "
 
 [hg_branch]
 disabled = false
+format = "[$symbol$branch]($style) "
 
 [shell]
 disabled = false
+
+[directory]
+format = "[$path]($style)[$read_only]($read_only_style) "
+
+[rust]
+format = "[$symbol($version)]($style)"

@@ -64,7 +64,7 @@ then
         for rfcfile in $rfcfiles
         do
             rfc=$(echo $rfcfile | sed 's/rfc\([[:digit:]]\+\).txt/\1/g')
-            curl https://tools.ietf.org/html/rfc$rfc -so - |\
+            curl https://www.rfc-editor.org/rfc/rfc$rfc -so - |\
                 echo "$(grep -iPo '(?<=title>)(.*)(?=</title>)')" >> \
                 $MANIFEST
             if [ $? -ne 0 ]
@@ -93,7 +93,7 @@ do
         if ! [ -f $RFCDIR/rfc$rfc.txt ]
         then
             echo "Downloading RFC: $rfc"
-            curl https://tools.ietf.org/rfc/rfc$rfc.txt -o $RFCDIR/rfc$rfc.txt
+            curl https://www.rfc-editor.org/rfc/rfc$rfc.txt -o $RFCDIR/rfc$rfc.txt
             if [ $? -ne 0 ]
             then
                 echo "Could not download rfc$1!"
@@ -101,7 +101,7 @@ do
             fi
             if ! [ -f $MANIFEST ] || ! grep "^RFC $rfc" -i $MANIFEST
             then
-                curl https://tools.ietf.org/html/rfc$rfc -so - |\
+                curl https://www.rfc-editor.org/rfc/rfc$rfc -so - |\
                     echo "$(grep -iPo '(?<=title>)(.*)(?=</title>)')" >> \
                     $MANIFEST
             fi

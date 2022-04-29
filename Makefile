@@ -26,7 +26,7 @@ HELPERS := $(addprefix $(LOCAL_BIN)/, rfc)
 
 GENERICS := \
 	.bashrc .tmux.conf .i3 .gitconfig .gitignore .gdbinit \
-	.xinitrc .Xresources .radare2rc .git-prompt.sh
+	.lldbinit .xinitrc .Xresources .radare2rc .git-prompt.sh
 
 DOTFILES := $(VIMRC) $(XDGCONF) $(addprefix $(DEST)/, $(GENERICS))
 

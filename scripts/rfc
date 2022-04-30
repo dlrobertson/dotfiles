@@ -101,8 +101,8 @@ do
             fi
             if ! [ -f $MANIFEST ] || ! grep "^RFC $rfc" -i $MANIFEST
             then
-                curl https://www.rfc-editor.org/rfc/rfc$rfc -so - |\
-                    echo "$(grep -iPo '(?<=title>)(.*)(?=</title>)')" >> \
+                curl -so - https://www.rfc-editor.org/rfc/rfc$rfc 2> /dev/null |\
+                    sed -ne 's/^<title>\(.*\)<\/title>/\1/p' >> \
                     $MANIFEST
             fi
             sed -i 's/[\x0c\x0d]//g' $RFCDIR/rfc$rfc.txt

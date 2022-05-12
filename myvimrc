@@ -72,13 +72,14 @@ set nomodeline
 set showcmd
 set showmatch
 set tabstop=8
-set shiftwidth=4
+set shiftwidth=2
 set expandtab
 set cinoptions=(0,m1,:1
 set formatoptions=tcqr2
 set laststatus=2
 set nomodeline
-set softtabstop=4
+set softtabstop=2
+set textwidth=80
 set showtabline=1
 set smartcase
 set sidescroll=5

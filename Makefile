@@ -5,7 +5,8 @@ XDG_CONFIG_HOME := $(DEST)/.config
 VIM ?= nvim
 ifeq ($(VIM), nvim)
 	VIMDIR := $(XDG_CONFIG_HOME)/nvim
-	VIMRC := $(VIMDIR)/init.vim
+	VIMRC := $(VIMDIR)/vimrc.vim
+	NVIMRC := $(VIMDIR)/init.lua
 	VIMAUTOLOAD := $(HOME)/.local/share/nvim/site/autoload
 	VIMPLUGINDIR := $(HOME)/.local/share/nvim/plugged
 else ifeq ($(VIM), vim)
@@ -28,7 +29,7 @@ GENERICS := \
 	.bashrc .tmux.conf .i3 .gitconfig .gitignore .gdbinit \
 	.lldbinit .xinitrc .Xresources .radare2rc .git-prompt.sh
 
-DOTFILES := $(VIMRC) $(XDGCONF) $(addprefix $(DEST)/, $(GENERICS))
+DOTFILES := $(NVIMRC) $(VIMRC) $(XDGCONF) $(addprefix $(DEST)/, $(GENERICS))
 
 all: dirs $(DOTFILES) $(HELPERS)
 
@@ -55,6 +56,9 @@ $(VIMAUTOLOAD):
 
 $(VIMAUTOLOAD)/plug.vim: $(VIMAUTOLOAD)
 	@curl -fLo $@ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+
+$(NVIMRC): $(PWD)/myvimrc.lua
+	@ln -svf $< $@
 
 $(VIMRC): $(PWD)/myvimrc
 	@ln -svf $< $@

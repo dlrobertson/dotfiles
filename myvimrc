@@ -13,13 +13,6 @@ Plug 'altercation/vim-colors-solarized'
 
 Plug 'rust-lang/rust.vim'
 
-if has('nvim')
-Plug 'autozimu/LanguageClient-neovim', {
-    \ 'branch': 'next',
-    \ 'do': 'bash install.sh',
-    \ }
-endif
-
 Plug 'ctrlpvim/ctrlp.vim'
 
 Plug 'scrooloose/nerdtree'
@@ -42,11 +35,17 @@ Plug 'majutsushi/tagbar'
 
 Plug 'junegunn/fzf'
 
+Plug 'junegunn/fzf.vim'
+
 Plug 'CraneStation/cranelift.vim'
 
 Plug 'let-def/vimbufsync'
 
 Plug 'whonore/Coqtail'
+
+Plug 'neovim/nvim-lspconfig'
+
+" Plug 'p00f/clangd_extensions.nvim'
 
 if has('nvim')
     Plug 'Shougo/deoplete.nvim'
@@ -146,11 +145,18 @@ augroup END
 
 " Airline Settings ---- {{{
 let g:airline_theme                        = 'simple'
+let g:airline_theme                        = 'dark'
+
 let g:airline_extensions                   = ['branch', 'tabline']
 let g:airline_powerline_fonts              = 1
 let g:airline#extensions#hunks#enabled     = 1
 let g:airline#extensions#branch#enabled    = 1
 let g:airline#extensions#tabline#enabled   = 1
+" }}}
+
+" Language Client Settings --- {{{
+if has('nvim')
+endif
 " }}}
 
 " Color scheme ---- {{{
@@ -345,7 +351,10 @@ command! -nargs=1 RfcVSplit call CallVRFC(<q-args>)
 command! -nargs=1 RfcTab call CallTRFC(<q-args>)
 " }}}
 
-" CoqTail ---- {{{
-let g:coqtail_nomap = 1
-let g:coqtail_noident = 1
+" Fzf ---- {{{
+let g:fzf_command_prefix = 'Fzf'
+
+let g:fzf_commits_log_options = '--graph --color=always --format="%C(auto)%h%d %s %C(black)%C(bold)%cr"'
+
+let g:fzf_tags_command = 'ctags -R'
 " }}}

@@ -11,6 +11,10 @@ endif
 
 Plug 'altercation/vim-colors-solarized'
 
+Plug 'sjl/badwolf'
+
+Plug 'morhetz/gruvbox'
+
 Plug 'rust-lang/rust.vim'
 
 Plug 'ctrlpvim/ctrlp.vim'
@@ -162,12 +166,7 @@ endif
 " Color scheme ---- {{{
 autocmd ColorScheme * highlight ExtraWhitespace ctermbg=red
 set background=dark
-try
-    let g:solarized_termcolors=256
-    colorscheme solarized
-catch
-    colorscheme default
-endtry
+colorscheme badwolf
 hi clear SpellBad
 hi SpellBad ctermbg=None ctermfg=red
 " Whitespace ---- {{{

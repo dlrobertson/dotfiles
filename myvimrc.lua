@@ -8,7 +8,7 @@ vim.cmd.source(vimrc)
 local lspconfig = require('lspconfig')
 lspconfig.clangd.setup({
   name = 'clangd',
-  cmd = {'/Users/danrobertson/.mozbuild/clang/bin/clangd'},
+  cmd = {'clangd'},
   root_dir = require("lspconfig").util.root_pattern(
           '.clangd',
           '.clang-tidy',

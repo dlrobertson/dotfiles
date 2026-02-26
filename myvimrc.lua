@@ -2,48 +2,27 @@
 local vimrc = vim.fn.stdpath("config") .. "/vimrc.vim"
 vim.cmd.source(vimrc)
 
--- Maybe in the future
--- require("clangd_extensions").setup()
--- cmd = {'clangd', '--compile-commands-dir', './objdir/clangd'},
-local lspconfig = require('lspconfig')
-lspconfig.clangd.setup({
-  name = 'clangd',
-  cmd = {'clangd'},
-  root_dir = require("lspconfig").util.root_pattern(
-          '.clangd',
-          '.clang-tidy',
-          '.clang-format',
-          'compile_commands.json',
-          'compile_flags.txt',
-          'configure.ac'
-        ),
-})
-
-local on_attach = function(client)
-    require'completion'.on_attach(client)
-end
-
-lspconfig.rust_analyzer.setup({
-  on_attach=on_attach,
+vim.lsp.config('ra', {
+  cmd = { "rust-analyzer" },
+  filetypes = { "rust" },
   settings = {
     ["rust-analyzer"] = {
-      imports = {
-        granularity = {
-          group = "module",
-        },
-        prefix = "self",
+      files = { watcher = "server" },
+      cargo = { targetDir = true },
+      check = { command = "clippy" },
+      inlayHints = {
+        bindingModeHints = { enabled = true },
+        closureCaptureHints = { enabled = true },
+        closureReturnTypeHints = { enable = "always" },
+        maxLength = 100,
       },
-      cargo = {
-        buildScripts = {
-          enable = true,
-        },
-      },
-      procMacro = {
-        enable = true
-      },
-    }
-  }
+      rustc = { source = "discover" },
+    },
+  },
 })
+vim.lsp.enable('ra')
+
+vim.lsp.enable('clangd')
 
 vim.api.nvim_create_autocmd('LspAttach', {
   group = vim.api.nvim_create_augroup('UserLspConfig', {}),
@@ -73,4 +52,27 @@ vim.api.nvim_create_autocmd('LspAttach', {
       vim.lsp.buf.format { async = true }
     end, opts)
   end,
+})
+
+require('blink.cmp').setup({
+  keymap = {
+    preset = 'super-tab',
+  },
+  appearance = {
+    nerd_font_variant = 'mono'
+  },
+  completion = {
+    documentation = {
+      auto_show = false
+    },
+    menu = {
+      auto_show = false,
+    }
+  },
+  sources = {
+    default = { 'lsp', 'path', 'snippets', 'buffer' },
+  },
+  fuzzy = {
+    implementation = "prefer_rust_with_warning"
+  }
 })

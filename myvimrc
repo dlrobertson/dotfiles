@@ -17,8 +17,6 @@ Plug 'morhetz/gruvbox'
 
 Plug 'rust-lang/rust.vim'
 
-Plug 'ctrlpvim/ctrlp.vim'
-
 Plug 'scrooloose/nerdtree'
 
 Plug 'scrooloose/nerdcommenter'
@@ -29,31 +27,25 @@ Plug 'vim-airline/vim-airline-themes'
 
 Plug 'tpope/vim-fugitive'
 
-Plug 'vim-scripts/rfc-syntax'
-
 Plug 'tpope/vim-git'
+
+Plug 'vim-scripts/rfc-syntax'
 
 Plug 'airblade/vim-gitgutter'
 
 Plug 'majutsushi/tagbar'
 
-Plug 'junegunn/fzf'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 
 Plug 'junegunn/fzf.vim'
 
-Plug 'CraneStation/cranelift.vim'
-
-Plug 'let-def/vimbufsync'
-
-Plug 'whonore/Coqtail'
+Plug 'bytecodealliance/cranelift.vim'
 
 Plug 'neovim/nvim-lspconfig'
 
-" Plug 'p00f/clangd_extensions.nvim'
+Plug 'saghen/blink.cmp'
 
-if has('nvim')
-    Plug 'Shougo/deoplete.nvim'
-endif
+Plug 'rafamadriz/friendly-snippets'
 
 call plug#end()
 
@@ -156,11 +148,6 @@ let g:airline_powerline_fonts              = 1
 let g:airline#extensions#hunks#enabled     = 1
 let g:airline#extensions#branch#enabled    = 1
 let g:airline#extensions#tabline#enabled   = 1
-" }}}
-
-" Language Client Settings --- {{{
-if has('nvim')
-endif
 " }}}
 
 " Color scheme ---- {{{
@@ -283,13 +270,6 @@ let NERDTreeMapJumpFirstChild = 'gK'
 
 " Tagbar ---- {{{
 nnoremap <silent> <Leader>b :TagbarToggle<CR>
-" }}}
-
-" CtrlP ---- {{{
-"nnoremap <leader>p :CtrlPTag<cr>
-let g:ctrlp_map = '<leader>p'
-let g:ctrlp_cmd = 'CtrlP'
-let g:ctrlp_root_markers = ['Cargo.toml']
 " }}}
 
 " Custom Functions {{{

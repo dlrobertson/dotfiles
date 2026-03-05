@@ -215,10 +215,6 @@ nnoremap <leader>Ev :e $MYVIMRC<cr>
 nnoremap <leader>sv :source $MYVIMRC<cr>
 nnoremap <leader>t :NERDTree<cr>
 nnoremap <leader>cd :cd %:h<cr>
-nnoremap <leader>e :tabe<space>
-
-" Yankring
-nnoremap <leader>y :YRShow<cr>
 
 " Usefull shortcuts
 onoremap in( :<C-u>:normal! f(vi(<cr>

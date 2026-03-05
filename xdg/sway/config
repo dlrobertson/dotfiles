@@ -100,8 +100,12 @@ mode "window" {
     bindsym Escape mode "default"
 }
 bindsym $mod+w mode "window"
+
 bindsym $mod+Shift+backslash split h
 bindsym $mod+minus split v
+
+bindsym $mod+b splith
+bindsym $mod+v splitv
 
 mode "resize" {
     bindsym $left resize shrink width 10 px or 10 ppt
@@ -137,8 +141,8 @@ bindsym $mod+space focus mode_togle
 bindsym $mod+Shift+t move scratchpad
 bindsym $mod+t scratchpad show
 
-# Border styles
-bindsym $mod+b border toggle
+## Border styles
+bindsym $mod+Shift+b border toggle
 
 # Basic Apps
 set $menu exec $term --class=launcher -e bash -c 'compgen -c | grep -v fzf | sort -u | fzf --layout=reverse | xargs -r swaymsg -t command exec'
@@ -181,5 +185,6 @@ bar {
 gaps outer 5
 gaps inner 5
 
+exec dunst
 include /etc/sway/config.d/*
 include ~/.config/sway/config.d/*
